@@ -1,0 +1,1719 @@
+/* settings.css - Admin Settings Page + Dark Mode System */
+
+.sidebar,
+.sidebar *,
+.topbar,
+.topbar *,
+.main-content,
+.profile-dropdown-menu,
+.notif-dropdown,
+.dropdown-item,
+.notif-item {
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+#page-content,
+#page-content * {
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* Settings page layout */
+.settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.settings-grid .settings-full {
+    grid-column: 1 / -1;
+}
+
+/* Settings card */
+.settings-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.settings-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.settings-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.12),
+        0 4px 16px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.settings-card:hover::before {
+    opacity: 1;
+}
+
+.settings-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
+}
+
+.settings-card-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    background: rgba(249, 115, 22, .09);
+    color: var(--color-accent);
+}
+
+.settings-card-header h2 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.settings-card-header p {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.settings-card-body {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper .rinput {
+    padding-right: 44px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: var(--color-primary);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.password-toggle:focus {
+    outline: none;
+}
+
+/* Dark mode toggle row */
+.settings-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.settings-toggle-info h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin: 0 0 3px;
+}
+
+.settings-toggle-info p {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* ── Toggle Switch ───────────────────────────── */
+.toggle-switch {
+    position: relative;
+    width: 46px;
+    height: 26px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.toggle-track {
+    position: absolute;
+    inset: 0;
+    background: #e5e7eb;
+    border-radius: 999px;
+    transition: background 0.25s ease;
+}
+
+.toggle-track::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 4px;
+    top: 4px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+}
+
+.toggle-switch input:checked+.toggle-track {
+    background: var(--color-accent);
+}
+
+.toggle-switch input:checked+.toggle-track::before {
+    transform: translateX(20px);
+}
+
+/* ── Form Feedback ───────────────────────────── */
+.settings-feedback {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: none;
+    gap: 7px;
+    align-items: center;
+}
+
+.settings-feedback.show {
+    display: flex;
+}
+
+.settings-feedback.success {
+    background: rgba(22, 163, 74, .08);
+    color: #16a34a;
+}
+
+.settings-feedback.error {
+    background: rgba(239, 68, 68, .08);
+    color: #ef4444;
+}
+
+/* ── Button Loading State ────────────────────── */
+.rbtn-primary.loading {
+    opacity: .7;
+    pointer-events: none;
+}
+
+.rbtn-primary.loading::after {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(255, 255, 255, .4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: btn-spin .6s linear infinite;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+@keyframes btn-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ── Enhanced Form Inputs ───────────────────── */
+.settings-card .rinput {
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-size: 14px;
+    color: #1f2937;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.settings-card .rinput::placeholder {
+    color: #9ca3af;
+    font-weight: 400;
+}
+
+.settings-card .rinput:hover {
+    border-color: rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.settings-card .rinput:focus {
+    border-color: var(--color-accent);
+    background: #ffffff;
+    box-shadow:
+        0 0 0 3px rgba(249, 115, 22, 0.12),
+        0 2px 12px rgba(249, 115, 22, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+    transform: translateY(-1px);
+}
+
+.settings-card .rfield {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.settings-card .rfield-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 2px;
+    letter-spacing: -0.01em;
+}
+
+.settings-card .rfield-hint {
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+/* ── Enhanced Buttons ───────────────────────── */
+.settings-card .rbtn-primary {
+    height: 44px;
+    padding: 0 24px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-brand) 100%);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 2px 8px rgba(46, 58, 77, 0.15),
+        0 1px 3px rgba(46, 58, 77, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.settings-card .rbtn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.settings-card .rbtn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 6px 20px rgba(46, 58, 77, 0.25),
+        0 2px 8px rgba(46, 58, 77, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.settings-card .rbtn-primary:hover::before {
+    left: 100%;
+}
+
+.settings-card .rbtn-primary:active {
+    transform: translateY(0);
+    box-shadow:
+        0 2px 8px rgba(46, 58, 77, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.settings-card .rbtn-primary i {
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 900px) {
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .settings-grid .settings-full {
+        grid-column: 1;
+    }
+}
+
+@media (max-width: 600px) {
+    .settings-card-body {
+        padding: 16px;
+    }
+
+    .settings-card-header {
+        padding: 14px 16px;
+    }
+}
+
+
+/* Dark mode - shell (body.admin-dark-mode-active) */
+
+/* ── Sidebar ─────────────────────────────────── */
+body.admin-dark-mode-active .sidebar {
+    background: #111827;
+    border-right-color: rgba(255, 255, 255, .05);
+    box-shadow: 2px 0 16px rgba(0, 0, 0, .4);
+}
+
+body.admin-dark-mode-active .sidebar .logo p {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .sidebar-menu label {
+    color: var(--color-accent);
+    opacity: 1;
+}
+
+body.admin-dark-mode-active .menu-btn {
+    color: #9ca3af;
+}
+
+body.admin-dark-mode-active .menu-btn i {
+    color: #6b7280;
+}
+
+body.admin-dark-mode-active .menu-btn:hover {
+    background: rgba(255, 255, 255, .06);
+    color: #f3f4f6;
+    transform: translateX(2px);
+}
+
+body.admin-dark-mode-active .menu-btn:hover i {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .menu-btn.active {
+    background: rgba(249, 115, 22, .12);
+    color: var(--color-accent);
+    border-left-color: var(--color-accent);
+}
+
+body.admin-dark-mode-active .menu-btn.active i {
+    color: var(--color-accent);
+}
+
+body.admin-dark-mode-active .menu-btn.logout-btn {
+    color: #f87171;
+}
+
+body.admin-dark-mode-active .menu-btn.logout-btn i {
+    color: #f87171;
+}
+
+body.admin-dark-mode-active .menu-btn.logout-btn:hover {
+    background: rgba(239, 68, 68, .1);
+}
+
+/* ── Topbar ──────────────────────────────────── */
+body.admin-dark-mode-active .topbar {
+    background: rgba(17, 24, 39, .95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom-color: rgba(255, 255, 255, .05);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, .35);
+}
+
+body.admin-dark-mode-active .page-title {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .topbar-greeting {
+    color: #4b5563;
+}
+
+body.admin-dark-mode-active .topbar-icon-btn {
+    background: rgba(255, 255, 255, .05);
+    color: #9ca3af;
+}
+
+body.admin-dark-mode-active .topbar-icon-btn:hover {
+    background: rgba(249, 115, 22, .12);
+    color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, .08);
+}
+
+body.admin-dark-mode-active .notif-dot {
+    border-color: #111827;
+}
+
+body.admin-dark-mode-active .topbar-profile:hover {
+    background: rgba(255, 255, 255, .05);
+}
+
+body.admin-dark-mode-active .topbar-avatar,
+body.admin-dark-mode-active .dropdown-avatar {
+    background: var(--color-accent);
+}
+
+body.admin-dark-mode-active .topbar-name {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .topbar-role {
+    color: #4b5563;
+}
+
+body.admin-dark-mode-active .topbar-caret {
+    color: #4b5563;
+}
+
+body.admin-dark-mode-active .burger-btn span {
+    background: #9ca3af;
+}
+
+/* ── Profile Dropdown ────────────────────────── */
+body.admin-dark-mode-active .profile-dropdown-menu {
+    background: #1a1f2e;
+    border-color: rgba(255, 255, 255, .07);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, .5);
+}
+
+body.admin-dark-mode-active .dropdown-name {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .dropdown-role {
+    color: #4b5563;
+}
+
+body.admin-dark-mode-active .dropdown-divider {
+    background: rgba(255, 255, 255, .06);
+}
+
+body.admin-dark-mode-active .dropdown-item {
+    color: #9ca3af;
+}
+
+body.admin-dark-mode-active .dropdown-item i {
+    color: #4b5563;
+}
+
+body.admin-dark-mode-active .dropdown-item:hover {
+    background: rgba(255, 255, 255, .05);
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .dropdown-item:hover i {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .dropdown-logout {
+    color: #f87171;
+}
+
+body.admin-dark-mode-active .dropdown-logout i {
+    color: #f87171;
+}
+
+body.admin-dark-mode-active .dropdown-logout:hover {
+    background: rgba(239, 68, 68, .08);
+    color: #fca5a5;
+}
+
+/* ── Notification Dropdown ───────────────────── */
+body.admin-dark-mode-active .notif-dropdown {
+    background: #1a1f2e;
+    border-color: rgba(255, 255, 255, .07);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, .5);
+}
+
+body.admin-dark-mode-active .notif-header {
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+body.admin-dark-mode-active .notif-header p {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .notif-item {
+    border-bottom-color: rgba(255, 255, 255, .04);
+}
+
+body.admin-dark-mode-active .notif-item:hover {
+    background: rgba(255, 255, 255, .03);
+}
+
+body.admin-dark-mode-active .notif-item.unread {
+    background: rgba(249, 115, 22, .06);
+}
+
+body.admin-dark-mode-active .notif-item.unread:hover {
+    background: rgba(249, 115, 22, .1);
+}
+
+body.admin-dark-mode-active .notif-text {
+    color: #d1d5db;
+}
+
+body.admin-dark-mode-active .notif-time {
+    color: #4b5563;
+}
+
+body.admin-dark-mode-active .notif-footer {
+    border-top-color: rgba(255, 255, 255, .06);
+}
+
+/* ── Main Content Shell ──────────────────────── */
+body.admin-dark-mode-active .main-content {
+    background-color: #0f172a;
+}
+
+
+/* Dark mode - page content (#page-content.admin-dark-mode) */
+
+#page-content.admin-dark-mode {
+    background-color: #0f172a;
+}
+
+/* ── Toolbar ─────────────────────────────────── */
+#page-content.admin-dark-mode .toolbar p {
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .toolbar>div>p:last-child {
+    color: #4b5563;
+}
+
+/* ── All Card Types ──────────────────────────── */
+#page-content.admin-dark-mode .page-card,
+#page-content.admin-dark-mode .vans-card,
+#page-content.admin-dark-mode .drivers-card,
+#page-content.admin-dark-mode .routes-card,
+#page-content.admin-dark-mode .schedules-card,
+#page-content.admin-dark-mode .bookings-card,
+#page-content.admin-dark-mode .settings-card,
+#page-content.admin-dark-mode .db-card,
+#page-content.admin-dark-mode .db-tbl-card,
+#page-content.admin-dark-mode .map-card,
+#page-content.admin-dark-mode .driver-card,
+#page-content.admin-dark-mode .schedule-card {
+    background: #1a1f2e;
+    border-color: rgba(255, 255, 255, .06);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .4);
+}
+
+#page-content.admin-dark-mode .van-seat-viewer {
+    background: #141924;
+    border-color: rgba(255, 255, 255, .06);
+}
+
+/* ── Card Headers ────────────────────────────── */
+#page-content.admin-dark-mode .page-card-header,
+#page-content.admin-dark-mode .vans-card-header,
+#page-content.admin-dark-mode .drivers-card-header,
+#page-content.admin-dark-mode .routes-card-header,
+#page-content.admin-dark-mode .schedules-card-header,
+#page-content.admin-dark-mode .bookings-card-header,
+#page-content.admin-dark-mode .settings-card-header,
+#page-content.admin-dark-mode .db-card__head,
+#page-content.admin-dark-mode .db-tbl-head,
+#page-content.admin-dark-mode .map-card-header,
+#page-content.admin-dark-mode .driver-card-header,
+#page-content.admin-dark-mode .schedule-card-header {
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+#page-content.admin-dark-mode .page-card-header h2,
+#page-content.admin-dark-mode .vans-card-header h2,
+#page-content.admin-dark-mode .drivers-card-header h2,
+#page-content.admin-dark-mode .routes-card-header h2,
+#page-content.admin-dark-mode .schedules-card-header h2,
+#page-content.admin-dark-mode .bookings-card-header h2,
+#page-content.admin-dark-mode .settings-card-header h2,
+#page-content.admin-dark-mode .db-card__title,
+#page-content.admin-dark-mode .map-card-header p,
+#page-content.admin-dark-mode .driver-card-header p,
+#page-content.admin-dark-mode .schedule-card-header p {
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .settings-card-header h2 {
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .settings-card-header p {
+    color: #4b5563;
+}
+
+#page-content.admin-dark-mode .settings-card .rbtn-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-brand) 100%);
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        0 1px 3px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+#page-content.admin-dark-mode .settings-card .rbtn-primary:hover {
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.5),
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+#page-content.admin-dark-mode .page-card-header span,
+#page-content.admin-dark-mode .vans-card-header span,
+#page-content.admin-dark-mode .drivers-card-header span,
+#page-content.admin-dark-mode .routes-card-header span,
+#page-content.admin-dark-mode .schedules-card-header span,
+#page-content.admin-dark-mode .bookings-card-header span,
+#page-content.admin-dark-mode .db-pill {
+    background: rgba(255, 255, 255, .06);
+    color: #6b7280;
+}
+
+/* ── Tables ──────────────────────────────────── */
+#page-content.admin-dark-mode .page-table thead th,
+#page-content.admin-dark-mode .vans-table thead th,
+#page-content.admin-dark-mode .drivers-table thead th,
+#page-content.admin-dark-mode .routes-table thead th,
+#page-content.admin-dark-mode .schedules-table thead th,
+#page-content.admin-dark-mode .bookings-table thead th,
+#page-content.admin-dark-mode .db-table thead th {
+    background: #141924;
+    color: #4b5563;
+    border-bottom-color: rgba(255, 255, 255, .05);
+}
+
+#page-content.admin-dark-mode .page-table tbody tr,
+#page-content.admin-dark-mode .vans-table tbody tr,
+#page-content.admin-dark-mode .drivers-table tbody tr,
+#page-content.admin-dark-mode .routes-table tbody tr,
+#page-content.admin-dark-mode .schedules-table tbody tr,
+#page-content.admin-dark-mode .bookings-table tbody tr,
+#page-content.admin-dark-mode .db-table tbody tr {
+    border-bottom-color: rgba(255, 255, 255, .04);
+}
+
+#page-content.admin-dark-mode .page-table tbody tr:hover,
+#page-content.admin-dark-mode .vans-table tbody tr:hover,
+#page-content.admin-dark-mode .drivers-table tbody tr:hover,
+#page-content.admin-dark-mode .routes-table tbody tr:hover,
+#page-content.admin-dark-mode .schedules-table tbody tr:hover,
+#page-content.admin-dark-mode .bookings-table tbody tr:hover,
+#page-content.admin-dark-mode .db-table tbody tr:hover {
+    background: rgba(255, 255, 255, .03);
+}
+
+#page-content.admin-dark-mode .page-table tbody tr.selected,
+#page-content.admin-dark-mode .vans-table tbody tr.selected,
+#page-content.admin-dark-mode .drivers-table tbody tr.selected,
+#page-content.admin-dark-mode .routes-table tbody tr.selected,
+#page-content.admin-dark-mode .schedules-table tbody tr.selected,
+#page-content.admin-dark-mode .bookings-table tbody tr.selected {
+    background: rgba(249, 115, 22, .06);
+    border-left-color: var(--color-accent);
+}
+
+#page-content.admin-dark-mode .page-table tbody td,
+#page-content.admin-dark-mode .vans-table tbody td,
+#page-content.admin-dark-mode .drivers-table tbody td,
+#page-content.admin-dark-mode .routes-table tbody td,
+#page-content.admin-dark-mode .schedules-table tbody td,
+#page-content.admin-dark-mode .bookings-table tbody td,
+#page-content.admin-dark-mode .db-table tbody td {
+    color: #d1d5db;
+}
+
+/* ── Search Box ──────────────────────────────── */
+#page-content.admin-dark-mode .search-box {
+    background: #1a1f2e;
+    border-color: rgba(255, 255, 255, .08);
+}
+
+#page-content.admin-dark-mode .search-box input {
+    color: #d1d5db;
+    background: transparent;
+}
+
+#page-content.admin-dark-mode .search-box input::placeholder {
+    color: #374151;
+}
+
+#page-content.admin-dark-mode .search-box i {
+    color: #4b5563;
+}
+
+#page-content.admin-dark-mode .search-box:focus-within {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, .08);
+}
+
+/* ── Filter Select ───────────────────────────── */
+#page-content.admin-dark-mode .filter-select {
+    background: #1a1f2e;
+    border-color: rgba(255, 255, 255, .08);
+    color: #d1d5db;
+}
+
+#page-content.admin-dark-mode .filter-select:focus {
+    border-color: var(--color-accent);
+}
+
+/* ── Form Fields ─────────────────────────────── */
+#page-content.admin-dark-mode .rfield-label {
+    color: #6b7280;
+}
+
+#page-content.admin-dark-mode .rfield-hint {
+    color: #374151;
+}
+
+#page-content.admin-dark-mode .settings-card .rinput {
+    background: rgba(17, 24, 39, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+#page-content.admin-dark-mode .settings-card .rinput::placeholder {
+    color: #6b7280;
+}
+
+#page-content.admin-dark-mode .settings-card .rinput:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(17, 24, 39, 0.9);
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+#page-content.admin-dark-mode .settings-card .rinput:focus {
+    border-color: var(--color-accent);
+    background: #111827;
+    box-shadow:
+        0 0 0 3px rgba(249, 115, 22, 0.15),
+        0 2px 12px rgba(249, 115, 22, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+#page-content.admin-dark-mode .settings-card .rfield-label {
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .settings-card .rfield-hint {
+    color: #9ca3af;
+}
+
+#page-content.admin-dark-mode .rinput:hover {
+    background: #0f172a;
+    border-color: rgba(255, 255, 255, .15);
+}
+
+#page-content.admin-dark-mode .rinput:focus {
+    background: #0f172a;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, .1);
+}
+
+/* ── Searchable Select (SS) ──────────────────── */
+#page-content.admin-dark-mode .ss-btn {
+    background: #111827;
+    border-color: rgba(255, 255, 255, .1);
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .ss-btn:hover {
+    background: #0f172a;
+    border-color: rgba(255, 255, 255, .15);
+}
+
+#page-content.admin-dark-mode .ss-btn.is-open {
+    background: #0f172a;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, .1);
+}
+
+#page-content.admin-dark-mode .ss-btn.is-placeholder .ss-btn-txt {
+    color: #374151;
+}
+
+#page-content.admin-dark-mode .ss-btn-txt {
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .ss-btn-arr {
+    color: #4b5563;
+}
+
+#page-content.admin-dark-mode .ss-panel {
+    background: #1a1f2e;
+    border-color: rgba(255, 255, 255, .08);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .5);
+}
+
+#page-content.admin-dark-mode .ss-item {
+    color: #9ca3af;
+}
+
+#page-content.admin-dark-mode .ss-item:hover {
+    background: rgba(255, 255, 255, .05);
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .ss-item.is-sel {
+    background: rgba(249, 115, 22, .1);
+    color: var(--color-accent);
+}
+
+#page-content.admin-dark-mode .ss-search {
+    background: transparent;
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .ss-search::placeholder {
+    color: #374151;
+}
+
+#page-content.admin-dark-mode .ss-search-wrap {
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+#page-content.admin-dark-mode .ss-no-results {
+    color: #4b5563;
+}
+
+/* ── Buttons ─────────────────────────────────── */
+#page-content.admin-dark-mode .rbtn-ghost {
+    color: #9ca3af;
+    border-color: rgba(255, 255, 255, .1);
+    background: transparent;
+}
+
+#page-content.admin-dark-mode .rbtn-ghost:hover {
+    background: rgba(255, 255, 255, .05);
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .btn-add {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .btn-add:hover {
+    background: #273449;
+}
+
+#page-content.admin-dark-mode .icon-btn:hover {
+    background: rgba(255, 255, 255, .07);
+}
+
+/* ── Modals ──────────────────────────────────── */
+#page-content.admin-dark-mode~.modal .rmodal,
+.admin-dark-mode-active .rmodal,
+body.admin-dark-mode-active .modal .rmodal {
+    background: #1a1f2e !important;
+    border-color: rgba(255, 255, 255, .06) !important;
+}
+
+body.admin-dark-mode-active .rmodal {
+    background: #1a1f2e !important;
+}
+
+body.admin-dark-mode-active .rmodal-title {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .rmodal-sub {
+    color: #4b5563;
+}
+
+body.admin-dark-mode-active .rmodal-footer {
+    border-top-color: rgba(255, 255, 255, .06);
+}
+
+body.admin-dark-mode-active .rmodal-body .rinput {
+    background: #111827;
+    border-color: rgba(255, 255, 255, .1);
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .rmodal-body .rinput::placeholder {
+    color: #374151;
+}
+
+body.admin-dark-mode-active .rmodal-body .rfield-label {
+    color: #6b7280;
+}
+
+body.admin-dark-mode-active .rmodal-body .ss-btn {
+    background: #111827;
+    border-color: rgba(255, 255, 255, .1);
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .rmodal-body .ss-btn.is-placeholder .ss-btn-txt {
+    color: #374151;
+}
+
+body.admin-dark-mode-active .rmodal-body .ss-panel {
+    background: #1a1f2e;
+    border-color: rgba(255, 255, 255, .08);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .5);
+}
+
+body.admin-dark-mode-active .rmodal-body .ss-item {
+    color: #9ca3af;
+}
+
+body.admin-dark-mode-active .rmodal-body .ss-item:hover {
+    background: rgba(255, 255, 255, .05);
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .rmodal-body .ss-item.is-sel {
+    background: rgba(249, 115, 22, .1);
+    color: var(--color-accent);
+}
+
+body.admin-dark-mode-active .rmodal-body .rbtn-ghost {
+    color: #9ca3af;
+    border-color: rgba(255, 255, 255, .1);
+}
+
+body.admin-dark-mode-active .modal-content {
+    background: #1a1f2e !important;
+    border-color: rgba(255, 255, 255, .06) !important;
+}
+
+body.admin-dark-mode-active .modal-header {
+    background: #141924;
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+body.admin-dark-mode-active .modal-title {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .modal-body {
+    background: #1a1f2e;
+}
+
+body.admin-dark-mode-active .modal-footer {
+    background: #1a1f2e;
+    border-top-color: rgba(255, 255, 255, .06);
+}
+
+body.admin-dark-mode-active .btn-close {
+    filter: invert(1) brightness(0.7);
+}
+
+/* ── Empty State ─────────────────────────────── */
+#page-content.admin-dark-mode .empty-state {
+    color: #374151;
+}
+
+#page-content.admin-dark-mode .text-muted-sm {
+    color: #374151;
+}
+
+/* ── Dashboard ───────────────────────────────── */
+#page-content.admin-dark-mode .db-stat {
+    background: #1a1f2e;
+    border-color: rgba(255, 255, 255, .06);
+}
+
+#page-content.admin-dark-mode .db-stat::before {
+    background: rgba(255, 255, 255, .05);
+}
+
+#page-content.admin-dark-mode .db-stat--accent::before {
+    background: var(--color-accent);
+}
+
+#page-content.admin-dark-mode .db-stat__label {
+    color: #6b7280;
+}
+
+#page-content.admin-dark-mode .db-stat__val {
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .db-stat__sub {
+    color: #4b5563;
+}
+
+#page-content.admin-dark-mode .db-stat__sub strong {
+    color: #9ca3af;
+}
+
+#page-content.admin-dark-mode .db-seg__name {
+    color: #9ca3af;
+}
+
+#page-content.admin-dark-mode .db-seg__count {
+    color: #6b7280;
+}
+
+#page-content.admin-dark-mode .db-seg__track {
+    background: rgba(255, 255, 255, .06);
+}
+
+#page-content.admin-dark-mode .db-muted {
+    color: #4b5563;
+}
+
+#page-content.admin-dark-mode .db-ref {
+    background: rgba(255, 255, 255, .06);
+    color: #9ca3af;
+}
+
+#page-content.admin-dark-mode .db-act {
+    border-bottom-color: rgba(255, 255, 255, .04);
+}
+
+#page-content.admin-dark-mode .db-act__text {
+    color: #9ca3af;
+}
+
+#page-content.admin-dark-mode .db-act__text b {
+    color: #d1d5db;
+}
+
+#page-content.admin-dark-mode .db-act__time {
+    color: #374151;
+}
+
+#page-content.admin-dark-mode .db-tbl-head {
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+#page-content.admin-dark-mode .db-pill--live {
+    background: rgba(22, 163, 74, .1);
+    color: #4ade80;
+}
+
+/* ── Routes Specific ─────────────────────────── */
+#page-content.admin-dark-mode .route-point .label {
+    color: #4b5563;
+}
+
+#page-content.admin-dark-mode .route-point .value {
+    color: #d1d5db;
+}
+
+#page-content.admin-dark-mode .stop-pill {
+    background: rgba(255, 255, 255, .05);
+    color: #6b7280;
+}
+
+#page-content.admin-dark-mode .map-empty {
+    color: #374151;
+}
+
+#page-content.admin-dark-mode .map-route-info {
+    border-top-color: rgba(255, 255, 255, .06);
+}
+
+#page-content.admin-dark-mode .map-stop span {
+    color: #9ca3af;
+}
+
+#page-content.admin-dark-mode .map-stop .stop-label {
+    color: #4b5563;
+}
+
+#page-content.admin-dark-mode .stop-connector {
+    background: rgba(249, 115, 22, .2);
+}
+
+/* ── Vans Specific ───────────────────────────── */
+#page-content.admin-dark-mode .plate-number {
+    background: rgba(255, 255, 255, .05);
+    border-color: rgba(255, 255, 255, .08);
+    color: #d1d5db;
+}
+
+#page-content.admin-dark-mode .model-display {
+    color: #d1d5db;
+}
+
+#page-content.admin-dark-mode .capacity-badge {
+    background: rgba(255, 255, 255, .05);
+    color: #6b7280;
+}
+
+#page-content.admin-dark-mode .vsv-windshield {
+    background: linear-gradient(135deg, #1e293b, #273449);
+}
+
+#page-content.admin-dark-mode .vsv-seat.driver {
+    background: rgba(255, 255, 255, .06);
+    border-color: rgba(255, 255, 255, .12);
+    color: #9ca3af;
+}
+
+#page-content.admin-dark-mode .vsv-seat.available {
+    background: rgba(249, 115, 22, .08);
+    border-color: rgba(249, 115, 22, .2);
+}
+
+#page-content.admin-dark-mode .vsv-legend-item {
+    color: #4b5563;
+}
+
+/* ── Drivers Specific ────────────────────────── */
+#page-content.admin-dark-mode .license-number {
+    background: rgba(255, 255, 255, .05);
+    border-color: rgba(255, 255, 255, .08);
+    color: #d1d5db;
+}
+
+#page-content.admin-dark-mode .driver-empty {
+    color: #374151;
+}
+
+#page-content.admin-dark-mode .driver-avatar {
+    background: linear-gradient(135deg, #1e293b, #273449);
+}
+
+#page-content.admin-dark-mode .driver-details h3 {
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .detail-label {
+    color: #4b5563;
+}
+
+#page-content.admin-dark-mode .detail-value {
+    color: #d1d5db;
+}
+
+/* ── Schedules Specific ──────────────────────── */
+#page-content.admin-dark-mode .schedule-empty {
+    color: #374151;
+}
+
+#page-content.admin-dark-mode .schedule-details h3 {
+    color: #e2e8f0;
+}
+
+/* ── Bookings Specific ───────────────────────── */
+#page-content.admin-dark-mode .ref-code {
+    background: rgba(255, 255, 255, .05);
+    border-color: rgba(255, 255, 255, .08);
+    color: #d1d5db;
+}
+
+#page-content.admin-dark-mode .passenger-info .name {
+    color: #d1d5db;
+}
+
+#page-content.admin-dark-mode .passenger-info .email {
+    color: #4b5563;
+}
+
+#page-content.admin-dark-mode .seat-badge {
+    background: rgba(255, 255, 255, .05);
+    border-color: rgba(255, 255, 255, .08);
+    color: #9ca3af;
+}
+
+#page-content.admin-dark-mode .detail-section .section-title {
+    border-bottom-color: rgba(249, 115, 22, .15);
+}
+
+#page-content.admin-dark-mode #detailsModal .modal-header {
+    background: #141924;
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+#page-content.admin-dark-mode #detailsModal .modal-title {
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode #detailsModal .detail-value {
+    color: #d1d5db;
+}
+
+/* ── Settings Page in Dark Mode ──────────────── */
+#page-content.admin-dark-mode .settings-card {
+    background: rgba(26, 31, 46, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: rgba(255, 255, 255, 0.06);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+#page-content.admin-dark-mode .settings-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.5),
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+#page-content.admin-dark-mode .settings-card-header {
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+#page-content.admin-dark-mode .settings-card-header h2 {
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .settings-card-header p {
+    color: #4b5563;
+}
+
+#page-content.admin-dark-mode .settings-toggle-info h3 {
+    color: #e2e8f0;
+}
+
+#page-content.admin-dark-mode .settings-toggle-info p {
+    color: #4b5563;
+}
+
+#page-content.admin-dark-mode .toggle-track {
+    background: #2d3748;
+}
+
+#page-content.admin-dark-mode .settings-feedback.success {
+    background: rgba(22, 163, 74, .1);
+}
+
+#page-content.admin-dark-mode .settings-feedback.error {
+    background: rgba(239, 68, 68, .1);
+}
+
+/* ── Status Badge Adjustments in Dark Mode ───── */
+#page-content.admin-dark-mode .badge.active {
+    background: rgba(22, 163, 74, .12);
+    color: #4ade80;
+}
+
+#page-content.admin-dark-mode .badge.active::before {
+    background: #4ade80;
+}
+
+#page-content.admin-dark-mode .badge.inactive {
+    background: rgba(239, 68, 68, .12);
+    color: #f87171;
+}
+
+#page-content.admin-dark-mode .badge.inactive::before {
+    background: #f87171;
+}
+
+#page-content.admin-dark-mode .badge.pending {
+    background: rgba(249, 115, 22, .12);
+    color: #fb923c;
+}
+
+#page-content.admin-dark-mode .badge.pending::before {
+    background: #fb923c;
+}
+
+#page-content.admin-dark-mode .badge.approved {
+    background: rgba(22, 163, 74, .12);
+    color: #4ade80;
+}
+
+#page-content.admin-dark-mode .badge.approved::before {
+    background: #4ade80;
+}
+
+#page-content.admin-dark-mode .badge.rejected {
+    background: rgba(239, 68, 68, .12);
+    color: #f87171;
+}
+
+#page-content.admin-dark-mode .badge.rejected::before {
+    background: #f87171;
+}
+
+#page-content.admin-dark-mode .badge.cancelled {
+    background: rgba(156, 163, 175, .1);
+    color: #9ca3af;
+}
+
+#page-content.admin-dark-mode .badge.cancelled::before {
+    background: #9ca3af;
+}
+
+#page-content.admin-dark-mode .badge.boarding {
+    background: rgba(249, 115, 22, .12);
+    color: #fb923c;
+}
+
+#page-content.admin-dark-mode .badge.departed {
+    background: rgba(59, 130, 246, .12);
+    color: #60a5fa;
+}
+
+#page-content.admin-dark-mode .badge.arrived {
+    background: rgba(22, 163, 74, .12);
+    color: #4ade80;
+}
+
+/* ── Icon Buttons in Dark Mode ───────────────── */
+#page-content.admin-dark-mode .icon-btn.edit {
+    background: rgba(249, 115, 22, .12);
+    color: #fb923c;
+}
+
+#page-content.admin-dark-mode .icon-btn.delete {
+    background: rgba(239, 68, 68, .12);
+    color: #f87171;
+}
+
+#page-content.admin-dark-mode .icon-btn.toggle {
+    background: rgba(22, 163, 74, .12);
+    color: #4ade80;
+}
+
+#page-content.admin-dark-mode .icon-btn.view {
+    background: rgba(255, 255, 255, .07);
+    color: #9ca3af;
+}
+
+#page-content.admin-dark-mode .icon-btn.approve {
+    background: rgba(22, 163, 74, .12);
+    color: #4ade80;
+}
+
+#page-content.admin-dark-mode .icon-btn.reject {
+    background: rgba(239, 68, 68, .12);
+    color: #f87171;
+}
+
+#page-content.admin-dark-mode .icon-btn.cancel {
+    background: rgba(249, 115, 22, .12);
+    color: #fb923c;
+}
+
+#page-content.admin-dark-mode .icon-btn.status {
+    background: rgba(59, 130, 246, .12);
+    color: #60a5fa;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   OVERRIDE PATCH — forces dark bg on ALL page-specific cards
+   Needed because schedules.css, drivers.css, routes.css etc all have
+   hardcoded background:#fff that loads after settings.css
+   Using body + #page-content double scope for higher specificity
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Universal card override ─────────────────── */
+body.admin-dark-mode-active #page-content.admin-dark-mode .schedules-card,
+body.admin-dark-mode-active #page-content.admin-dark-mode .schedules-card-header,
+body.admin-dark-mode-active #page-content.admin-dark-mode .schedule-card,
+body.admin-dark-mode-active #page-content.admin-dark-mode .schedule-card-header,
+body.admin-dark-mode-active #page-content.admin-dark-mode .vans-card,
+body.admin-dark-mode-active #page-content.admin-dark-mode .drivers-card,
+body.admin-dark-mode-active #page-content.admin-dark-mode .driver-card,
+body.admin-dark-mode-active #page-content.admin-dark-mode .routes-card,
+body.admin-dark-mode-active #page-content.admin-dark-mode .map-card,
+body.admin-dark-mode-active #page-content.admin-dark-mode .bookings-card,
+body.admin-dark-mode-active #page-content.admin-dark-mode .settings-card,
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-card,
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-tbl-card,
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-stat {
+    background: #1a1f2e !important;
+    border-color: rgba(255, 255, 255, .06) !important;
+}
+
+/* ── Table headers ───────────────────────────── */
+body.admin-dark-mode-active #page-content.admin-dark-mode .schedules-table thead th,
+body.admin-dark-mode-active #page-content.admin-dark-mode .vans-table thead th,
+body.admin-dark-mode-active #page-content.admin-dark-mode .drivers-table thead th,
+body.admin-dark-mode-active #page-content.admin-dark-mode .routes-table thead th,
+body.admin-dark-mode-active #page-content.admin-dark-mode .bookings-table thead th,
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-table thead th {
+    background: #141924 !important;
+    color: #4b5563 !important;
+    border-bottom-color: rgba(255, 255, 255, .05) !important;
+}
+
+/* ── Table rows ──────────────────────────────── */
+body.admin-dark-mode-active #page-content.admin-dark-mode .schedules-table tbody td,
+body.admin-dark-mode-active #page-content.admin-dark-mode .vans-table tbody td,
+body.admin-dark-mode-active #page-content.admin-dark-mode .drivers-table tbody td,
+body.admin-dark-mode-active #page-content.admin-dark-mode .routes-table tbody td,
+body.admin-dark-mode-active #page-content.admin-dark-mode .bookings-table tbody td,
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-table tbody td {
+    color: #d1d5db !important;
+    border-bottom-color: rgba(255, 255, 255, .04) !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .schedules-table tbody tr:hover,
+body.admin-dark-mode-active #page-content.admin-dark-mode .vans-table tbody tr:hover,
+body.admin-dark-mode-active #page-content.admin-dark-mode .drivers-table tbody tr:hover,
+body.admin-dark-mode-active #page-content.admin-dark-mode .routes-table tbody tr:hover,
+body.admin-dark-mode-active #page-content.admin-dark-mode .bookings-table tbody tr:hover,
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-table tbody tr:hover {
+    background: rgba(255, 255, 255, .03) !important;
+}
+
+/* ── Search box ──────────────────────────────── */
+body.admin-dark-mode-active #page-content.admin-dark-mode .search-box {
+    background: #1a1f2e !important;
+    border-color: rgba(255, 255, 255, .08) !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .search-box input {
+    background: transparent !important;
+    color: #d1d5db !important;
+}
+
+/* ── Filter select ───────────────────────────── */
+body.admin-dark-mode-active #page-content.admin-dark-mode .filter-select {
+    background: #1a1f2e !important;
+    border-color: rgba(255, 255, 255, .08) !important;
+    color: #d1d5db !important;
+}
+
+/* ── Form inputs ─────────────────────────────── */
+body.admin-dark-mode-active #page-content.admin-dark-mode .rinput {
+    background: #111827 !important;
+    border-color: rgba(255, 255, 255, .1) !important;
+    color: #e2e8f0 !important;
+}
+
+/* ── SS widget ───────────────────────────────── */
+body.admin-dark-mode-active #page-content.admin-dark-mode .ss-btn,
+body.admin-dark-mode-active .rmodal-body .ss-btn {
+    background: #111827 !important;
+    border-color: rgba(255, 255, 255, .1) !important;
+    color: #e2e8f0 !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .ss-panel,
+body.admin-dark-mode-active .rmodal-body .ss-panel {
+    background: #1a1f2e !important;
+    border-color: rgba(255, 255, 255, .08) !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .ss-item,
+body.admin-dark-mode-active .rmodal-body .ss-item {
+    color: #9ca3af !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .ss-item:hover,
+body.admin-dark-mode-active .rmodal-body .ss-item:hover {
+    background: rgba(255, 255, 255, .05) !important;
+    color: #e2e8f0 !important;
+}
+
+/* ── Modals ──────────────────────────────────── */
+body.admin-dark-mode-active .modal-content,
+body.admin-dark-mode-active .rmodal {
+    background: #1a1f2e !important;
+    border-color: rgba(255, 255, 255, .06) !important;
+}
+
+body.admin-dark-mode-active .modal-header,
+body.admin-dark-mode-active .rmodal-header {
+    background: #141924 !important;
+    border-bottom-color: rgba(255, 255, 255, .06) !important;
+}
+
+body.admin-dark-mode-active .modal-footer,
+body.admin-dark-mode-active .rmodal-footer {
+    background: #1a1f2e !important;
+    border-top-color: rgba(255, 255, 255, .06) !important;
+}
+
+body.admin-dark-mode-active .rmodal-title,
+body.admin-dark-mode-active .modal-title {
+    color: #e2e8f0 !important;
+}
+
+body.admin-dark-mode-active .rmodal-sub {
+    color: #4b5563 !important;
+}
+
+body.admin-dark-mode-active .rmodal-body .rfield-label {
+    color: #6b7280 !important;
+}
+
+body.admin-dark-mode-active .rmodal-body .rinput {
+    background: #111827 !important;
+    border-color: rgba(255, 255, 255, .1) !important;
+    color: #e2e8f0 !important;
+}
+
+body.admin-dark-mode-active .rmodal-body .rbtn-ghost {
+    color: #9ca3af !important;
+    border-color: rgba(255, 255, 255, .1) !important;
+}
+
+/* ── Schedule/driver preview card details ────── */
+body.admin-dark-mode-active #page-content.admin-dark-mode .detail-label {
+    color: #4b5563 !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .detail-value {
+    color: #d1d5db !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .detail-row {
+    border-bottom-color: rgba(255, 255, 255, .05) !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .schedule-empty,
+body.admin-dark-mode-active #page-content.admin-dark-mode .driver-empty,
+body.admin-dark-mode-active #page-content.admin-dark-mode .map-empty {
+    color: #374151 !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .schedule-empty i,
+body.admin-dark-mode-active #page-content.admin-dark-mode .driver-empty i {
+    background: #141924 !important;
+    border-color: rgba(255, 255, 255, .06) !important;
+    color: #374151 !important;
+}
+
+/* ── Plate number ────────────────────────────── */
+body.admin-dark-mode-active #page-content.admin-dark-mode .plate-number {
+    background: rgba(255, 255, 255, .05) !important;
+    border-color: rgba(255, 255, 255, .08) !important;
+    color: #d1d5db !important;
+}
+
+/* ── Route/driver/van display text ──────────── */
+body.admin-dark-mode-active #page-content.admin-dark-mode .route-display span,
+body.admin-dark-mode-active #page-content.admin-dark-mode .driver-display,
+body.admin-dark-mode-active #page-content.admin-dark-mode .model-display {
+    color: #d1d5db !important;
+}
+
+/* ── Schedules badge overrides ───────────────── */
+body.admin-dark-mode-active #page-content.admin-dark-mode .badge.boarding {
+    background: rgba(249, 115, 22, .12) !important;
+    color: #fb923c !important;
+    border-color: rgba(249, 115, 22, .2) !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .badge.departed {
+    background: rgba(59, 130, 246, .12) !important;
+    color: #60a5fa !important;
+    border-color: rgba(59, 130, 246, .2) !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .badge.arrived {
+    background: rgba(22, 163, 74, .12) !important;
+    color: #4ade80 !important;
+    border-color: rgba(22, 163, 74, .2) !important;
+}
+
+/* ── db-stat specific ────────────────────────── */
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-stat__val {
+    color: #e2e8f0 !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-stat__label {
+    color: #6b7280 !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-stat__sub {
+    color: #4b5563 !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-seg__name {
+    color: #9ca3af !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-seg__track {
+    background: rgba(255, 255, 255, .06) !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-seg__count {
+    color: #6b7280 !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-act__text {
+    color: #9ca3af !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-act__time {
+    color: #374151 !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-ref {
+    background: rgba(255, 255, 255, .06) !important;
+    color: #9ca3af !important;
+}
+
+body.admin-dark-mode-active #page-content.admin-dark-mode .db-muted {
+    color: #4b5563 !important;
+}

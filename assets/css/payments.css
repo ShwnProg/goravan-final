@@ -1,0 +1,770 @@
+/* ══════════════════════════════════════════════
+   payments.css
+   ══════════════════════════════════════════════ */
+
+/* ── CARD ────────────────────────────────────── */
+.payments-card {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .07);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .05);
+}
+
+.payments-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
+}
+
+.payments-card-header h2 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.payments-card-header span {
+    font-size: 11px;
+    color: var(--text-muted);
+    background: rgba(0, 0, 0, .04);
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.payments-table-wrap {
+    overflow-x: auto;
+}
+
+.payments-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.payments-table thead th {
+    text-align: left;
+    padding: 10px 16px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    background: #fafafa;
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
+    white-space: nowrap;
+}
+
+.payments-table tbody tr {
+    border-bottom: 1px solid rgba(0, 0, 0, .04);
+    transition: background .15s;
+    cursor: pointer;
+}
+
+.payments-table tbody tr.payment-group-row {
+    background: #f8fafc;
+    cursor: default;
+}
+
+.payments-table tbody tr.payment-group-row:hover {
+    background: #f8fafc;
+}
+
+.payments-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.payments-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.payments-table tbody tr.selected {
+    background: rgba(249, 115, 22, .04);
+    border-left: 3px solid var(--color-accent);
+}
+
+.payments-table tbody tr.payment-row.status-refund_requested {
+    box-shadow: inset 3px 0 0 var(--color-accent);
+}
+
+.payments-table tbody tr.payment-row.status-paid {
+    box-shadow: inset 3px 0 0 #16a34a;
+}
+
+.payments-table tbody tr.payment-row.status-rejected {
+    box-shadow: inset 3px 0 0 #ef4444;
+}
+
+.payments-table tbody tr.payment-row.status-cancelled {
+    box-shadow: inset 3px 0 0 #6b7280;
+}
+
+.payments-table tbody tr.payment-row.status-refunded {
+    box-shadow: inset 3px 0 0 #2563eb;
+}
+
+.payments-table tbody tr.payment-row.status-pending {
+    box-shadow: inset 3px 0 0 var(--color-accent);
+}
+
+.payments-table td,
+.payments-table th {
+    padding: 12px 12px;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: #374151;
+}
+
+.payments-table .payment-group-row td {
+    padding: 8px 16px;
+    color: #64748b;
+}
+
+.payment-group-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: .45px;
+    text-transform: uppercase;
+}
+
+.payment-group-label i {
+    color: var(--color-accent);
+    font-size: 11px;
+}
+
+.payment-group-label small {
+    margin-left: auto;
+    color: #94a3b8;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+/* ── BOOKING REF ─────────────────────────────── */
+.booking-ref-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.booking-ref-display > span {
+    display: grid;
+    gap: 3px;
+}
+
+.booking-ref-display small {
+    color: #9ca3af;
+    font-size: 10.5px;
+    font-weight: 700;
+}
+
+.ref-code {
+    font-family: var(--font-reference);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    background: rgba(46, 58, 77, .06);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+#view-booking-ref,
+#view-payment-ref {
+    font-family: var(--font-reference);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+}
+
+/* ── USER INFO ───────────────────────────────── */
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.user-info .name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.user-info .email {
+    font-size: 11.5px;
+    color: #9ca3af;
+}
+
+/* ── AMOUNT ──────────────────────────────────── */
+.amount-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-accent);
+}
+
+/* ── METHOD BADGE ────────────────────────────── */
+.payment-method-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: capitalize;
+    background: rgba(249, 115, 22, .08);
+    color: var(--color-accent);
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.payments-card .icon-btn.paid {
+    background: rgba(22, 163, 74, .08);
+    color: #16a34a;
+}
+
+.payments-card .icon-btn.paid:hover {
+    background: rgba(22, 163, 74, .16);
+}
+
+.payments-card .icon-btn.cancel {
+    background: rgba(239, 68, 68, .08);
+    color: #ef4444;
+}
+
+.payments-card .icon-btn.cancel:hover {
+    background: rgba(239, 68, 68, .16);
+}
+
+.payments-card .icon-btn.refund-review {
+    background: rgba(249, 115, 22, .1);
+    color: var(--color-accent);
+}
+
+.payments-card .icon-btn.refund-review:hover {
+    background: rgba(249, 115, 22, .18);
+}
+
+.payments-table .badge.pending,
+.payments-table .badge.refund_requested {
+    background: rgba(249, 115, 22, .1);
+    color: var(--color-accent);
+}
+
+.payments-table .badge.pending::before,
+.payments-table .badge.refund_requested::before {
+    background: var(--color-accent);
+}
+
+.payments-table .badge.paid {
+    background: rgba(22, 163, 74, .1);
+    color: #16a34a;
+}
+
+.payments-table .badge.paid::before {
+    background: #16a34a;
+}
+
+.payments-table .badge.rejected {
+    background: rgba(239, 68, 68, .1);
+    color: #ef4444;
+}
+
+.payments-table .badge.rejected::before {
+    background: #ef4444;
+}
+
+.payments-table .badge.refunded {
+    background: rgba(59, 130, 246, .1);
+    color: #2563eb;
+}
+
+.payments-table .badge.refunded::before {
+    background: #2563eb;
+}
+
+.payments-table .badge.cancelled {
+    background: rgba(107, 114, 128, .1);
+    color: #4b5563;
+}
+
+.payments-table .badge.cancelled::before {
+    background: #6b7280;
+}
+
+/* ── PAYMENT DETAILS VIEWER (Modal) ──────────── */
+.payment-details-viewer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pdv-section {
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
+    padding-bottom: 16px;
+}
+
+.pdv-section:last-child {
+    border-bottom: none;
+}
+
+.pdv-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #9ca3af;
+    margin: 0 0 12px;
+}
+
+.pdv-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.pdv-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pdv-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+}
+
+.pdv-value {
+    font-size: 13px;
+    color: #374151;
+    font-weight: 500;
+}
+
+/* ── NOTES ───────────────────────────────────── */
+.pdv-notes {
+    background: #f8fafc;
+    border: 1px solid rgba(0, 0, 0, .06);
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.5;
+    min-height: 40px;
+    word-break: break-word;
+}
+
+/* ══════════════════════════════════════════════
+   DARK MODE
+   ══════════════════════════════════════════════ */
+body.admin-dark-mode-active .payments-card {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, .07);
+}
+
+body.admin-dark-mode-active .payments-card-header {
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+body.admin-dark-mode-active .payments-card-header h2 {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .payments-card-header span {
+    background: rgba(255, 255, 255, .06);
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .payments-table thead th {
+    background: #162032;
+    color: #64748b;
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+body.admin-dark-mode-active .payments-table tbody tr {
+    border-bottom-color: rgba(255, 255, 255, .04);
+}
+
+body.admin-dark-mode-active .payments-table tbody tr.payment-group-row,
+body.admin-dark-mode-active .payments-table tbody tr.payment-group-row:hover {
+    background: #111827;
+}
+
+body.admin-dark-mode-active .payments-table tbody tr:hover {
+    background: rgba(255, 255, 255, .03);
+}
+
+body.admin-dark-mode-active .payments-table tbody tr.selected {
+    background: rgba(249, 115, 22, .08);
+    border-left-color: var(--color-accent);
+}
+
+body.admin-dark-mode-active .payments-table td {
+    color: #cbd5e1;
+}
+
+body.admin-dark-mode-active .payments-table .payment-group-row td {
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .payment-group-label small {
+    color: #64748b;
+}
+
+body.admin-dark-mode-active .booking-ref-display {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .ref-code {
+    background: rgba(255, 255, 255, .08);
+    color: #cbd5e1;
+}
+
+body.admin-dark-mode-active .user-info .name {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .user-info .email {
+    color: #64748b;
+}
+
+body.admin-dark-mode-active .payment-method-badge {
+    background: rgba(249, 115, 22, .12);
+    color: var(--color-accent);
+}
+
+.refund-request-box {
+    padding: 12px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(249, 115, 22, .18);
+    border-radius: 10px;
+    background: rgba(249, 115, 22, .07);
+    color: #9a3412;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.refund-note-row {
+    display: grid;
+    gap: 3px;
+    padding: 8px 0;
+}
+
+.refund-note-row + .refund-note-row {
+    border-top: 1px solid rgba(249, 115, 22, .16);
+}
+
+.refund-note-row strong {
+    color: #7c2d12;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.refund-note-row small {
+    color: #9a3412;
+    font-size: 11px;
+}
+
+.refund-review-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.refund-review-grid label {
+    display: grid;
+    gap: 6px;
+}
+
+.refund-review-grid label span {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.refund-review-grid .span-full {
+    grid-column: 1 / -1;
+}
+
+.refund-review-grid select,
+.refund-review-grid textarea {
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: 9px;
+    background: #f8fafc;
+    color: #374151;
+    font: inherit;
+    font-size: 13px;
+    padding: 10px 12px;
+}
+
+.refund-review-grid textarea {
+    resize: vertical;
+}
+
+body.admin-dark-mode-active .payments-card .icon-btn.paid {
+    background: rgba(16, 185, 129, .1);
+    color: #34d399;
+}
+
+body.admin-dark-mode-active .payments-card .icon-btn.cancel {
+    background: rgba(239, 68, 68, .1);
+    color: #f87171;
+}
+
+body.admin-dark-mode-active .payments-card .icon-btn.refund-review {
+    background: rgba(249, 115, 22, .12);
+    color: var(--color-accent);
+}
+
+/* Modal dark */
+body.admin-dark-mode-active .pdv-section {
+    border-bottom-color: rgba(255, 255, 255, .08);
+}
+
+body.admin-dark-mode-active .pdv-section-title {
+    color: #64748b;
+}
+
+body.admin-dark-mode-active .pdv-label {
+    color: #64748b;
+}
+
+body.admin-dark-mode-active .pdv-value {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .pdv-notes {
+    background: rgba(15, 23, 42, .5);
+    border-color: rgba(255, 255, 255, .07);
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .refund-request-box {
+    background: rgba(249, 115, 22, .1);
+    border-color: rgba(249, 115, 22, .22);
+    color: #fdba74;
+}
+
+body.admin-dark-mode-active .refund-note-row + .refund-note-row {
+    border-top-color: rgba(249, 115, 22, .18);
+}
+
+body.admin-dark-mode-active .refund-note-row strong,
+body.admin-dark-mode-active .refund-note-row small {
+    color: #fdba74;
+}
+
+body.admin-dark-mode-active .refund-review-grid label span {
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .refund-review-grid select,
+body.admin-dark-mode-active .refund-review-grid textarea {
+    background: rgba(15, 23, 42, .5);
+    border-color: rgba(255, 255, 255, .08);
+    color: #e2e8f0;
+}
+
+/* Shared admin table polish */
+.schedules-card,
+.bookings-card,
+.users-card,
+.drivers-card,
+.vans-card,
+.routes-card {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .07);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .05);
+}
+
+.schedules-card-header,
+.bookings-card-header,
+.users-card-header,
+.drivers-card-header,
+.vans-card-header,
+.routes-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
+}
+
+.schedules-card-header h2,
+.bookings-card-header h2,
+.users-card-header h2,
+.drivers-card-header h2,
+.vans-card-header h2,
+.routes-card-header h2 {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.schedules-card-header span,
+.bookings-card-header span,
+.users-card-header span,
+.drivers-card-header span,
+.vans-card-header span,
+.routes-card-header span {
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, .04);
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+.schedules-table-wrap,
+.bookings-table-wrap,
+.users-table-wrap,
+.drivers-table-wrap,
+.vans-table-wrap,
+.routes-table-wrap {
+    overflow-x: auto;
+}
+
+.schedules-table,
+.bookings-table,
+.users-table,
+.drivers-table,
+.vans-table,
+.routes-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.schedules-table thead th,
+.bookings-table thead th,
+.users-table thead th,
+.drivers-table thead th,
+.vans-table thead th,
+.routes-table thead th {
+    padding: 10px 16px;
+    background: #fafafa;
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
+    color: #9ca3af;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.schedules-table tbody tr,
+.bookings-table tbody tr,
+.users-table tbody tr,
+.drivers-table tbody tr,
+.vans-table tbody tr,
+.routes-table tbody tr {
+    border-bottom: 1px solid rgba(0, 0, 0, .04);
+    transition: background .15s;
+}
+
+.schedules-table tbody tr:hover,
+.bookings-table tbody tr:hover,
+.users-table tbody tr:hover,
+.drivers-table tbody tr:hover,
+.vans-table tbody tr:hover,
+.routes-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.schedules-table td,
+.schedules-table th,
+.bookings-table td,
+.bookings-table th,
+.users-table td,
+.users-table th,
+.drivers-table td,
+.drivers-table th,
+.vans-table td,
+.vans-table th,
+.routes-table td,
+.routes-table th {
+    padding: 12px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+body.admin-dark-mode-active .schedules-card,
+body.admin-dark-mode-active .bookings-card,
+body.admin-dark-mode-active .users-card,
+body.admin-dark-mode-active .drivers-card,
+body.admin-dark-mode-active .vans-card,
+body.admin-dark-mode-active .routes-card {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, .07);
+}
+
+body.admin-dark-mode-active .schedules-card-header,
+body.admin-dark-mode-active .bookings-card-header,
+body.admin-dark-mode-active .users-card-header,
+body.admin-dark-mode-active .drivers-card-header,
+body.admin-dark-mode-active .vans-card-header,
+body.admin-dark-mode-active .routes-card-header {
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+body.admin-dark-mode-active .schedules-card-header h2,
+body.admin-dark-mode-active .bookings-card-header h2,
+body.admin-dark-mode-active .users-card-header h2,
+body.admin-dark-mode-active .drivers-card-header h2,
+body.admin-dark-mode-active .vans-card-header h2,
+body.admin-dark-mode-active .routes-card-header h2 {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .schedules-card-header span,
+body.admin-dark-mode-active .bookings-card-header span,
+body.admin-dark-mode-active .users-card-header span,
+body.admin-dark-mode-active .drivers-card-header span,
+body.admin-dark-mode-active .vans-card-header span,
+body.admin-dark-mode-active .routes-card-header span {
+    background: rgba(255, 255, 255, .06);
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .schedules-table thead th,
+body.admin-dark-mode-active .bookings-table thead th,
+body.admin-dark-mode-active .users-table thead th,
+body.admin-dark-mode-active .drivers-table thead th,
+body.admin-dark-mode-active .vans-table thead th,
+body.admin-dark-mode-active .routes-table thead th {
+    background: #162032;
+    border-bottom-color: rgba(255, 255, 255, .06);
+    color: #64748b;
+}
+
+body.admin-dark-mode-active .schedules-table tbody tr,
+body.admin-dark-mode-active .bookings-table tbody tr,
+body.admin-dark-mode-active .users-table tbody tr,
+body.admin-dark-mode-active .drivers-table tbody tr,
+body.admin-dark-mode-active .vans-table tbody tr,
+body.admin-dark-mode-active .routes-table tbody tr {
+    border-bottom-color: rgba(255, 255, 255, .04);
+}
+
+body.admin-dark-mode-active .schedules-table tbody tr:hover,
+body.admin-dark-mode-active .bookings-table tbody tr:hover,
+body.admin-dark-mode-active .users-table tbody tr:hover,
+body.admin-dark-mode-active .drivers-table tbody tr:hover,
+body.admin-dark-mode-active .vans-table tbody tr:hover,
+body.admin-dark-mode-active .routes-table tbody tr:hover {
+    background: rgba(255, 255, 255, .03);
+}

@@ -1,0 +1,571 @@
+/* ═══════════════════════════════════════════════════
+   user-home.css — Home page specific styles only
+   Load order: base.css → user-common.css → user-home.css
+   ═══════════════════════════════════════════════════ */
+
+/* Home page body: no extra top padding since header handles spacing */
+.u-body {
+    padding-top: 0;
+}
+
+/* Cleaner home dashboard */
+.user-home-page .u-dashboard-header {
+    max-width: 1180px;
+    margin: 22px auto 0;
+    padding: 24px;
+    border: 1px solid var(--u-border);
+    border-radius: 16px;
+    background: var(--u-surface);
+    color: var(--u-text);
+    box-shadow: none;
+}
+
+.user-home-page .u-header-title {
+    color: var(--u-text);
+    font-size: 28px;
+    line-height: 1.15;
+    letter-spacing: 0;
+}
+
+.user-home-page .u-header-subtitle,
+.user-home-page .u-date-label {
+    color: var(--u-muted);
+}
+
+.user-home-page .u-header-date {
+    min-width: 138px;
+    border: 1px solid var(--u-border);
+    border-radius: 12px;
+    background: var(--u-surface2);
+    color: var(--u-text);
+}
+
+.user-home-page .u-search-toolbar {
+    max-width: 1180px;
+    margin: 16px auto 0;
+    padding: 18px 20px;
+    border: 1px solid var(--u-border);
+    border-radius: 16px;
+    background: var(--u-surface);
+    box-shadow: none;
+}
+
+.user-home-page .u-toolbar-title {
+    color: var(--u-text);
+    font-size: 18px;
+    letter-spacing: 0;
+}
+
+.user-home-page .u-toolbar-form {
+    align-items: end;
+    gap: 12px;
+}
+
+.user-home-page .u-tf label {
+    color: var(--u-muted);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.user-home-page .u-search-toolbar .ss-btn,
+.user-home-page .u-search-toolbar input[type="date"] {
+    min-height: 44px;
+    border: 1px solid var(--u-border);
+    border-radius: 10px;
+    background: var(--u-surface2);
+    color: var(--u-text);
+}
+
+.user-home-page .u-t-sep {
+    width: 32px;
+    height: 44px;
+    color: var(--u-muted);
+}
+
+.user-home-page .u-tbtn {
+    min-height: 44px;
+    border-radius: 10px;
+    font-weight: 800;
+}
+
+.user-home-page .u-stats-dashboard {
+    gap: 12px;
+}
+
+.user-home-page .u-stat {
+    min-height: 96px;
+    border-radius: 12px;
+    border: 1px solid var(--u-border);
+    background: var(--u-surface);
+}
+
+.user-home-page .u-stat-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+}
+
+.user-home-page .u-stat-val {
+    font-size: 28px;
+}
+
+.user-home-page .u-next-trip {
+    border-radius: 14px;
+    border: 1px solid var(--u-border);
+    background: var(--u-surface);
+}
+
+@media (max-width: 768px) {
+    .user-home-page .u-dashboard-header,
+    .user-home-page .u-search-toolbar {
+        margin-left: 12px;
+        margin-right: 12px;
+        padding: 18px;
+    }
+
+    .user-home-page .u-header-content,
+    .user-home-page .u-toolbar-form {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .user-home-page .u-header-title {
+        font-size: 24px;
+    }
+
+    .user-home-page .u-t-sep {
+        display: none;
+    }
+}
+
+/* First section needs no extra top margin */
+.u-sec:first-child {
+    margin-top: 0;
+}
+
+/* Quick action press effect */
+.u-qa-card:active {
+    transform: scale(0.98);
+}
+
+.u-stats-dashboard {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.u-next-trip {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 18px;
+    background: var(--u-surface);
+    border: 1px solid var(--u-border);
+    border-radius: 16px;
+    color: var(--u-text);
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.u-next-trip:hover {
+    border-color: var(--u-accent-ring);
+    color: var(--u-text);
+}
+
+.u-next-date {
+    width: 58px;
+    min-height: 58px;
+    border-radius: 14px;
+    background: var(--u-accent-soft);
+    color: var(--u-accent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.u-next-date span {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.u-next-date strong {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.u-next-date.muted {
+    background: var(--u-surface2);
+    color: var(--u-muted);
+    font-size: 20px;
+}
+
+.u-next-main {
+    min-width: 0;
+}
+
+.u-next-route {
+    color: var(--u-text);
+    font-size: 15px;
+    font-weight: 800;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.u-next-meta {
+    margin-top: 4px;
+    color: var(--u-muted);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.u-next-cta {
+    color: var(--u-accent);
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.u-search-toolbar .ss-btn {
+    min-height: 46px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.u-search-toolbar .ss-btn:hover,
+.u-search-toolbar .ss-btn.is-open {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(249, 115, 22, 0.9);
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.12);
+}
+
+.u-search-toolbar .ss-btn.is-placeholder .ss-btn-txt,
+.u-search-toolbar .ss-btn-arr {
+    color: rgba(255, 255, 255, 0.58);
+}
+
+@media (max-width: 992px) {
+    .u-stats-dashboard {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .u-dashboard-header {
+        margin-bottom: 0;
+    }
+
+    .u-header-text h1 {
+        font-size: 26px;
+        line-height: 1.12;
+    }
+
+    .u-search-toolbar {
+        max-width: none;
+        margin: 0;
+        border-radius: 0 0 14px 14px;
+        padding: 14px;
+    }
+
+    .u-toolbar-title {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .u-toolbar-form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .u-t-sep {
+        display: none;
+    }
+
+    .u-tf label {
+        font-size: 10px;
+    }
+
+    .u-tbtn,
+    .u-toolbar-form .ss-btn,
+    .u-toolbar-form input[type="date"] {
+        min-height: 44px;
+    }
+}
+
+@media (max-width: 480px) {
+    .u-stats-dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .u-header-text h1 {
+        font-size: 23px;
+    }
+
+    .u-next-trip {
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .u-next-trip > i,
+    .u-next-cta {
+        grid-column: 2;
+        justify-self: start;
+    }
+}
+
+/* Simple home page interactions */
+.user-page .u-qa-card:active {
+    transform: none;
+}
+
+.user-page .u-next-trip {
+    box-shadow: none;
+}
+
+.user-page .u-next-trip:hover {
+    background: var(--u-surface2);
+    border-color: var(--u-border2);
+    color: var(--u-text);
+}
+
+.user-page .u-search-toolbar .ss-btn:hover,
+.user-page .u-search-toolbar .ss-btn.is-open {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow: none;
+}
+
+/* Compact home quick actions */
+.user-home-page .u-qa-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.user-home-page .u-qa-card {
+    min-height: 58px;
+    padding: 10px 12px;
+    gap: 9px;
+    border-radius: 10px;
+}
+
+.user-home-page .u-qa-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    font-size: 13px;
+}
+
+.user-home-page .u-qa-label {
+    font-size: 12.5px;
+    font-weight: 750;
+}
+
+@media (max-width: 768px) {
+    .user-home-page .u-qa-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .user-home-page .u-qa-card {
+        min-height: 54px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-home-page .u-qa-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .user-home-page .u-qa-card {
+        min-height: 52px;
+    }
+}
+
+/* Final home simplification overrides */
+.user-home-page .u-dashboard-header,
+.user-home-page .u-search-toolbar,
+.user-home-page .u-stat,
+.user-home-page .u-next-trip {
+    box-shadow: none !important;
+}
+
+.user-home-page .u-dashboard-header,
+.user-home-page .u-search-toolbar {
+    background: var(--u-surface) !important;
+    color: var(--u-text) !important;
+    border: 1px solid var(--u-border) !important;
+}
+
+.user-home-page .u-header-title,
+.user-home-page .u-toolbar-title {
+    color: var(--u-text) !important;
+}
+
+.user-home-page .u-header-subtitle,
+.user-home-page .u-date-label,
+.user-home-page .u-tf label {
+    color: var(--u-muted) !important;
+}
+
+.user-home-page .u-dashboard-header {
+    position: relative;
+    overflow: hidden;
+}
+
+.user-home-page .u-dashboard-header::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: var(--u-accent);
+}
+
+.user-home-page .u-qa-grid-refined {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.user-home-page .u-qa-grid-refined .u-qa-card {
+    min-height: 76px;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 14px 16px;
+    border: 1px solid var(--u-border);
+    border-radius: 12px;
+    background: var(--u-surface);
+}
+
+.user-home-page .u-qa-grid-refined .u-qa-card:hover {
+    background: var(--u-surface2);
+    border-color: var(--u-border2);
+}
+
+.user-home-page .u-qa-grid-refined .u-qa-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--u-accent-soft);
+    color: var(--u-accent);
+}
+
+.user-home-page .u-qa-grid-refined .u-qa-label {
+    color: var(--u-text);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+@media (max-width: 768px) {
+    .user-home-page .u-qa-grid-refined {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 420px) {
+    .user-home-page .u-qa-grid-refined {
+        grid-template-columns: 1fr;
+    }
+}
+/* =========================================================
+   HOME SEARCH FORM - LIGHT/DARK READABILITY FIX
+   Paste at the VERY BOTTOM of user-home.css
+========================================================= */
+
+/* Select button + date input */
+.user-home-page .u-search-toolbar .ss-btn,
+.user-home-page .u-search-toolbar input[type="date"] {
+    background: var(--u-surface2) !important;
+    border: 1px solid var(--u-border) !important;
+    color: var(--u-text) !important;
+    min-height: 46px;
+    border-radius: 10px;
+}
+
+/* Select placeholder text */
+.user-home-page .u-search-toolbar .ss-btn.is-placeholder .ss-btn-txt {
+    color: var(--u-muted) !important;
+    opacity: 1 !important;
+}
+
+/* Select selected text */
+.user-home-page .u-search-toolbar .ss-btn .ss-btn-txt {
+    color: var(--u-text) !important;
+    opacity: 1 !important;
+}
+
+/* Select arrow */
+.user-home-page .u-search-toolbar .ss-btn-arr {
+    color: var(--u-muted) !important;
+    opacity: 1 !important;
+}
+
+/* Date text */
+.user-home-page .u-search-toolbar input[type="date"] {
+    color-scheme: light dark;
+    font-weight: 650;
+}
+
+/* Date calendar icon visibility */
+.user-home-page .u-search-toolbar input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 1;
+    cursor: pointer;
+}
+
+/* Focus state */
+.user-home-page .u-search-toolbar .ss-btn:hover,
+.user-home-page .u-search-toolbar .ss-btn.is-open,
+.user-home-page .u-search-toolbar input[type="date"]:hover,
+.user-home-page .u-search-toolbar input[type="date"]:focus {
+    border-color: var(--u-accent-ring) !important;
+    background: var(--u-surface) !important;
+    color: var(--u-text) !important;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12) !important;
+    outline: none !important;
+}
+
+/* Native date placeholder/text fallback */
+.user-home-page .u-search-toolbar input[type="date"]::-webkit-datetime-edit,
+.user-home-page .u-search-toolbar input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+.user-home-page .u-search-toolbar input[type="date"]::-webkit-datetime-edit-text,
+.user-home-page .u-search-toolbar input[type="date"]::-webkit-datetime-edit-month-field,
+.user-home-page .u-search-toolbar input[type="date"]::-webkit-datetime-edit-day-field,
+.user-home-page .u-search-toolbar input[type="date"]::-webkit-datetime-edit-year-field {
+    color: var(--u-text) !important;
+}
+
+/* Disabled-looking issue fix */
+.user-home-page .u-search-toolbar select,
+.user-home-page .u-search-toolbar input {
+    opacity: 1 !important;
+}
+
+.user-home-page .u-header-date {
+    background: var(--u-surface2) !important;
+    border: 1px solid var(--u-border) !important;
+    color: var(--u-text) !important;
+}
+
+.user-home-page .u-header-date .u-date-label {
+    color: var(--u-muted) !important;
+    opacity: 1 !important;
+}
+
+.user-home-page .u-header-date .u-date-value {
+    color: var(--u-text) !important;
+    opacity: 1 !important;
+    font-weight: 850;
+}
+
+.user-home-page .u-header-date span {
+    opacity: 1 !important;
+}

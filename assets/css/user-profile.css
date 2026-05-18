@@ -1,0 +1,709 @@
+/* user-profile.css - Profile page specific styles */
+
+/* Form card */
+.u-form-card {
+    background: var(--u-surface);
+    border: 1px solid var(--u-border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    box-sizing: border-box;
+}
+
+.u-prof-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    min-width: 0;
+}
+
+.u-prof-identity {
+    min-width: 0;
+}
+
+.u-prof-badge {
+    width: fit-content;
+}
+
+.u-prof-verif {
+    width: min(380px, 42%);
+    margin-left: auto;
+    padding: 12px 14px;
+    background: var(--u-surface2);
+    border: 1px solid var(--u-border);
+    border-radius: 10px;
+    text-align: left;
+}
+
+/* Form styles */
+.u-form-group {
+    margin-bottom: 16px;
+}
+
+.u-form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--u-text);
+    margin-bottom: 6px;
+}
+
+.u-form-group input {
+    width: 100%;
+    height: 40px;
+    background: var(--u-surface2);
+    border: 1px solid var(--u-border);
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 13px;
+    color: var(--u-text);
+    font-family: inherit;
+    transition: border 0.15s, box-shadow 0.15s;
+}
+
+.u-form-group input:focus {
+    outline: none;
+    border-color: var(--u-accent);
+    box-shadow: 0 0 0 3px var(--u-accent-ring);
+}
+
+.u-form-group input::placeholder {
+    color: var(--u-dim);
+}
+
+.u-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* Button styles */
+.u-btn {
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.15s;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.u-btn-primary {
+    background: var(--u-accent);
+    color: #fff;
+}
+
+.u-btn-primary:hover {
+    background: #ea6906;
+}
+
+.u-btn-secondary {
+    background: var(--u-surface2);
+    color: var(--u-text);
+}
+
+.u-btn-secondary:hover {
+    background: var(--u-border2);
+}
+
+.u-menu-item {
+    width: 100%;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+}
+
+.u-menu-item:not(.danger) > i:first-child {
+    color: var(--u-accent);
+}
+
+/* Menu item hover effects */
+.u-menu-item:active {
+    transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .u-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .u-prof-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .u-prof-avatar {
+        margin: 0 auto;
+    }
+
+    .u-prof-main {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .u-prof-verif {
+        width: 100%;
+        margin-left: 0;
+        padding: 12px;
+    }
+}
+
+
+
+/* Badge color variants for the profile header */
+.u-prof-badge.pending {
+    background: var(--u-warn-bg);
+    color: var(--u-warn);
+}
+
+.u-prof-badge.approved {
+    background: var(--u-success-bg);
+    color: var(--u-success);
+}
+
+.u-prof-badge.rejected {
+    background: var(--u-danger-bg);
+    color: var(--u-danger);
+}
+
+/* Verification state row inside .u-form-card */
+.u-verif-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 0;
+}
+
+.u-verif-row .u-btn {
+    flex-shrink: 0;
+}
+
+.u-verif-row .u-sec-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    white-space: nowrap;
+}
+
+/* Left icon circle */
+.u-verif-icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    background: var(--u-surface2);
+    color: var(--u-dim);
+}
+
+.u-verif-icon-wrap.pending  { background: var(--u-warn-bg);    color: var(--u-warn);    }
+.u-verif-icon-wrap.approved { background: var(--u-success-bg); color: var(--u-success); }
+.u-verif-icon-wrap.rejected { background: var(--u-danger-bg);  color: var(--u-danger);  }
+
+/* Text block */
+.u-verif-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.u-verif-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--u-text);
+    margin: 0;
+}
+
+.u-verif-desc {
+    font-size: 12px;
+    color: var(--u-muted);
+    margin: 5px 0 0;
+    line-height: 1.5;
+}
+
+.u-verif-reason {
+    color: var(--u-danger) !important;
+}
+
+.u-verif-reason i {
+    margin-right: 4px;
+}
+
+/* Small hint below file input */
+.u-verif-hint {
+    display: block;
+    margin-top: 5px;
+    font-size: 11px;
+    color: var(--u-dim);
+}
+
+.u-file-upload {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 42px;
+    margin: 0;
+    padding: 0;
+    background: var(--u-surface2);
+    border: 1px solid var(--u-border);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.u-file-upload:hover {
+    border-color: var(--u-border2);
+    background: var(--u-surface);
+}
+
+.u-file-upload:focus-within {
+    border-color: var(--u-accent);
+    box-shadow: 0 0 0 3px var(--u-accent-ring);
+    background: var(--u-surface);
+}
+
+.u-file-upload input[type="file"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.u-file-copy {
+    flex: 1;
+    min-width: 0;
+    padding: 0 12px;
+}
+
+.u-file-title {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--u-text);
+}
+
+.u-file-action {
+    align-self: stretch;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 96px;
+    padding: 0 14px;
+    background: var(--u-surface);
+    border-left: 1px solid var(--u-border);
+    color: var(--u-text);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.u-file-upload:hover .u-file-action {
+    color: var(--u-accent);
+}
+
+/* Inline alert inside modal */
+.u-verif-alert {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-top: 4px;
+    border: 1px solid transparent;
+}
+
+.u-verif-alert.is-success {
+    background: var(--u-success-bg);
+    color: var(--u-success);
+    border-color: var(--u-success);
+}
+
+.u-verif-alert.is-danger {
+    background: var(--u-danger-bg);
+    color: var(--u-danger);
+    border-color: var(--u-danger);
+}
+
+/* Mobile: stack button below text */
+@media (max-width: 640px) {
+    .u-verif-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .u-verif-row .u-btn {
+        width: 100%;
+    }
+}
+
+/* Verification modal theme. These rules apply at all screen sizes. */
+
+/* Light + base */
+#verifModal .modal-content {
+    background: var(--u-surface) !important;
+    border: 1px solid var(--u-border2) !important;
+    border-radius: 16px !important;
+    color: var(--u-text) !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12) !important;
+}
+
+#verifModal .modal-header {
+    background: var(--u-surface2) !important;
+    border-bottom: 1px solid var(--u-border) !important;
+    padding: 1.1rem 1.4rem !important;
+}
+
+#verifModal .modal-title {
+    color: var(--u-text) !important;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#verifModal .modal-body {
+    background: var(--u-surface) !important;
+    color: var(--u-text) !important;
+    padding: 1.4rem 1.4rem 1rem !important;
+}
+
+#verifModal .modal-footer {
+    background: var(--u-surface2) !important;
+    border-top: 1px solid var(--u-border) !important;
+    padding: 0.9rem 1.4rem !important;
+}
+
+/* Labels inside modal */
+#verifModal .u-form-group label {
+    color: var(--u-text) !important;
+}
+
+/* Select + file input */
+#verifModal .form-select,
+#verifModal .form-control {
+    background: var(--u-surface2) !important;
+    border: 1px solid var(--u-border) !important;
+    color: var(--u-text) !important;
+    border-radius: 8px !important;
+}
+
+#verifModal .form-select:focus,
+#verifModal .form-control:focus {
+    border-color: var(--u-accent) !important;
+    box-shadow: 0 0 0 3px var(--u-accent-ring) !important;
+    background: var(--u-surface) !important;
+}
+
+/* Placeholder text */
+#verifModal .form-select option,
+#verifModal .form-control::placeholder {
+    color: var(--u-dim) !important;
+}
+
+/* Hint text */
+#verifModal .u-verif-hint {
+    color: var(--u-dim) !important;
+}
+
+/* btn-close visibility (dark mode inverts it) */
+#verifModal .btn-close {
+    filter: none;
+    opacity: 0.6;
+}
+
+/* Bootstrap secondary button */
+#verifModal .btn-secondary {
+    background: var(--u-surface2) !important;
+    border: 1px solid var(--u-border2) !important;
+    color: var(--u-text) !important;
+}
+
+#verifModal .btn-secondary:hover {
+    background: var(--u-border2) !important;
+    color: var(--u-text) !important;
+}
+
+/* Bootstrap primary button */
+#verifModal .btn-primary {
+    background: var(--u-accent) !important;
+    border-color: var(--u-accent) !important;
+    color: #fff !important;
+}
+
+#verifModal .btn-primary:hover {
+    background: #ea6906 !important;
+    border-color: #ea6906 !important;
+}
+
+#verifModal .btn-primary:disabled {
+    background: var(--u-accent) !important;
+    border-color: var(--u-accent) !important;
+    opacity: 0.65;
+}
+
+.user-profile-modal {
+    background: var(--u-surface) !important;
+    border: 1px solid var(--u-border2) !important;
+    border-radius: 16px !important;
+    color: var(--u-text) !important;
+    overflow: hidden;
+}
+
+.user-profile-modal .modal-header,
+.user-profile-modal .modal-footer {
+    background: var(--u-surface2) !important;
+    border-color: var(--u-border) !important;
+    padding: 14px 18px !important;
+}
+
+.user-profile-modal .modal-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--u-text) !important;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.user-profile-modal .modal-title i {
+    color: var(--u-accent);
+}
+
+.user-profile-modal .modal-body {
+    padding: 16px 18px !important;
+}
+
+.user-profile-modal .btn-primary {
+    background: var(--u-accent) !important;
+    border-color: var(--u-accent) !important;
+    color: #fff !important;
+}
+
+.user-profile-modal .btn-secondary {
+    background: var(--u-surface) !important;
+    border: 1px solid var(--u-border) !important;
+    color: var(--u-text) !important;
+}
+
+.u-pref-list,
+.u-help-grid {
+    display: grid;
+    gap: 8px;
+}
+
+.u-pref-row,
+.u-help-card,
+.u-support-note {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid var(--u-border);
+    border-radius: 10px;
+    background: var(--u-surface);
+}
+
+.u-pref-icon,
+.u-help-card > i,
+.u-support-note > i {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 34px;
+    background: var(--u-accent-soft);
+    color: var(--u-accent);
+    font-size: 14px;
+}
+
+.u-pref-copy,
+.u-help-card span {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+}
+
+.u-pref-copy strong,
+.u-help-card strong {
+    color: var(--u-text);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.u-pref-copy small,
+.u-help-card small,
+.u-support-note span {
+    color: var(--u-muted);
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.u-pref-row input[type="checkbox"] {
+    width: 40px;
+    height: 22px;
+    min-width: 40px;
+    appearance: none;
+    border: 1px solid var(--u-border2);
+    border-radius: 999px;
+    background: var(--u-surface2);
+    position: relative;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+}
+
+.u-pref-row input[type="checkbox"]::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--u-muted);
+    transition: transform .15s, background .15s;
+}
+
+.u-pref-row input[type="checkbox"]:checked {
+    border-color: var(--u-accent);
+    background: var(--u-accent-soft);
+}
+
+.u-pref-row input[type="checkbox"]:checked::after {
+    transform: translateX(18px);
+    background: var(--u-accent);
+}
+
+.u-help-card {
+    color: var(--u-text);
+    text-decoration: none;
+}
+
+.u-help-card:hover {
+    border-color: var(--u-border2);
+    color: var(--u-text);
+}
+
+.u-support-note {
+    margin-top: 12px;
+    background: var(--u-surface2);
+}
+
+/* Dark mode overrides */
+body.dark #verifModal .btn-close {
+    filter: invert(1) brightness(1.2);
+    opacity: 0.75;
+}
+
+body.dark .user-profile-modal .btn-close {
+    filter: invert(1) brightness(1.2);
+    opacity: 0.75;
+}
+
+body.dark #verifModal .form-select,
+body.dark #verifModal .form-control {
+    background: var(--u-surface2) !important;
+    border-color: var(--u-border) !important;
+    color: var(--u-text) !important;
+    /* Override browser autofill yellow tint in dark mode */
+    color-scheme: dark;
+}
+
+/* Spinner in dark mode */
+body.dark #verifModal .spinner-border {
+    color: #fff;
+}
+
+/* Simple profile page interactions */
+.user-page .u-form-group input:focus,
+.user-page .u-file-upload:focus-within,
+.user-page #verifModal .form-select:focus,
+.user-page #verifModal .form-control:focus {
+    box-shadow: none !important;
+    border-color: var(--u-border2) !important;
+}
+
+.user-page .u-menu-item:active {
+    transform: none;
+}
+
+.user-page .u-file-upload:hover {
+    background: var(--u-surface2);
+    border-color: var(--u-border2);
+}
+
+.user-page #verifModal .modal-content {
+    box-shadow: none !important;
+}
+
+.user-page #verifModal .btn-primary:hover,
+.user-page #verifModal .btn-secondary:hover {
+    filter: none;
+    box-shadow: none;
+}
+
+/* Cleaner profile sections */
+.user-page .u-form-card,
+.user-page .profile-card,
+.user-page .verification-card {
+    border: 1px solid var(--u-border);
+    border-radius: 14px;
+    background: var(--u-surface);
+    box-shadow: none !important;
+}
+
+.user-page .u-form-card h2,
+.user-page .u-form-card h3,
+.user-page .u-form-card .card-title {
+    color: var(--u-text);
+    letter-spacing: 0;
+}
+
+.user-page .u-form-card p,
+.user-page .u-form-card small,
+.user-page .verification-help {
+    color: var(--u-muted);
+}
+
+.user-page .u-form-group label {
+    color: var(--u-muted);
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.user-page .u-form-group input,
+.user-page .u-form-group select,
+.user-page .u-form-group textarea {
+    min-height: 44px;
+    border-radius: 10px;
+}
+
+.user-profile-modal {
+    background: var(--u-surface);
+    color: var(--u-text);
+    border: 1px solid var(--u-border);
+    box-shadow: none;
+}

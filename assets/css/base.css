@@ -1,0 +1,174 @@
+/* ══════════════════════════════════════════════
+   BASE.CSS — global reset + CSS custom properties
+   Load this FIRST on every page (auth & admin).
+   ══════════════════════════════════════════════ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── DESIGN TOKENS ───────────────────────────── */
+:root {
+    /* Brand */
+    --color-primary: #2E3A4D;
+    --color-brand: #3e5272;
+    --color-accent: #F97316;
+    --color-white: #ffffff;
+
+    /* UI */
+    --color-hover-bg: rgba(249, 115, 22, 0.10);
+    --border: #e2e8f0;
+    --text-muted: #64748b;
+    --input-bg: #f8fafc;
+    --page-bg: #f8f8f8;
+
+    /* Typography - Font Stack */
+    --font-base: 'Inter', 'Roboto', sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --font-reference: var(--font-mono);
+
+    /* Typography - Scale (Typographic Hierarchy) */
+    --text-xs: 11px;
+    --text-sm: 12px;
+    --text-base: 14px;
+    --text-md: 15px;
+    --text-lg: 16px;
+    --text-xl: 18px;
+    --text-2xl: 20px;
+    --text-3xl: 24px;
+    --text-4xl: 28px;
+    --text-5xl: 32px;
+
+    /* Font Weights */
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+    --fw-extrabold: 800;
+
+    /* Line Heights */
+    --lh-tight: 1.25;
+    --lh-normal: 1.5;
+    --lh-relaxed: 1.75;
+    --lh-loose: 2;
+
+    /* Letter Spacing */
+    --ls-tight: -0.01em;
+    --ls-normal: 0;
+    --ls-wide: 0.025em;
+    --ls-wider: 0.05em;
+
+    /* Radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+
+    /* Misc */
+    --transition: 0.25s ease;
+    --input-height: 46px;
+}
+
+/* ── BASE ────────────────────────────────────── */
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    height: 100%;
+    font-family: var(--font-base);
+    font-size: var(--text-base);
+    line-height: var(--lh-normal);
+    color: var(--color-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background-color: var(--page-bg);
+}
+
+/* ─── TYPOGRAPHY HIERARCHY ──────────────────── */
+h1 {
+    font-size: var(--text-5xl);
+    font-weight: var(--fw-extrabold);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    margin-bottom: 0.5em;
+    color: var(--color-primary);
+}
+
+h2 {
+    font-size: var(--text-3xl);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    margin-bottom: 0.6em;
+    color: var(--color-primary);
+}
+
+h3 {
+    font-size: var(--text-2xl);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-normal);
+    letter-spacing: var(--ls-normal);
+    margin-bottom: 0.7em;
+    color: var(--color-primary);
+}
+
+h4,
+h5,
+h6 {
+    font-size: var(--text-lg);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-normal);
+    letter-spacing: var(--ls-normal);
+    margin-bottom: 0.75em;
+    color: var(--color-primary);
+}
+
+p {
+    line-height: var(--lh-relaxed);
+    margin-bottom: 1em;
+}
+
+small,
+.text-sm {
+    font-size: var(--text-sm);
+    line-height: var(--lh-normal);
+}
+
+.text-xs {
+    font-size: var(--text-xs);
+    line-height: var(--lh-normal);
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.text-bold {
+    font-weight: var(--fw-bold);
+}
+
+.text-semibold {
+    font-weight: var(--fw-semibold);
+}
+
+.text-medium {
+    font-weight: var(--fw-medium);
+}
+
+.text-mono {
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+}
+
+/* Dark mode CSS variable override */
+html.admin-dark-mode-active {
+    --page-bg: #0f172a;
+}

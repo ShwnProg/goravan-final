@@ -1,0 +1,1471 @@
+/* ══════════════════════════════════════════════════════════════════
+   admin-common.css
+   Shared styles for admin pages.
+   Load order: base.css → admin-layout.css → admin-common.css → page-specific.css
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Status Colors (Light Mode) */
+:root {
+    --bk-pending-bg: rgba(249, 115, 22, .08);
+    --bk-pending-text: #ea580c;
+    --bk-approved-bg: rgba(22, 163, 74, .08);
+    --bk-approved-txt: #15803d;
+    --bk-rejected-bg: rgba(239, 68, 68, .08);
+    --bk-rejected-txt: #dc2626;
+    --bk-cancelled-bg: rgba(156, 163, 175, .08);
+    --bk-cancelled-txt: #6b7280;
+    --bk-expired-bg: rgba(239, 68, 68, .06);
+    --bk-expired-txt: #dc2626;
+}
+
+html, body {
+    background: #f9fafb;
+}
+
+html.dark-init,
+body.admin-dark-mode-active {
+    background: #374151;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 12px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .09);
+    border-radius: 8px;
+    padding: 0 12px;
+    height: 38px;
+    flex: 1;
+    max-width: 300px;
+    transition: border .2s, box-shadow .2s;
+}
+
+.search-box:focus-within {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, .08);
+}
+
+.search-box i {
+    font-size: 12px;
+    color: #c0c0c0;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    font-size: 13px;
+    width: 100%;
+    background: transparent;
+    color: #333;
+    font-family: inherit;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-select {
+    height: 38px;
+    padding: 0 12px;
+    border: 1px solid rgba(0, 0, 0, .09);
+    border-radius: 8px;
+    background: #fff;
+    font-size: 13px;
+    color: #333;
+    cursor: pointer;
+    transition: border .2s, box-shadow .2s;
+    font-family: inherit;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, .08);
+}
+
+.btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .2s ease;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.btn-add:hover {
+    background: var(--color-brand);
+    box-shadow: 0 4px 12px rgba(46, 58, 77, .2);
+}
+
+/* Card containers */
+.page-card,
+.vans-card,
+.drivers-card,
+.routes-card,
+.schedules-card,
+.bookings-card {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .07);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .05);
+}
+
+.page-card-header,
+.vans-card-header,
+.drivers-card-header,
+.routes-card-header,
+.schedules-card-header,
+.bookings-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
+}
+
+.page-card-header h2,
+.vans-card-header h2,
+.drivers-card-header h2,
+.routes-card-header h2,
+.schedules-card-header h2,
+.bookings-card-header h2 {
+    font-size: var(--text-xl);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-tight);
+    color: var(--color-primary);
+    margin: 0;
+    letter-spacing: var(--ls-tight);
+}
+
+.page-card-header span,
+.vans-card-header span,
+.drivers-card-header span,
+.routes-card-header span,
+.schedules-card-header span,
+.bookings-card-header span {
+    font-size: 11px;
+    color: var(--text-muted);
+    background: rgba(0, 0, 0, .04);
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+/* Table wrappers */
+.page-table-wrap,
+.vans-table-wrap,
+.drivers-table-wrap,
+.routes-table-wrap,
+.schedules-table-wrap,
+.bookings-table-wrap {
+    overflow-x: auto;
+}
+
+.page-table,
+.vans-table,
+.drivers-table,
+.routes-table,
+.schedules-table,
+.bookings-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.page-table thead th,
+.vans-table thead th,
+.drivers-table thead th,
+.routes-table thead th,
+.schedules-table thead th,
+.bookings-table thead th {
+    text-align: left;
+    padding: 10px 16px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    background: #fafafa;
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
+    white-space: nowrap;
+}
+
+.page-table tbody tr,
+.vans-table tbody tr,
+.drivers-table tbody tr,
+.routes-table tbody tr,
+.schedules-table tbody tr,
+.bookings-table tbody tr {
+    border-bottom: 1px solid rgba(0, 0, 0, .04);
+    transition: background .15s;
+    cursor: pointer;
+}
+
+.page-table tbody tr:last-child,
+.vans-table tbody tr:last-child,
+.drivers-table tbody tr:last-child,
+.routes-table tbody tr:last-child,
+.schedules-table tbody tr:last-child,
+.bookings-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.page-table tbody tr:hover,
+.vans-table tbody tr:hover,
+.drivers-table tbody tr:hover,
+.routes-table tbody tr:hover,
+.schedules-table tbody tr:hover,
+.bookings-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.page-table tbody tr.selected,
+.vans-table tbody tr.selected,
+.drivers-table tbody tr.selected,
+.routes-table tbody tr.selected,
+.schedules-table tbody tr.selected,
+.bookings-table tbody tr.selected {
+    background: rgba(249, 115, 22, .04);
+    border-left: 3px solid var(--color-accent);
+}
+
+.page-table td,
+.page-table th,
+.vans-table td,
+.vans-table th,
+.drivers-table td,
+.drivers-table th,
+.routes-table td,
+.routes-table th,
+.schedules-table td,
+.schedules-table th,
+.bookings-table td,
+.bookings-table th {
+    padding: 14px 12px;
+    white-space: nowrap;
+}
+
+.page-table tbody td,
+.vans-table tbody td,
+.drivers-table tbody td,
+.routes-table tbody td,
+.schedules-table tbody td,
+.bookings-table tbody td {
+    color: #374151;
+    vertical-align: middle;
+}
+
+/* Status badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.badge::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+
+.badge.active {
+    background: rgba(22, 163, 74, .08);
+    color: #16a34a;
+}
+
+.badge.active::before {
+    background: #16a34a;
+}
+
+.badge.inactive {
+    background: rgba(239, 68, 68, .08);
+    color: #ef4444;
+}
+
+.badge.inactive::before {
+    background: #ef4444;
+}
+
+.badge.pending {
+    background: rgba(249, 115, 22, .08);
+    color: var(--color-accent);
+}
+
+.badge.pending::before {
+    background: var(--color-accent);
+}
+
+.badge.approved {
+    background: rgba(22, 163, 74, .08);
+    color: #16a34a;
+}
+
+.badge.approved::before {
+    background: #16a34a;
+}
+
+.badge.rejected {
+    background: rgba(239, 68, 68, .08);
+    color: #ef4444;
+}
+
+.badge.rejected::before {
+    background: #ef4444;
+}
+
+.badge.no-submission {
+    background: rgba(107, 114, 128, .08);
+    color: #6b7280;
+}
+
+.badge.no-submission::before {
+    background: #6b7280;
+}
+
+.badge.cancelled {
+    background: rgba(156, 163, 175, .08);
+    color: #9ca3af;
+}
+
+.badge.cancelled::before {
+    background: #9ca3af;
+}
+
+.badge.boarding,
+.badge.not_departed,
+.badge.refund_requested,
+.badge.pending_cash,
+.badge.cash_unpaid,
+.badge.unpaid {
+    background: rgba(249, 115, 22, .08);
+    color: var(--color-accent);
+}
+
+.badge.boarding::before,
+.badge.not_departed::before,
+.badge.refund_requested::before,
+.badge.pending_cash::before,
+.badge.cash_unpaid::before,
+.badge.unpaid::before {
+    background: var(--color-accent);
+}
+
+.badge.departed,
+.badge.completed,
+.badge.paid,
+.badge.refunded {
+    background: rgba(59, 130, 246, .08);
+    color: #2563eb;
+}
+
+.badge.departed::before,
+.badge.completed::before,
+.badge.paid::before,
+.badge.refunded::before {
+    background: #2563eb;
+}
+
+.badge.arrived {
+    background: rgba(22, 163, 74, .08);
+    color: #16a34a;
+}
+
+.badge.failed {
+    background: rgba(239, 68, 68, .08);
+    color: #ef4444;
+}
+
+.badge.failed::before {
+    background: #ef4444;
+}
+
+.badge.arrived::before {
+    background: #16a34a;
+}
+
+.vans-table tbody tr[class*="status-"],
+.drivers-table tbody tr[class*="status-"],
+.routes-table tbody tr[class*="status-"],
+.schedules-table tbody tr[class*="status-"],
+.bookings-table tbody tr[class*="status-"],
+.users-table tbody tr[class*="status-"] {
+    box-shadow: inset 3px 0 0 transparent;
+}
+
+.vans-table tbody tr.status-active,
+.drivers-table tbody tr.status-active,
+.routes-table tbody tr.status-active,
+.schedules-table tbody tr.status-arrived,
+.bookings-table tbody tr.status-approved,
+.users-table tbody tr.status-approved {
+    box-shadow: inset 3px 0 0 #16a34a;
+}
+
+.schedules-table tbody tr.status-departed,
+.bookings-table tbody tr.status-completed {
+    box-shadow: inset 3px 0 0 #2563eb;
+}
+
+.schedules-table tbody tr.status-boarding,
+.bookings-table tbody tr.status-pending,
+.users-table tbody tr.status-pending {
+    box-shadow: inset 3px 0 0 var(--color-accent);
+}
+
+.vans-table tbody tr.status-inactive,
+.drivers-table tbody tr.status-inactive,
+.routes-table tbody tr.status-inactive,
+.schedules-table tbody tr.status-cancelled,
+.bookings-table tbody tr.status-cancelled,
+.users-table tbody tr.status-no-submission {
+    box-shadow: inset 3px 0 0 #6b7280;
+}
+
+.bookings-table tbody tr.status-rejected,
+.users-table tbody tr.status-rejected {
+    box-shadow: inset 3px 0 0 #ef4444;
+}
+
+.admin-status-group-row {
+    background: #f8fafc;
+    cursor: default;
+    box-shadow: none !important;
+}
+
+.admin-status-group-row:hover {
+    background: #f8fafc !important;
+}
+
+.admin-status-group-row td {
+    padding: 8px 16px !important;
+    color: #64748b;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    width: auto !important;
+    min-width: 100%;
+}
+
+.admin-status-group-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: .45px;
+    text-transform: uppercase;
+    min-width: max-content;
+}
+
+.admin-status-group-label i {
+    color: var(--color-accent);
+    font-size: 11px;
+}
+
+.admin-status-group-label small {
+    margin-left: auto;
+    color: #94a3b8;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+/* ── ROW ACTIONS ─────────────────────────────── */
+.row-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.icon-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12.5px;
+    transition: background .15s, color .15s;
+}
+
+.icon-btn:hover {
+    background: rgba(0, 0, 0, .06);
+    color: var(--color-primary);
+}
+
+.icon-btn.edit {
+    background: rgba(249, 115, 22, .08);
+    color: var(--color-accent);
+}
+
+.icon-btn.edit:hover {
+    transform: translateY(-1px);
+}
+
+.icon-btn.delete {
+    background: rgba(239, 68, 68, .08);
+    color: #ef4444;
+}
+
+.icon-btn.delete:hover {
+    transform: translateY(-1px);
+}
+
+.icon-btn.toggle {
+    background: rgba(22, 163, 74, .08);
+    color: #16a34a;
+}
+
+.icon-btn.toggle:hover {
+    transform: translateY(-1px);
+}
+
+.icon-btn.view {
+    background: rgba(46, 58, 77, .08);
+    color: var(--color-primary);
+}
+
+.icon-btn.view:hover {
+    transform: translateY(-1px);
+}
+
+/* ── EMPTY STATE ─────────────────────────────── */
+.empty-state {
+    padding: 48px 20px;
+    text-align: center;
+    color: #d1d5db;
+}
+
+.empty-state i {
+    font-size: 36px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.empty-state p {
+    font-size: 13px;
+    margin: 0;
+}
+
+.text-muted-sm {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.admin-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-top: 1px solid rgba(0, 0, 0, .06);
+    background: #fff;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.admin-pagination > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-pagination button {
+    min-height: 32px;
+    padding: 0 12px;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 8px;
+    background: #fff;
+    color: #374151;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.admin-pagination button:hover:not(:disabled) {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.admin-pagination button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+/* ── FORM INPUTS ─────────────────────────────── */
+.rinput {
+    width: 100%;
+    height: 38px;
+    padding: 0 11px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(0, 0, 0, .1);
+    background: var(--input-bg);
+    font-size: 13px;
+    font-family: inherit;
+    color: #374151;
+    outline: none;
+    transition: border .18s, box-shadow .18s, background .18s;
+}
+
+.rinput::placeholder {
+    color: #bbb;
+}
+
+.rinput:hover {
+    border-color: rgba(0, 0, 0, .18);
+    background: #fff;
+}
+
+.rinput:focus {
+    border-color: var(--color-accent);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, .08);
+}
+
+/* ── FORM FIELDS ─────────────────────────────── */
+.rfield {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.rfield-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.rfield-label i {
+    color: #c0c0c0;
+    font-size: 10px;
+}
+
+.rfield-hint {
+    font-size: 10.5px;
+    color: #bbb;
+    font-style: italic;
+}
+
+/* Name row for first/last name */
+.name-row {
+    display: flex;
+    gap: 16px;
+}
+
+.rfield-half {
+    flex: 1;
+}
+
+/* ── SEARCHABLE SELECT ───────────────────────── */
+select.ss {
+    display: none !important;
+}
+
+.ss-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.ss-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 38px;
+    padding: 0 11px;
+    background: var(--input-bg);
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: #374151;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border .18s, box-shadow .18s, background .18s;
+    text-align: left;
+    gap: 8px;
+}
+
+.ss-btn:hover {
+    border-color: rgba(0, 0, 0, .18);
+    background: #fff;
+}
+
+.ss-btn.is-open {
+    border-color: var(--color-accent);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, .08);
+}
+
+.ss-btn.is-placeholder .ss-btn-txt {
+    color: #aaa;
+}
+
+.ss-btn-txt {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+.ss-btn-arr {
+    font-size: 10px;
+    color: #aaa;
+    flex-shrink: 0;
+    transition: transform .2s;
+}
+
+.ss-btn.is-open .ss-btn-arr {
+    transform: rotate(180deg);
+}
+
+.ss-panel {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, .1);
+    z-index: 9999;
+    overflow: hidden;
+    display: none;
+}
+
+.ss-panel.is-open {
+    display: block;
+}
+
+.ss-list {
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.ss-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.ss-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.ss-list::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .12);
+    border-radius: 4px;
+}
+
+.ss-item {
+    padding: 8px 12px;
+    font-size: 12.5px;
+    color: #374151;
+    cursor: pointer;
+    transition: background .12s;
+}
+
+.ss-item:hover {
+    background: rgba(249, 115, 22, .06);
+    color: var(--color-primary);
+}
+
+.ss-item.is-sel {
+    background: rgba(249, 115, 22, .08);
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.ss-item.is-sel::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 10px;
+    float: right;
+    margin-top: 1px;
+}
+
+.ss-item.is-placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+.ss-no-results {
+    padding: 14px 12px;
+    font-size: 12px;
+    color: #aaa;
+    text-align: center;
+}
+
+/* ── MODALS ──────────────────────────────────── */
+.rmodal {
+    border: 0 !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .18) !important;
+    overflow: hidden;
+}
+
+.rmodal-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px 20px 0;
+}
+
+.rmodal-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    background: rgba(249, 115, 22, .09);
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    font-size: 14px;
+}
+
+.rmodal-icon.edit {
+    background: rgba(46, 58, 77, .07);
+    color: var(--color-primary);
+}
+
+.rmodal-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 2px;
+    line-height: 1.2;
+}
+
+.rmodal-sub {
+    font-size: 11.5px;
+    color: #9ca3af;
+    margin: 0;
+}
+
+.rmodal-body {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.rmodal-footer {
+    padding: 14px 20px;
+    border-top: 1px solid rgba(0, 0, 0, .06);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.modal-dialog-scrollable .modal-content {
+    max-height: 90vh;
+}
+
+/* ── BUTTONS ─────────────────────────────────── */
+.rbtn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: .18s ease;
+    white-space: nowrap;
+}
+
+.rbtn-ghost {
+    background: transparent;
+    color: #6b7280;
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+.rbtn-ghost:hover {
+    background: rgba(0, 0, 0, .04);
+    color: var(--color-primary);
+}
+
+.rbtn-primary {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.rbtn-primary:hover {
+    background: var(--color-brand);
+    box-shadow: 0 4px 12px rgba(46, 58, 77, .2);
+}
+
+/* ── RESPONSIVE UTILITIES ────────────────────── */
+
+/* Tablet (900px) */
+@media (max-width: 900px) {
+    .toolbar {
+        flex-wrap: wrap;
+    }
+
+    .search-box {
+        max-width: 100%;
+        flex: 1;
+    }
+
+    .filter-group {
+        width: 100%;
+        order: 1;
+    }
+
+    .btn-add {
+        width: 100%;
+        justify-content: center;
+        order: 2;
+    }
+
+    .page-table,
+    .vans-table,
+    .drivers-table,
+    .routes-table,
+    .schedules-table,
+    .bookings-table {
+        min-width: 600px;
+        font-size: 12px;
+    }
+
+    .page-table td,
+    .page-table th,
+    .vans-table td,
+    .vans-table th,
+    .drivers-table td,
+    .drivers-table th,
+    .routes-table td,
+    .routes-table th,
+    .schedules-table td,
+    .schedules-table th,
+    .bookings-table td,
+    .bookings-table th {
+        padding: 10px 12px;
+    }
+}
+
+/* Mobile (600px) */
+@media (max-width: 600px) {
+    .toolbar {
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .search-box {
+        min-width: 100%;
+        order: -1;
+        font-size: 12px;
+    }
+
+    .name-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .filter-group {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .filter-select {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .btn-add {
+        width: 100%;
+        justify-content: center;
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+
+    .page-card-header,
+    .vans-card-header,
+    .drivers-card-header,
+    .routes-card-header,
+    .schedules-card-header,
+    .bookings-card-header {
+        padding: 12px 16px;
+    }
+
+    .page-card-header h2,
+    .vans-card-header h2,
+    .drivers-card-header h2,
+    .routes-card-header h2,
+    .schedules-card-header h2,
+    .bookings-card-header h2 {
+        font-size: 14px;
+    }
+
+    .page-table,
+    .vans-table,
+    .drivers-table,
+    .routes-table,
+    .schedules-table,
+    .bookings-table {
+        min-width: 650px;
+        font-size: 11px;
+    }
+
+    .page-table thead th,
+    .vans-table thead th,
+    .drivers-table thead th,
+    .routes-table thead th,
+    .schedules-table thead th,
+    .bookings-table thead th {
+        padding: 8px 12px;
+        font-size: 10px;
+    }
+
+    .page-table td,
+    .page-table th,
+    .vans-table td,
+    .vans-table th,
+    .drivers-table td,
+    .drivers-table th,
+    .routes-table td,
+    .routes-table th,
+    .schedules-table td,
+    .schedules-table th,
+    .bookings-table td,
+    .bookings-table th {
+        padding: 8px 10px;
+    }
+
+    .icon-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 10px;
+    }
+
+    .rmodal-body {
+        max-height: 50vh;
+        padding: 14px 16px;
+    }
+
+    .rfield-label {
+        font-size: 10px;
+    }
+
+    .rinput {
+        height: 36px;
+        font-size: 12px;
+        padding: 0 10px;
+    }
+
+    .rbtn {
+        padding: 6px 14px;
+        font-size: 12px;
+    }
+
+    .empty-state {
+        padding: 30px 16px;
+    }
+
+    .empty-state i {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+
+    .empty-state p {
+        font-size: 12px;
+    }
+}
+
+/* ══════════════════════════════════════════════
+   DARK MODE — admin.css shared styles
+   ══════════════════════════════════════════════ */
+
+/* ── TOOLBAR ─────────────────────────────────── */
+body.admin-dark-mode-active .search-box {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, .08);
+}
+
+body.admin-dark-mode-active .search-box i {
+    color: #475569;
+}
+
+body.admin-dark-mode-active .search-box input {
+    color: #e2e8f0;
+    background: transparent;
+}
+
+body.admin-dark-mode-active .search-box input::placeholder {
+    color: #475569;
+}
+
+body.admin-dark-mode-active .filter-select {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, .08);
+    color: #e2e8f0;
+}
+
+/* ── SHARED PAGE CARDS ───────────────────────── */
+body.admin-dark-mode-active .page-card,
+body.admin-dark-mode-active .vans-card,
+body.admin-dark-mode-active .drivers-card,
+body.admin-dark-mode-active .routes-card,
+body.admin-dark-mode-active .schedules-card,
+body.admin-dark-mode-active .bookings-card {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, .07);
+}
+
+body.admin-dark-mode-active .page-card-header,
+body.admin-dark-mode-active .vans-card-header,
+body.admin-dark-mode-active .drivers-card-header,
+body.admin-dark-mode-active .routes-card-header,
+body.admin-dark-mode-active .schedules-card-header,
+body.admin-dark-mode-active .bookings-card-header {
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+body.admin-dark-mode-active .page-card-header h2,
+body.admin-dark-mode-active .vans-card-header h2,
+body.admin-dark-mode-active .drivers-card-header h2,
+body.admin-dark-mode-active .routes-card-header h2,
+body.admin-dark-mode-active .schedules-card-header h2,
+body.admin-dark-mode-active .bookings-card-header h2 {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .page-card-header span,
+body.admin-dark-mode-active .vans-card-header span,
+body.admin-dark-mode-active .drivers-card-header span,
+body.admin-dark-mode-active .routes-card-header span,
+body.admin-dark-mode-active .schedules-card-header span,
+body.admin-dark-mode-active .bookings-card-header span {
+    background: rgba(255, 255, 255, .06);
+    color: #94a3b8;
+}
+
+/* ── SHARED TABLES ───────────────────────────── */
+body.admin-dark-mode-active .page-table thead th,
+body.admin-dark-mode-active .vans-table thead th,
+body.admin-dark-mode-active .drivers-table thead th,
+body.admin-dark-mode-active .routes-table thead th,
+body.admin-dark-mode-active .schedules-table thead th,
+body.admin-dark-mode-active .bookings-table thead th {
+    background: #162032;
+    color: #64748b;
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+body.admin-dark-mode-active .page-table tbody tr,
+body.admin-dark-mode-active .vans-table tbody tr,
+body.admin-dark-mode-active .drivers-table tbody tr,
+body.admin-dark-mode-active .routes-table tbody tr,
+body.admin-dark-mode-active .schedules-table tbody tr,
+body.admin-dark-mode-active .bookings-table tbody tr {
+    border-bottom-color: rgba(255, 255, 255, .04);
+}
+
+body.admin-dark-mode-active .page-table tbody tr:hover,
+body.admin-dark-mode-active .vans-table tbody tr:hover,
+body.admin-dark-mode-active .drivers-table tbody tr:hover,
+body.admin-dark-mode-active .routes-table tbody tr:hover,
+body.admin-dark-mode-active .schedules-table tbody tr:hover,
+body.admin-dark-mode-active .bookings-table tbody tr:hover {
+    background: rgba(255, 255, 255, .03);
+}
+
+body.admin-dark-mode-active .page-table tbody tr.selected,
+body.admin-dark-mode-active .vans-table tbody tr.selected,
+body.admin-dark-mode-active .drivers-table tbody tr.selected,
+body.admin-dark-mode-active .routes-table tbody tr.selected,
+body.admin-dark-mode-active .schedules-table tbody tr.selected,
+body.admin-dark-mode-active .bookings-table tbody tr.selected {
+    background: rgba(249, 115, 22, .08);
+    border-left-color: var(--color-accent);
+}
+
+body.admin-dark-mode-active .page-table tbody td,
+body.admin-dark-mode-active .vans-table tbody td,
+body.admin-dark-mode-active .drivers-table tbody td,
+body.admin-dark-mode-active .routes-table tbody td,
+body.admin-dark-mode-active .schedules-table tbody td,
+body.admin-dark-mode-active .bookings-table tbody td {
+    color: #cbd5e1;
+}
+
+body.admin-dark-mode-active .text-muted-sm {
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .admin-status-group-row,
+body.admin-dark-mode-active .admin-status-group-row:hover {
+    background: #111827 !important;
+}
+
+body.admin-dark-mode-active .admin-status-group-row td {
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .admin-status-group-label small {
+    color: #64748b;
+}
+
+body.admin-dark-mode-active .admin-pagination {
+    background: #1e293b;
+    border-top-color: rgba(255, 255, 255, .07);
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .admin-pagination button {
+    background: #162032;
+    border-color: rgba(255, 255, 255, .09);
+    color: #cbd5e1;
+}
+
+/* ── BADGES ──────────────────────────────────── */
+body.admin-dark-mode-active .badge.active {
+    background: rgba(16, 185, 129, .1);
+    color: #34d399;
+}
+
+body.admin-dark-mode-active .badge.active::before {
+    background: #10b981;
+}
+
+body.admin-dark-mode-active .badge.inactive {
+    background: rgba(239, 68, 68, .1);
+    color: #f87171;
+}
+
+body.admin-dark-mode-active .badge.inactive::before {
+    background: #ef4444;
+}
+
+body.admin-dark-mode-active .badge.pending {
+    background: rgba(249, 115, 22, .12);
+    color: #fb923c;
+}
+
+body.admin-dark-mode-active .badge.pending::before {
+    background: #f97316;
+}
+
+body.admin-dark-mode-active .badge.approved {
+    background: rgba(16, 185, 129, .1);
+    color: #34d399;
+}
+
+body.admin-dark-mode-active .badge.approved::before {
+    background: #10b981;
+}
+
+body.admin-dark-mode-active .badge.rejected {
+    background: rgba(239, 68, 68, .1);
+    color: #f87171;
+}
+
+body.admin-dark-mode-active .badge.rejected::before {
+    background: #ef4444;
+}
+
+body.admin-dark-mode-active .badge.no-submission {
+    background: rgba(100, 116, 139, .1);
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .badge.no-submission::before {
+    background: #64748b;
+}
+
+body.admin-dark-mode-active .badge.cancelled {
+    background: rgba(100, 116, 139, .1);
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .badge.cancelled::before {
+    background: #64748b;
+}
+
+/* ── ICON BUTTONS ────────────────────────────── */
+body.admin-dark-mode-active .icon-btn {
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .icon-btn:hover {
+    background: rgba(255, 255, 255, .07);
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .icon-btn.edit {
+    background: rgba(249, 115, 22, .1);
+    color: #fb923c;
+}
+
+body.admin-dark-mode-active .icon-btn.delete {
+    background: rgba(239, 68, 68, .1);
+    color: #f87171;
+}
+
+body.admin-dark-mode-active .icon-btn.toggle {
+    background: rgba(16, 185, 129, .1);
+    color: #34d399;
+}
+
+body.admin-dark-mode-active .icon-btn.view {
+    background: rgba(255, 255, 255, .06);
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .icon-btn.view:hover {
+    background: rgba(255, 255, 255, .12);
+    color: #e2e8f0;
+}
+
+/* ── EMPTY STATE ─────────────────────────────── */
+body.admin-dark-mode-active .empty-state {
+    color: #475569;
+}
+
+body.admin-dark-mode-active .empty-state p {
+    color: #475569;
+}
+
+/* ── FORM INPUTS ─────────────────────────────── */
+body.admin-dark-mode-active .rinput {
+    background: #162032;
+    border-color: rgba(255, 255, 255, .09);
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .rinput::placeholder {
+    color: #475569;
+}
+
+body.admin-dark-mode-active .rinput:hover {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, .14);
+}
+
+body.admin-dark-mode-active .rinput:focus {
+    background: #1e293b;
+    border-color: var(--color-accent);
+}
+
+body.admin-dark-mode-active .rfield-label {
+    color: #64748b;
+}
+
+/* ── MODAL ───────────────────────────────────── */
+body.admin-dark-mode-active .rmodal {
+    background: #1e293b !important;
+}
+
+body.admin-dark-mode-active .modal-content {
+    background: #1e293b;
+    color: #cbd5e1;
+    border-color: rgba(255, 255, 255, .08);
+}
+
+body.admin-dark-mode-active .modal-header,
+body.admin-dark-mode-active .modal-footer {
+    border-color: rgba(255, 255, 255, .07);
+}
+
+body.admin-dark-mode-active .btn-close {
+    filter: invert(1) grayscale(100%);
+}
+
+body.admin-dark-mode-active .rmodal-title {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .rmodal-sub {
+    color: #64748b;
+}
+
+body.admin-dark-mode-active .rmodal-footer {
+    border-top-color: rgba(255, 255, 255, .07);
+}
+
+body.admin-dark-mode-active .rbtn-ghost {
+    color: #94a3b8;
+    border-color: rgba(255, 255, 255, .1);
+}
+
+body.admin-dark-mode-active .rbtn-ghost:hover {
+    background: rgba(255, 255, 255, .06);
+    color: #e2e8f0;
+}
+
+/* ── SEARCHABLE SELECT ───────────────────────── */
+body.admin-dark-mode-active .ss-btn {
+    background: #162032;
+    border-color: rgba(255, 255, 255, .09);
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .ss-btn:hover {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, .14);
+}
+
+body.admin-dark-mode-active .ss-panel {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, .09);
+}
+
+body.admin-dark-mode-active .ss-item {
+    color: #cbd5e1;
+}
+
+body.admin-dark-mode-active .ss-item:hover {
+    background: rgba(249, 115, 22, .08);
+    color: #fb923c;
+}
+
+body.admin-dark-mode-active .ss-item.is-sel {
+    color: #fb923c;
+}
+
+body.admin-dark-mode-active .ss-no-results {
+    color: #475569;
+}

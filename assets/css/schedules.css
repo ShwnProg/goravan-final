@@ -1,0 +1,847 @@
+/* ══════════════════════════════════════════════════════════════════════
+   schedules.css — Schedules Page
+   Scope: all styles are scoped to .schedules-* / .schedule-* / #schedule-*
+   Does NOT override admin-common.css or base.css globals.
+   Load order: base → admin-layout → admin-common → schedules.css
+   ══════════════════════════════════════════════════════════════════════ */
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   1. PAGE LAYOUT
+══════════════════════════════════════════════════════════════════════ */
+
+.schedules-wrapper {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 20px;
+    align-items: start;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   2. TABLE CARD
+══════════════════════════════════════════════════════════════════════ */
+
+.schedules-card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.07);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.schedules-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    background: #fff;
+}
+
+.schedules-card-header h2 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -.01em;
+    line-height: 1;
+}
+
+.schedules-card-header h2 i {
+    color: var(--color-accent);
+    font-size: 13px;
+}
+
+/* Count pill */
+.schedules-card-header span#schedule-count {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    background: rgba(0,0,0,.04);
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: .01em;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   3. TABLE — compact + readable
+══════════════════════════════════════════════════════════════════════ */
+
+.schedules-card .schedules-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: calc(100vh - 220px);
+    overflow-y: auto;
+}
+
+.schedules-card .schedules-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    min-width: 820px;
+    table-layout: fixed;
+}
+
+.schedules-card .schedules-table th:nth-child(1),
+.schedules-card .schedules-table td:nth-child(1) {
+    width: 44px;
+}
+
+.schedules-card .schedules-table th:nth-child(2),
+.schedules-card .schedules-table td:nth-child(2) {
+    width: 110px;
+}
+
+.schedules-card .schedules-table th:nth-child(3),
+.schedules-card .schedules-table td:nth-child(3) {
+    width: 250px;
+}
+
+.schedules-card .schedules-table th:nth-child(4),
+.schedules-card .schedules-table td:nth-child(4) {
+    width: 135px;
+}
+
+.schedules-card .schedules-table th:nth-child(5),
+.schedules-card .schedules-table td:nth-child(5) {
+    width: 120px;
+}
+
+.schedules-card .schedules-table th:nth-child(6),
+.schedules-card .schedules-table td:nth-child(6) {
+    width: 145px;
+}
+
+.schedules-card .schedules-table th:nth-child(7),
+.schedules-card .schedules-table td:nth-child(7) {
+    width: 96px;
+}
+
+.schedules-card .schedules-table .admin-status-group-row td {
+    width: auto !important;
+    min-width: 100%;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}
+
+.schedules-card .admin-status-group-label {
+    width: min(100%, 720px);
+}
+
+/* ── TH ── */
+.schedules-card .schedules-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 9px 14px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    background: #fafafa;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    white-space: nowrap;
+    text-align: left;
+}
+
+/* ── TD ── */
+.schedules-card .schedules-table tbody td {
+    padding: 11px 14px;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(0,0,0,.04);
+    color: #374151;
+}
+
+.schedules-card .schedules-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ── Row states ── */
+.schedules-card .schedules-table tbody tr.schedule-row {
+    transition: background .13s ease;
+    cursor: pointer;
+}
+
+.schedules-card .schedules-table tbody tr.schedule-row:hover {
+    background: rgba(249,115,22,.03);
+}
+
+.schedules-card .schedules-table tbody tr.schedule-row.selected {
+    background: rgba(249,115,22,.05);
+    border-left: 3px solid var(--color-accent);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   4. CELL CONTENT — typography hierarchy
+══════════════════════════════════════════════════════════════════════ */
+
+/* Row index */
+.schedules-card .text-muted-sm {
+    font-size: 11px;
+    color: #c4c9d4;
+    font-weight: 500;
+}
+
+/* Route — bold primary */
+.route-display {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 7px;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.route-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.route-stack span {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--color-primary);
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.route-stack small {
+    color: #9ca3af;
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Driver — muted secondary */
+.driver-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* Van / plate */
+.plate-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.plate-number {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--color-primary);
+    background: rgba(46,58,77,.05);
+    border: 1px solid rgba(46,58,77,.1);
+    padding: 2px 7px;
+    border-radius: 5px;
+    letter-spacing: .4px;
+}
+
+/* Departure — soft gray */
+.schedules-card .schedules-table td.text-muted-sm {
+    font-size: 12px;
+    color: #9ca3af;
+    font-weight: 400;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   5. STATUS BADGES — pill style, scoped inside schedules-card
+      Suppress admin-common ::before dot and redefine per status
+══════════════════════════════════════════════════════════════════════ */
+
+.schedules-card .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .2px;
+    white-space: nowrap;
+    line-height: 1.5;
+}
+
+/* Remove the generic dot */
+.schedules-card .badge::before {
+    display: none;
+}
+
+/* Add a tiny dot via ::after per status */
+.schedules-card .badge::after {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    order: -1;           /* dot appears before text */
+    flex-shrink: 0;
+}
+
+/* boarding → orange */
+.schedules-card .badge.boarding,
+.schedules-card .badge.not_departed {
+    background: rgba(249,115,22,.1);
+    color: #ea6c0a;
+    border: 1px solid rgba(249,115,22,.18);
+}
+.schedules-card .badge.boarding::after,
+.schedules-card .badge.not_departed::after { background: #f97316; }
+
+/* departed → blue */
+.schedules-card .badge.departed {
+    background: rgba(59,130,246,.1);
+    color: #2563eb;
+    border: 1px solid rgba(59,130,246,.18);
+}
+.schedules-card .badge.departed::after  { background: #3b82f6; }
+
+/* arrived → green */
+.schedules-card .badge.arrived,
+.schedules-card .badge.completed {
+    background: rgba(22,163,74,.08);
+    color: #16a34a;
+    border: 1px solid rgba(22,163,74,.16);
+}
+.schedules-card .badge.arrived::after,
+.schedules-card .badge.completed::after { background: #16a34a; }
+
+/* cancelled → red */
+.schedules-card .badge.cancelled {
+    background: rgba(239,68,68,.08);
+    color: #dc2626;
+    border: 1px solid rgba(239,68,68,.15);
+}
+.schedules-card .badge.cancelled::after { background: #ef4444; }
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   6. ROW ACTION BUTTONS
+══════════════════════════════════════════════════════════════════════ */
+
+.schedules-card .row-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: nowrap;
+}
+
+.schedules-card .icon-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 11.5px;
+    transition: background .12s ease, transform .1s ease, box-shadow .12s ease;
+    flex-shrink: 0;
+    position: relative;
+}
+
+/* Tooltip via title attribute is browser-native; add a subtle scale on hover */
+.schedules-card .icon-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,.1);
+}
+
+.schedules-card .icon-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* Status */
+.schedules-card .icon-btn.status {
+    background: rgba(59,130,246,.09);
+    color: #2563eb;
+}
+.schedules-card .icon-btn.status:hover {
+    background: rgba(59,130,246,.18);
+}
+
+/* Edit */
+.schedules-card .icon-btn.edit {
+    background: rgba(249,115,22,.09);
+    color: var(--color-accent);
+}
+.schedules-card .icon-btn.edit:hover {
+    background: rgba(249,115,22,.18);
+}
+
+/* Delete */
+.schedules-card .icon-btn.delete {
+    background: rgba(239,68,68,.08);
+    color: #ef4444;
+}
+.schedules-card .icon-btn.delete:hover {
+    background: rgba(239,68,68,.16);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   7. EMPTY STATE (table)
+══════════════════════════════════════════════════════════════════════ */
+
+.schedules-card .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 52px 20px;
+    text-align: center;
+}
+
+.schedules-card .empty-state i {
+    font-size: 36px;
+    color: #e2e8f0;
+    margin-bottom: 12px;
+    display: block;
+    background: #f8fafc;
+    width: 72px;
+    height: 72px;
+    line-height: 72px;
+    border-radius: 50%;
+    border: 1.5px solid #e9eef4;
+}
+
+.schedules-card .empty-state p {
+    font-size: 13px;
+    color: #9ca3af;
+    margin: 0;
+    line-height: 1.5;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   8. PREVIEW / DETAILS CARD (right panel)
+══════════════════════════════════════════════════════════════════════ */
+
+.schedule-card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.07);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    position: sticky;
+    top: 80px;
+}
+
+/* ── Card header ── */
+.schedule-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 16px;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    background: #fafafa;
+}
+
+.schedule-card-header > i {
+    font-size: 13px;
+    color: var(--color-accent);
+    flex-shrink: 0;
+}
+
+.schedule-card-header > p {
+    margin: 0;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--color-primary);
+    flex: 1;
+    letter-spacing: -.01em;
+}
+
+#schedule-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: #9ca3af;
+    text-align: right;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ── Empty state ── */
+.schedule-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 44px 20px;
+    text-align: center;
+    gap: 10px;
+    color: #d1d5db;
+}
+
+.schedule-empty i {
+    font-size: 30px;
+    background: #f8fafc;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    border: 1.5px solid #e9eef4;
+    color: #d1d5db;
+}
+
+.schedule-empty p {
+    font-size: 12px;
+    margin: 0;
+    color: #c4c9d4;
+    line-height: 1.5;
+}
+
+/* ── Preview content ── */
+#schedule-preview {
+    padding: 18px 16px;
+    max-height: calc(100vh - 170px);
+    overflow-y: auto;
+}
+
+/* Avatar circle */
+.schedule-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-brand) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px;
+    color: #fff;
+    font-size: 20px;
+    box-shadow: 0 4px 12px rgba(46,58,77,.2);
+}
+
+/* Route title */
+.schedule-details > h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-align: left;
+    margin: 0 0 14px;
+    line-height: 1.3;
+    letter-spacing: -.01em;
+    word-break: break-word;
+}
+
+/* Divider between title and details */
+.schedule-details > h3::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 2px;
+    background: var(--color-accent);
+    border-radius: 2px;
+    margin: 8px 0 0;
+    opacity: .5;
+}
+
+.detail-section {
+    padding: 12px 0;
+    border-top: 1px solid rgba(0,0,0,.06);
+}
+
+.detail-section:first-of-type {
+    border-top: none;
+    padding-top: 0;
+}
+
+.detail-section h4 {
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: .45px;
+}
+
+/* ── Detail rows ── */
+.detail-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 0;
+    border-bottom: none;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    flex-shrink: 0;
+}
+
+.detail-value {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-align: right;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    line-height: 1.3;
+    min-width: 0;
+}
+
+/* Status badge inside preview — same pill style, no extra scoping needed
+   since .detail-badge sits inside .schedule-card, not .schedules-card */
+.detail-badge.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .2px;
+}
+
+.detail-badge.badge::before { display: none; }
+
+.detail-badge.badge::after {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    order: -1;
+    flex-shrink: 0;
+}
+
+.detail-badge.badge.boarding,
+.detail-badge.badge.not_departed { background: rgba(249,115,22,.1); color: #ea6c0a; border: 1px solid rgba(249,115,22,.18); }
+.detail-badge.badge.boarding::after,
+.detail-badge.badge.not_departed::after { background: #f97316; }
+.detail-badge.badge.departed  { background: rgba(59,130,246,.1); color: #2563eb; border: 1px solid rgba(59,130,246,.18); }
+.detail-badge.badge.departed::after  { background: #3b82f6; }
+.detail-badge.badge.arrived,
+.detail-badge.badge.completed { background: rgba(22,163,74,.08); color: #16a34a; border: 1px solid rgba(22,163,74,.16); }
+.detail-badge.badge.arrived::after,
+.detail-badge.badge.completed::after { background: #16a34a; }
+.detail-badge.badge.cancelled { background: rgba(239,68,68,.08); color: #dc2626; border: 1px solid rgba(239,68,68,.15); }
+.detail-badge.badge.cancelled::after { background: #ef4444; }
+
+
+/* ══════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════════════
+   10. MODAL ADDITIONS (date+time inline pair)
+══════════════════════════════════════════════════════════════════════ */
+
+.rfield-inline {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   11. RESPONSIVE
+══════════════════════════════════════════════════════════════════════ */
+
+/* ── Tablet (≤ 900px) ── */
+@media (max-width: 900px) {
+    .schedules-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .schedule-card {
+        position: static;
+    }
+
+    .schedules-card .schedules-table {
+        min-width: 940px;
+    }
+}
+
+/* ── Mobile (≤ 600px) ── */
+@media (max-width: 600px) {
+
+    /* Toolbar */
+    .toolbar {
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .search-box {
+        min-width: 100%;
+        order: -1;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-select {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .btn-add {
+        width: 100%;
+        justify-content: center;
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+
+    /* Card header */
+    .schedules-card-header {
+        padding: 11px 14px;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .schedules-card-header h2 {
+        font-size: 13px;
+    }
+
+    /* Table */
+    .schedules-card .schedules-table {
+        min-width: 900px;
+        font-size: 11.5px;
+    }
+
+    .schedules-card .schedules-table thead th {
+        padding: 7px 10px;
+        font-size: 9.5px;
+    }
+
+    .schedules-card .schedules-table tbody td {
+        padding: 8px 10px;
+    }
+
+    /* Plate number */
+    .plate-number {
+        font-size: 10.5px;
+        padding: 1px 5px;
+    }
+
+    /* Badge */
+    .schedules-card .badge {
+        font-size: 9.5px;
+        padding: 2px 7px;
+    }
+
+    /* Action buttons */
+    .schedules-card .icon-btn {
+        width: 25px;
+        height: 25px;
+        font-size: 10px;
+        border-radius: 6px;
+    }
+
+    /* Preview card */
+    .schedule-card-header {
+        padding: 10px 14px;
+    }
+
+    #schedule-preview {
+        padding: 14px;
+    }
+
+    .schedule-avatar {
+        width: 44px;
+        height: 44px;
+        font-size: 17px;
+        border-radius: 10px;
+    }
+
+    .schedule-details > h3 {
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+
+    .detail-label  { font-size: 9.5px; }
+    .detail-value  { font-size: 11.5px; }
+
+    /* Modal */
+    .rfield-inline {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Dark mode: schedules page-specific surfaces and table text */
+body.admin-dark-mode-active .schedules-card,
+body.admin-dark-mode-active .schedule-card {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, .07);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .22);
+}
+
+body.admin-dark-mode-active .schedules-card-header,
+body.admin-dark-mode-active .schedule-card-header {
+    background: #162032;
+    border-bottom-color: rgba(255, 255, 255, .07);
+}
+
+body.admin-dark-mode-active .schedules-card .schedules-table thead th {
+    background: #162032;
+    color: #94a3b8;
+    border-bottom-color: rgba(255, 255, 255, .07);
+}
+
+body.admin-dark-mode-active .schedules-card .schedules-table tbody td,
+body.admin-dark-mode-active .driver-display,
+body.admin-dark-mode-active .detail-value {
+    color: #cbd5e1;
+}
+
+body.admin-dark-mode-active .route-stack span,
+body.admin-dark-mode-active .plate-number,
+body.admin-dark-mode-active .schedule-card-header > p,
+body.admin-dark-mode-active .schedule-details > h3 {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .route-stack small,
+body.admin-dark-mode-active .detail-label,
+body.admin-dark-mode-active .schedules-card .schedules-table td.text-muted-sm,
+body.admin-dark-mode-active #schedule-label {
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .detail-section {
+    border-top-color: rgba(255, 255, 255, .07);
+}
+
+body.admin-dark-mode-active .detail-section h4 {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .plate-number {
+    background: rgba(255, 255, 255, .06);
+    border-color: rgba(255, 255, 255, .1);
+}
+
