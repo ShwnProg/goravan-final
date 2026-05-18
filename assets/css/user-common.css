@@ -2565,3 +2565,8 @@ body.user-page.dark .swal2-title,
 body.user-page.dark .swal2-html-container {
     color: var(--u-text);
 }
+.route-arrow-icon {
+    margin: 0 6px;
+    color: var(--u-accent);
+    font-size: .85em;
+}

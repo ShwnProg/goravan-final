@@ -298,7 +298,8 @@ function showBookingDetails(row, modal) {
     set('detail-passenger-name',  row.dataset.userName);
     set('detail-passenger-email', row.dataset.userEmail);
     set('detail-passenger-phone', row.dataset.userPhone);
-    set('detail-route',           row.dataset.route);
+    const routeEl = document.getElementById('detail-route');
+    if (routeEl) routeEl.innerHTML = routeHtml(row.dataset.route);
     const seatEl = document.getElementById('detail-seat');
     if (seatEl) seatEl.innerHTML = passengerTableFromNotes(row.dataset.notes || '', row.dataset.seat || '');
     set('detail-departure',       row.dataset.departure);
@@ -335,19 +336,22 @@ function passengerTableFromNotes(raw, fallbackSeats) {
     try {
         const notes = raw ? JSON.parse(raw) : {};
         if (Array.isArray(notes.passengers) && notes.passengers.length) {
+            const passengerName = notes.passenger_name || notes.passengers[0].name || 'Passenger';
+            const contact = notes.contact_number || '';
             const rows = notes.passengers.map(p => `
-                <tr>
-                    <td>${escapeHtml(p.seat_number || '-')}</td>
-                    <td>${escapeHtml(p.name || notes.passenger_name || 'Passenger')}</td>
-                    <td>${escapeHtml(statusLabel(p.type || 'regular'))}</td>
-                </tr>
+                <span class="seat-type-chip">
+                    <i class="fas fa-chair"></i>
+                    ${escapeHtml(p.seat_number || '-')}
+                    <small>${escapeHtml(statusLabel(p.type || 'regular'))}</small>
+                </span>
             `).join('');
             return `
-                <div class="admin-passenger-table-wrap">
-                    <table class="admin-passenger-table">
-                        <thead><tr><th>Seat</th><th>Passenger Name</th><th>Passenger Type</th></tr></thead>
-                        <tbody>${rows}</tbody>
-                    </table>
+                <div class="passenger-seat-summary">
+                    <div class="passenger-seat-person">
+                        <strong>${escapeHtml(passengerName)}</strong>
+                        ${contact ? `<span>${escapeHtml(contact)}</span>` : ''}
+                    </div>
+                    <div class="seat-type-list">${rows}</div>
                 </div>
             `;
         }
@@ -362,11 +366,11 @@ function summarizeBookingNotes(raw) {
         const notes = JSON.parse(raw);
         const parts = [];
         if (notes.passenger_name) parts.push(`Passenger: ${notes.passenger_name}`);
-        if (notes.passenger_type) parts.push(`Type: ${notes.passenger_type}`);
         if (notes.seats_count) parts.push(`Seats: ${notes.seats_count}`);
         if (Array.isArray(notes.passengers) && notes.passengers.length) {
             parts.push(notes.passengers.map(p => `${p.seat_number || '-'}: ${p.type || 'regular'}`).join(', '));
         }
+        if (notes.cash_fee && parseFloat(notes.cash_fee) > 0) parts.push(`Cash handling fee: ₱${parseFloat(notes.cash_fee).toFixed(2)}`);
         return parts.length ? parts.join(' | ') : 'No booking notes available.';
     } catch (_) {
         return raw || 'No booking notes available.';
@@ -377,6 +381,15 @@ function statusLabel(value) {
     return String(value || 'regular')
         .replace(/_/g, ' ')
         .replace(/\b\w/g, ch => ch.toUpperCase());
+}
+
+function routeHtml(value) {
+    const route = String(value || '').replace(/\s*→\s*/g, ' -> ');
+    const parts = route.split(/\s*->\s*/);
+    if (parts.length >= 2) {
+        return `${escapeHtml(parts[0])} <i class="fas fa-arrow-right route-arrow-icon"></i> ${escapeHtml(parts.slice(1).join(' -> '))}`;
+    }
+    return escapeHtml(value || '-');
 }
 
 function escapeHtml(value) {

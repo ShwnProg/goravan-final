@@ -45,6 +45,7 @@ if (empty($_SESSION['csrf_token'])) {
 require_once __DIR__ . "/config/database.php";
 require_once __DIR__ . "/helpers/csrf_helper.php";
 require_once __DIR__ . '/helpers/encryption.php';
+require_once __DIR__ . '/helpers/vanny_helper.php';
 
 spl_autoload_register(function ($class) {
     $paths = [

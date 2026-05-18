@@ -16,9 +16,15 @@
 
 .driver-welcome {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     gap: 18px;
     padding: 22px;
+}
+
+.driver-welcome-vanny {
+    width: 120px;
+    margin-left: auto;
 }
 
 .driver-eyebrow {
@@ -261,7 +267,7 @@
 .driver-passenger-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 460px;
+    min-width: 360px;
 }
 
 .driver-passenger-table th,
@@ -282,6 +288,37 @@
 .driver-complete-note {
     color: var(--text-muted);
     font-size: 13px;
+}
+
+.driver-seat-type-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.driver-seat-type-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 28px;
+    padding: 0 9px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: #f8fafc;
+    color: #334155;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.driver-seat-type-chip small {
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.route-arrow-icon {
+    margin: 0 6px;
+    color: var(--color-accent);
+    font-size: .8em;
 }
 
 .driver-trip-actions {
@@ -323,6 +360,11 @@
     padding: 44px 20px;
 }
 
+.driver-empty-vanny {
+    width: 126px;
+    margin-bottom: 8px;
+}
+
 .driver-empty-state i {
     color: var(--color-accent);
     font-size: 34px;
@@ -359,11 +401,13 @@ html.admin-dark-mode-active .driver-trip-meta div,
 html.admin-dark-mode-active .driver-trip-times span,
 html.admin-dark-mode-active .driver-field input,
 html.admin-dark-mode-active .driver-passenger-table th,
+html.admin-dark-mode-active .driver-seat-type-chip,
 body.admin-dark-mode-active .driver-license,
 body.admin-dark-mode-active .driver-trip-meta div,
 body.admin-dark-mode-active .driver-trip-times span,
 body.admin-dark-mode-active .driver-field input,
-body.admin-dark-mode-active .driver-passenger-table th {
+body.admin-dark-mode-active .driver-passenger-table th,
+body.admin-dark-mode-active .driver-seat-type-chip {
     background: #111827;
     border-color: rgba(148, 163, 184, .18);
 }
@@ -412,6 +456,11 @@ body.admin-dark-mode-active .driver-complete-note {
     color: #cbd5e1;
 }
 
+html.admin-dark-mode-active .driver-seat-type-chip,
+body.admin-dark-mode-active .driver-seat-type-chip {
+    color: #e2e8f0;
+}
+
 html.admin-dark-mode-active .driver-field input[readonly],
 body.admin-dark-mode-active .driver-field input[readonly] {
     background: #111827;
@@ -430,6 +479,13 @@ body.admin-dark-mode-active .driver-field input[readonly] {
     .driver-welcome,
     .driver-trip-head {
         flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .driver-welcome-vanny {
+        width: 96px;
+        margin: 0 auto;
+        align-self: center;
     }
 
     .driver-license {

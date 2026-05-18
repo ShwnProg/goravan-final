@@ -330,7 +330,7 @@
 
     function hydrateRoutePreview() {
         var schedule = state.schedule || {};
-        setText('routeName', (schedule.origin || '') + ' → ' + (schedule.destination || ''));
+        setHtml('routeName', routeHtml(schedule.origin, schedule.destination));
         setText('routeDateTime', formatDateTime(schedule.departure_date, schedule.departure_time));
         setText('routeVan', [schedule.van_model, schedule.van_plate].filter(Boolean).join(' · '));
         setText('routeFare', peso(state.pricePerSeat));
@@ -523,20 +523,23 @@
             var isMainSeat = isMainPassengerSeat(seat);
             var discountRate = discountForSeat(seat);
             var discountNote = '';
-            if (isMainSeat && hasVerifiedType()) {
-                discountNote = ' - account verified';
+            if (hasVerifiedType() && discountForType(type) > 0) {
+                discountNote = ' - verified bonus';
             } else if (!isMainSeat && type !== 'regular') {
                 discountNote = ' - ID required';
             }
             return '<div class="passenger-seat-row" data-seat-id="' + esc(seat.seat_id) + '">' +
-                '<div class="passenger-seat-label"><span>Seat ' + esc(seat.seat_number) + ' - ' + (isMainSeat ? 'Main Passenger' : 'Companion') + '</span><strong>' + esc(labelPassengerType(type)) + '</strong></div>' +
+                '<div class="passenger-seat-label">' +
+                    '<span class="passenger-seat-title">Seat ' + esc(seat.seat_number) + '</span>' +
+                    '<small>' + (isMainSeat ? 'Main' : 'Companion') + '</small>' +
+                '</div>' +
                 '<select class="passenger-seat-type" data-field="type"' + (isMainSeat ? ' disabled data-main-seat="1"' : '') + '>' +
                 passengerTypeOption('regular', type, isMainSeat) +
                 passengerTypeOption('student', type, isMainSeat) +
                 passengerTypeOption('senior', type, isMainSeat) +
                 passengerTypeOption('pwd', type, isMainSeat) +
                 '</select>' +
-                '<span class="passenger-seat-discount' + (isMainSeat && hasVerifiedType() ? ' verified' : '') + '">' +
+                '<span class="passenger-seat-discount' + (hasVerifiedType() && discountForType(type) > 0 ? ' verified' : '') + '">' +
                 discountRate + '% off' + esc(discountNote) +
                 '</span>' +
                 '</div>';
@@ -682,7 +685,7 @@
 
     function renderOrderSummary() {
         var schedule = state.schedule || {};
-        setText('summaryRoute', (schedule.origin || '-') + ' → ' + (schedule.destination || '-'));
+        setHtml('summaryRoute', routeHtml(schedule.origin || '-', schedule.destination || '-'));
         setText('summaryDate', formatDateTime(schedule.departure_date, schedule.departure_time));
         setText('summarySeats', state.selectedSeats.map(function (seat) { return seat.seat_number; }).join(', ') || '-');
         setText('summaryPassengerType', summarizePassengerTypes());
@@ -752,7 +755,7 @@
     function renderReceipt(data) {
         var schedule = state.schedule || {};
         setText('receiptReference', data.reference_code || '');
-        setText('receiptRoute', (schedule.origin || '-') + ' → ' + (schedule.destination || '-'));
+        setHtml('receiptRoute', routeHtml(schedule.origin || '-', schedule.destination || '-'));
         setText('receiptDate', formatDateTime(schedule.departure_date, schedule.departure_time));
         setText('receiptSeats', state.selectedSeats.map(function (seat) { return seat.seat_number; }).join(', '));
         setText('receiptPassenger', state.passengerName + ' · ' + summarizePassengerTypes());
@@ -828,7 +831,7 @@
     function discountForSeat(seat) {
         var type = normalizePassengerType(seat && seat.type);
         var base = discountForType(type);
-        if (base > 0 && isMainPassengerSeat(seat) && hasVerifiedType() && type === VERIFIED_TYPE) {
+        if (base > 0 && hasVerifiedType()) {
             return base + VERIFIED_BONUS;
         }
         return base;
@@ -914,6 +917,15 @@
     function setText(id, value) {
         var el = document.getElementById(id);
         if (el) el.textContent = value;
+    }
+
+    function setHtml(id, value) {
+        var el = document.getElementById(id);
+        if (el) el.innerHTML = value;
+    }
+
+    function routeHtml(origin, destination) {
+        return esc(origin || '-') + ' <i class="fa-solid fa-arrow-right route-arrow-icon"></i> ' + esc(destination || '-');
     }
 
     function esc(value) {

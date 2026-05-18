@@ -100,7 +100,7 @@ rsort($scheduleDates);
                         <tr>
                             <td colspan="7">
                                 <div class="empty-state">
-                                    <i class="fas fa-calendar-check"></i>
+                                    <?= vanny_mascot('waiting', 'small', 'admin-empty-vanny', 'Vanny waiting for schedules') ?>
                                     <p>No schedules yet. Add your first schedule.</p>
                                 </div>
                             </td>
@@ -238,7 +238,7 @@ rsort($scheduleDates);
         </div>
 
         <div id="schedule-empty" class="schedule-empty">
-            <i class="fas fa-calendar-check"></i>
+            <?= vanny_mascot('pointing', 'small', 'admin-empty-vanny', 'Vanny points to schedule details') ?>
             <p>Select a schedule to view details.</p>
         </div>
 

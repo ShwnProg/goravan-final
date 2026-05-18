@@ -1481,3 +1481,39 @@
     font-size: 12px;
     font-weight: 700;
 }
+
+.route-arrow-icon {
+    margin: 0 6px;
+    color: var(--u-accent);
+    font-size: .85em;
+}
+
+.u-passenger-group {
+    display: grid;
+    gap: 12px;
+}
+
+.u-seat-type-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.u-seat-type-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 30px;
+    padding: 0 10px;
+    border: 1px solid var(--u-border);
+    border-radius: 999px;
+    background: var(--u-surface2);
+    color: var(--u-text);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.u-seat-type-chip small {
+    color: var(--u-muted);
+    font-weight: 700;
+}

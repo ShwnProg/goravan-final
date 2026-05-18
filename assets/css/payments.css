@@ -550,6 +550,193 @@ body.admin-dark-mode-active .pdv-notes {
     color: #94a3b8;
 }
 
+/* Payment details modal readability fix */
+#viewModal .payment-details-dialog {
+    width: min(860px, 95vw);
+    max-width: 95vw;
+}
+
+#viewModal .payment-details-modal {
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#viewModal .payment-details-modal .rmodal-header,
+#viewModal .payment-details-modal .rmodal-footer {
+    flex: 0 0 auto;
+}
+
+#viewModal .payment-details-modal .rmodal-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: calc(90vh - 132px);
+    overflow-y: auto;
+    padding: 0;
+}
+
+#viewModal .payment-details-viewer {
+    display: block;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#viewModal .pdv-section {
+    display: block;
+    padding: 18px;
+    border-top: 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+#viewModal .pdv-section:last-child {
+    border-bottom: 0;
+}
+
+#viewModal .pdv-section-title {
+    margin: 0 0 16px;
+    color: #8a94a6;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+#viewModal .pdv-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 24px;
+}
+
+#viewModal .pdv-info-item {
+    display: block !important;
+    min-width: 0;
+}
+
+#viewModal .pdv-label {
+    display: block;
+    margin: 0 0 6px;
+    color: #667085 !important;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.25;
+    text-transform: uppercase;
+}
+
+#viewModal .pdv-value {
+    display: block;
+    min-width: 0;
+    color: #1f2937 !important;
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1.45;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+#viewModal #view-route .route-arrow-icon {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 7px;
+    color: var(--color-accent);
+    font-size: 11px;
+    vertical-align: middle;
+}
+
+#viewModal .pdv-money-breakdown {
+    display: grid;
+    width: min(100%, 320px);
+    gap: 8px;
+}
+
+#viewModal .pdv-money-breakdown > span {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    padding: 0 0 8px;
+    border-bottom: 1px solid #eef2f7;
+}
+
+#viewModal .pdv-money-breakdown small,
+#viewModal .pdv-money-breakdown b {
+    min-width: 0;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+#viewModal .pdv-money-breakdown small {
+    color: #667085;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: none;
+}
+
+#viewModal .pdv-money-breakdown b {
+    color: #111827;
+    font-size: 14px;
+    font-weight: 850;
+    white-space: nowrap;
+}
+
+#viewModal .pdv-money-breakdown .pdv-money-total {
+    padding-top: 4px;
+    border-bottom: 0;
+}
+
+#viewModal .pdv-notes {
+    white-space: pre-line;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+body.admin-dark-mode-active #viewModal .payment-details-viewer {
+    background: #1b2233;
+    border-color: rgba(148, 163, 184, .18);
+}
+
+body.admin-dark-mode-active #viewModal .pdv-section {
+    border-bottom-color: rgba(148, 163, 184, .16);
+}
+
+body.admin-dark-mode-active #viewModal .pdv-label,
+body.admin-dark-mode-active #viewModal .pdv-section-title,
+body.admin-dark-mode-active #viewModal .pdv-money-breakdown small {
+    color: #94a3b8 !important;
+}
+
+body.admin-dark-mode-active #viewModal .pdv-value,
+body.admin-dark-mode-active #viewModal .pdv-money-breakdown b {
+    color: #e5edf7 !important;
+}
+
+body.admin-dark-mode-active #viewModal .pdv-money-breakdown > span {
+    border-bottom-color: rgba(148, 163, 184, .16);
+}
+
+@media (max-width: 768px) {
+    #viewModal .payment-details-dialog {
+        width: 95vw;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #viewModal .pdv-info-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    #viewModal .payment-details-modal .rmodal-body {
+        max-height: calc(90vh - 124px);
+    }
+
+    #viewModal .pdv-section {
+        padding: 16px;
+    }
+}
+
 body.admin-dark-mode-active .refund-request-box {
     background: rgba(249, 115, 22, .1);
     border-color: rgba(249, 115, 22, .22);

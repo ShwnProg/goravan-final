@@ -198,7 +198,7 @@
             return '<article class="payment-card-item" data-payment-id="' + esc(p.payment_id) + '">' +
                 '<div class="payment-main">' +
                     '<div class="payment-ref">' + esc(p.reference_code) + '</div>' +
-                    '<div class="payment-route">' + esc(p.route_display) + '</div>' +
+                    '<div class="payment-route">' + routeHtml(p.route_display) + '</div>' +
                     '<div class="payment-meta">' + esc(formatDateTime(p.departure_date, p.departure_time)) + ' · ' + esc(p.seats_count || 0) + ' seat(s)</div>' +
                 '</div>' +
                 '<div>' +
@@ -220,7 +220,7 @@
         var list = document.getElementById('paymentList');
         if (!list) return;
         list.innerHTML = '<div class="payment-empty">' +
-            '<i class="fa-regular fa-credit-card"></i>' +
+            '<img src="/images/vanny-waiting.png" alt="Vanny waiting for payments" class="vanny-mascot payment-empty-vanny" loading="lazy" decoding="async">' +
             '<p>' + esc(message) + '</p>' +
         '</div>';
     }
@@ -229,7 +229,7 @@
         activePayment = payment;
         var method = methodMeta(payment.payment_method);
         setText('detailReference', payment.reference_code || '-');
-        setText('detailRoute', payment.route_display || '-');
+        setHTML('detailRoute', routeHtml(payment.route_display || '-'));
         setText('detailDate', formatDateTime(payment.departure_date, payment.departure_time));
         setHTML('detailSeats', seatSummary(payment.seat_numbers));
         setHTML('detailPassenger', passengerDetails(payment));
@@ -237,7 +237,7 @@
         setText('detailMethod', method.label);
         setText('detailPaymentRef', payment.payment_reference || '-');
         setText('detailStatus', statusLabel(payment.status || '-'));
-        setText('detailAmount', peso(payment.amount));
+        setHTML('detailAmount', paymentBreakdown(payment));
         renderRefundNotes(payment);
 
         var refundBtn = document.getElementById('requestRefundBtn');
@@ -509,13 +509,12 @@
             return '<span class="receipt-value-text">' + esc(payment.passenger_name || '-') + '</span>';
         }
 
-        var names = [];
-        passengers.forEach(function (p) {
-            var name = String(p.name || '').trim();
-            if (name && names.indexOf(name) === -1) names.push(name);
-        });
-
-        return '<span class="receipt-value-text">' + esc(names.join(', ') || payment.passenger_name || '-') + '</span>';
+        return '<span class="receipt-passenger-group">' +
+            '<strong>' + esc(payment.passenger_name || passengers[0].name || '-') + '</strong>' +
+            '<span class="receipt-seat-list">' + passengers.map(function (p) {
+                return '<span class="receipt-seat">' + esc(p.seat_number || '-') + ' <small>' + esc(labelPassengerType(p.type)) + '</small></span>';
+            }).join('') + '</span>' +
+        '</span>';
     }
 
     function seatSummary(value) {
@@ -528,6 +527,28 @@
         return '<span class="receipt-seat-list">' + seats.map(function (seat) {
             return '<span class="receipt-seat">' + esc(seat) + '</span>';
         }).join('') + '</span>';
+    }
+
+    function paymentBreakdown(payment) {
+        var base = parseFloat(payment.base_total || (payment.notes && payment.notes.base_total) || 0);
+        var discount = parseFloat(payment.discount_amount || 0);
+        var cashFee = parseFloat(payment.cash_fee || (payment.notes && payment.notes.cash_fee) || 0);
+        if (!base && !discount && !cashFee) return peso(payment.amount);
+        return '<span class="receipt-money-breakdown">' +
+            '<span><small>Base fare</small><b>' + esc(peso(base)) + '</b></span>' +
+            '<span><small>Discount</small><b>-' + esc(peso(discount)) + '</b></span>' +
+            (cashFee > 0 ? '<span><small>Cash handling fee</small><b>' + esc(peso(cashFee)) + '</b></span>' : '') +
+            '<span class="receipt-money-total"><small>Total</small><b>' + esc(peso(payment.amount)) + '</b></span>' +
+        '</span>';
+    }
+
+    function routeHtml(value) {
+        var route = String(value || '').replace(/\s*→\s*/g, ' -> ');
+        var parts = route.split(/\s*->\s*/);
+        if (parts.length >= 2) {
+            return esc(parts[0]) + ' <i class="fa-solid fa-arrow-right route-arrow-icon"></i> ' + esc(parts.slice(1).join(' -> '));
+        }
+        return esc(value || '-');
     }
 
     function formatDateTime(date, time) {

@@ -110,7 +110,7 @@ $paymentGroupMeta = function (string $displayStatus): array {
                     <tr>
                         <td colspan="9">
                             <div class="empty-state">
-                                <i class="fas fa-credit-card"></i>
+                                <?= vanny_mascot('waiting', 'small', 'admin-empty-vanny', 'Vanny waiting for payments') ?>
                                 <p>No payments yet.</p>
                             </div>
                         </td>
@@ -310,8 +310,8 @@ $paymentGroupMeta = function (string $displayStatus): array {
 
 <!-- VIEW PAYMENT DETAILS MODAL (read-only) -->
 <div class="modal fade" id="viewModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-        <div class="modal-content rmodal">
+    <div class="modal-dialog modal-dialog-centered modal-lg payment-details-dialog">
+        <div class="modal-content rmodal payment-details-modal">
             <div class="rmodal-header">
                 <div class="rmodal-icon"><i class="fas fa-file-invoice-dollar"></i></div>
                 <div>

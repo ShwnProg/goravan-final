@@ -44,6 +44,16 @@ $formatMoney = function ($amount): string {
 ?>
 
 <!-- ── KPI CARDS ─────────────────────────────────────────────────────────────── -->
+<?= vanny_message_card(
+    'info',
+    'Admin overview',
+    'Review pending bookings, payments, schedules, and daily operations from one clean workspace.',
+    'pointing',
+    '',
+    '',
+    'admin-vanny-overview'
+) ?>
+
 <div class="db-top-row">
 
     <a class="db-stat db-stat--accent" href="bookings.php">

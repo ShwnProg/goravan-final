@@ -71,7 +71,11 @@ $bookings = $bk->GetBookingsByUserFiltered();
                             <?= ucfirst($booking['status']) ?>
                         </span>
                     </div>
-                    <div class="u-bk-route"><?= htmlspecialchars($booking['route_display']) ?></div>
+                    <div class="u-bk-route">
+                        <?= htmlspecialchars($booking['origin'] ?? 'Origin') ?>
+                        <i class="fa-solid fa-arrow-right route-arrow-icon"></i>
+                        <?= htmlspecialchars($booking['destination'] ?? 'Destination') ?>
+                    </div>
                     <div class="u-bk-meta">
                         <span><i class="fa-regular fa-calendar"></i><?= date('M j, Y', strtotime($booking['departure_date'])) ?></span>
                         <span><i class="fa-regular fa-clock"></i><?= date('g:i A', strtotime($booking['departure_time'])) ?></span>
@@ -92,9 +96,7 @@ $bookings = $bk->GetBookingsByUserFiltered();
             <?php endforeach; ?>
         <?php else: ?>
             <div class="u-empty-state">
-                <span class="u-empty-icon"><i class="fa-solid fa-inbox"></i></span>
-                <p>No bookings found</p>
-                <p>Try changing your filter or <a href="schedule.php">book a new trip</a></p>
+                <?= vanny_empty_state('welcome', 'No bookings found', 'Try changing your filter or start a new trip.', 'Book a Trip', 'schedule.php', 'u-vanny-empty') ?>
             </div>
         <?php endif; ?>
     </div>

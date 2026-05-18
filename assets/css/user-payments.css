@@ -13,6 +13,11 @@
     box-shadow: 0 6px 24px color-mix(in srgb, var(--u-text) 10%, transparent);
 }
 
+.pay-header-vanny {
+    width: 118px;
+    align-self: center;
+}
+
 .pay-eyebrow {
     display: block;
     margin-bottom: 4px;
@@ -306,6 +311,11 @@
     font-size: 28px;
 }
 
+.payment-empty-vanny {
+    width: 118px;
+    margin: 0 auto 8px;
+}
+
 #paymentDetailModal .modal-dialog {
     max-width: 620px;
 }
@@ -540,6 +550,11 @@
     .pay-header-card,
     .pay-modal-actions {
         flex-direction: column;
+    }
+
+    .pay-header-vanny {
+        width: 96px;
+        align-self: center;
     }
 
     .pay-stat-grid,
@@ -1273,4 +1288,48 @@
             align-items: flex-start;
         }
     }
+}
+.route-arrow-icon {
+    margin: 0 6px;
+    color: var(--u-accent);
+    font-size: .85em;
+}
+
+.receipt-passenger-group,
+.receipt-money-breakdown {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+}
+
+.receipt-passenger-group strong {
+    color: var(--u-text);
+    overflow-wrap: anywhere;
+}
+
+.receipt-seat small {
+    color: var(--u-muted);
+    font-weight: 700;
+}
+
+.receipt-money-breakdown > span {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--u-border);
+}
+
+.receipt-money-breakdown small {
+    color: var(--u-muted);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.receipt-money-breakdown b {
+    color: var(--u-text);
+}
+
+.receipt-money-breakdown .receipt-money-total {
+    border-bottom: 0;
 }

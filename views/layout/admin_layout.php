@@ -160,6 +160,7 @@ $current = basename($_SERVER['PHP_SELF']);
 
 <body>
     <script>
+        window.GV_BASE_URL = <?= json_encode(rtrim(BASE_URL, '/')) ?>;
         (function () {
             var theme = document.documentElement.dataset.adminTheme || window.__adminTheme || 'light';
             var dark = theme === 'dark';

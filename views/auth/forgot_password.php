@@ -26,9 +26,13 @@ $left_features = [
 ];
 ?>
 
-<section class="auth-container">
-    <h2>Reset <span>password</span></h2>
-    <span class="sub-header">Enter your account email and set a new password.</span>
+<section class="auth-container auth-title-with-vanny">
+    <div>
+        <h2>Reset <span>password</span></h2>
+        <span class="sub-header">Enter your account email and set a new password.</span>
+    </div>
+
+    <?= vanny_mascot('waiting', 'small', 'auth-title-vanny', 'Vanny helps reset your password') ?>
 </section>
 
 <div class="auth-input">
@@ -43,7 +47,8 @@ $left_features = [
         <div class="input-group">
             <label for="password">New Password</label>
             <div class="password-wrapper">
-                <input type="password" name="password" id="password" placeholder="At least 8 characters" required minlength="8">
+                <input type="password" name="password" id="password" placeholder="At least 8 characters"
+                    required minlength="8">
                 <button type="button" class="password-toggle" aria-label="Toggle password visibility">
                     <i class="fas fa-eye"></i>
                 </button>
@@ -53,7 +58,8 @@ $left_features = [
         <div class="input-group">
             <label for="confirm_password">Confirm Password</label>
             <div class="password-wrapper">
-                <input type="password" name="confirm_password" id="confirm_password" placeholder="Repeat new password" required minlength="8">
+                <input type="password" name="confirm_password" id="confirm_password"
+                    placeholder="Repeat new password" required minlength="8">
                 <button type="button" class="password-toggle" aria-label="Toggle password visibility">
                     <i class="fas fa-eye"></i>
                 </button>

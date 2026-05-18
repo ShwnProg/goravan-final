@@ -44,13 +44,16 @@ $passengers = [];
 $passengerSummary = $booking['passenger_name'] ?? '-';
 if (!empty($paymentNotes['passengers']) && is_array($paymentNotes['passengers'])) {
     $passengers = $paymentNotes['passengers'];
-    $passengerSummary = implode(', ', array_map(function ($passenger) {
-        $name = trim((string) ($passenger['name'] ?? 'Passenger'));
-        $seat = trim((string) ($passenger['seat_number'] ?? ''));
-        $type = ucfirst((string) ($passenger['type'] ?? 'regular'));
-        return ($seat ? $seat . ': ' : '') . $name . ' (' . $type . ')';
-    }, $paymentNotes['passengers']));
 }
+$routeHtml = function (array $row) use ($paymentNotes): string {
+    $origin = $row['origin'] ?? ($paymentNotes['route_origin'] ?? '');
+    $destination = $row['destination'] ?? ($paymentNotes['route_destination'] ?? '');
+    if ($origin || $destination) {
+        return htmlspecialchars($origin ?: 'Origin') . ' <i class="fa-solid fa-arrow-right route-arrow-icon"></i> ' . htmlspecialchars($destination ?: 'Destination');
+    }
+    return htmlspecialchars((string) ($row['route_display'] ?? 'Route unavailable'));
+};
+$labelType = fn($type) => ucwords(str_replace('_', ' ', (string) ($type ?: 'regular')));
 ?>
 
 <div class="u-body booking-detail-page">
@@ -64,7 +67,7 @@ if (!empty($paymentNotes['passengers']) && is_array($paymentNotes['passengers'])
         <div class="u-bk-header">
             <div>
                 <div class="u-bk-ref"><?= htmlspecialchars($booking['reference_code']) ?></div>
-                <div class="u-bk-route"><?= htmlspecialchars($booking['route_display']) ?></div>
+                <div class="u-bk-route"><?= $routeHtml($booking) ?></div>
                 <div class="u-bk-subtle">Booked <?= date('M j, Y g:i A', strtotime($booking['created_at'])) ?></div>
             </div>
             <span class="u-badge <?= htmlspecialchars($booking['status']) ?>">
@@ -85,7 +88,7 @@ if (!empty($paymentNotes['passengers']) && is_array($paymentNotes['passengers'])
             <section class="u-detail-section">
                 <h2>Trip Information</h2>
                 <div class="u-detail-grid">
-                    <div><span>Route</span><strong><?= htmlspecialchars($booking['route_display']) ?></strong></div>
+                    <div><span>Route</span><strong><?= $routeHtml($booking) ?></strong></div>
                     <div><span>Departure</span><strong><?= date('M j, Y', strtotime($booking['departure_date'])) ?> &middot; <?= date('g:i A', strtotime($booking['departure_time'])) ?></strong></div>
                     <div><span>Trip status</span><strong><?= htmlspecialchars($scheduleObj->TripStatusLabel($scheduleStatus)) ?></strong></div>
                     <div><span>Van</span><strong><?= htmlspecialchars($booking['van_model']) ?> (<?= htmlspecialchars($booking['van_plate']) ?>)</strong></div>
@@ -110,35 +113,28 @@ if (!empty($paymentNotes['passengers']) && is_array($paymentNotes['passengers'])
             <section class="u-detail-section">
                 <h2>Passenger Information</h2>
                 <?php if ($passengers): ?>
-                    <div class="u-passenger-table-wrap">
-                        <table class="u-passenger-table">
-                            <thead>
-                                <tr>
-                                    <th>Seat</th>
-                                    <th>Passenger Name</th>
-                                    <th>Passenger Type</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($passengers as $passenger): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($passenger['seat_number'] ?? '-') ?></td>
-                                        <td><?= htmlspecialchars($passenger['name'] ?? $booking['passenger_name'] ?? '-') ?></td>
-                                        <td><?= htmlspecialchars(ucfirst($passenger['type'] ?? 'regular')) ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                    <div class="u-passenger-group">
+                        <div class="u-detail-grid">
+                            <div><span>Passenger</span><strong><?= htmlspecialchars($booking['passenger_name'] ?: ($passengers[0]['name'] ?? '-')) ?></strong></div>
+                            <div><span>Contact number</span><strong><?= htmlspecialchars($booking['contact_number'] ?? '-') ?></strong></div>
+                        </div>
+                        <div class="u-seat-type-list">
+                            <?php foreach ($passengers as $passenger): ?>
+                                <span class="u-seat-type-chip">
+                                    <i class="fa-solid fa-chair"></i>
+                                    <?= htmlspecialchars($passenger['seat_number'] ?? '-') ?>
+                                    <small><?= htmlspecialchars($labelType($passenger['type'] ?? 'regular')) ?></small>
+                                </span>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 <?php else: ?>
                     <div class="u-detail-grid">
                         <div><span>Passenger</span><strong><?= htmlspecialchars($passengerSummary) ?></strong></div>
                         <div><span>Passenger type</span><strong><?= ucfirst($booking['passenger_type'] ?? 'regular') ?></strong></div>
+                        <div><span>Contact number</span><strong><?= htmlspecialchars($booking['contact_number'] ?? '-') ?></strong></div>
                     </div>
                 <?php endif; ?>
-                <div class="u-detail-grid">
-                    <div><span>Contact number</span><strong><?= htmlspecialchars($booking['contact_number'] ?? '-') ?></strong></div>
-                </div>
             </section>
 
             <section class="u-detail-section">
@@ -146,6 +142,11 @@ if (!empty($paymentNotes['passengers']) && is_array($paymentNotes['passengers'])
                 <div class="u-detail-grid">
                     <div><span>Status</span><strong><?= ucfirst($booking['payment_status'] ?? 'pending') ?></strong></div>
                     <div><span>Method</span><strong><?= ucfirst($booking['payment_method'] ?? '-') ?></strong></div>
+                    <div><span>Base fare</span><strong>&#8369;<?= number_format((float) ($booking['base_total'] ?? 0), 2) ?></strong></div>
+                    <div><span>Discount</span><strong>-&#8369;<?= number_format((float) ($booking['discount_amount'] ?? 0), 2) ?></strong></div>
+                    <?php if ((float) ($booking['cash_fee'] ?? 0) > 0): ?>
+                        <div><span>Cash handling fee</span><strong>&#8369;<?= number_format((float) $booking['cash_fee'], 2) ?></strong></div>
+                    <?php endif; ?>
                     <div><span>Amount</span><strong>&#8369;<?= number_format((float) ($booking['payment_amount'] ?? 0), 2) ?></strong></div>
                     <div><span>Reference</span><strong><?= htmlspecialchars($booking['payment_reference'] ?? '-') ?></strong></div>
                 </div>

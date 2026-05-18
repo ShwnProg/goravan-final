@@ -383,7 +383,7 @@ if (!window._ssWidgetReady) {
                     '<span class="u-notif-icon ' + escAttr(tone) + '"><i class="' + escAttr(icon) + '"></i></span>' +
                     '<span class="u-notif-copy">' +
                         '<span class="u-notif-title">' + esc(title) + '</span>' +
-                        '<span class="u-notif-msg">' + esc(message) + '</span>' +
+                        '<span class="u-notif-msg">' + routeArrows(message) + '</span>' +
                         '<span class="u-notif-time">' + esc(relativeTime(item.time)) + ' &middot; ' + esc(item.time_label || formatFullDate(item.time)) + '</span>' +
                     '</span>' +
                 '</a>';
@@ -454,6 +454,10 @@ if (!window._ssWidgetReady) {
         function viewMoreMarkup(count) {
             if (count <= 0) return '';
             return '<button type="button" class="u-notif-more" data-notif-view-more>View more (' + count + ')</button>';
+        }
+
+        function routeArrows(value) {
+            return esc(value).replace(/\s*(?:-&gt;|→)\s*/g, ' <i class="fa-solid fa-arrow-right route-arrow-icon"></i> ');
         }
 
         function esc(value) {

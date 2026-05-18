@@ -529,21 +529,19 @@ class Schedules
         }
 
         $stmt = $this->conn->prepare("
-            UPDATE bookings b
-            LEFT JOIN payments p ON p.book_id_fk = (
-                SELECT MIN(b2.book_id_pk)
-                FROM bookings b2
-                WHERE b2.reference_code = b.reference_code
-            )
-            SET b.status = 'completed',
-                b.updated_at = NOW()
-            WHERE b.schedule_id_fk = :schedule_id
-              AND b.status = 'approved'
-              AND COALESCE(p.status, '') NOT IN ('refunded', 'failed', 'cancelled')
-        ");
-        $stmt->execute([':schedule_id' => $scheduleId]);
-    }
+        UPDATE bookings b
+        LEFT JOIN payments p ON p.book_id_fk = b.book_id_pk
+        SET b.status = 'completed',
+            b.updated_at = NOW()
+        WHERE b.schedule_id_fk = :schedule_id
+          AND b.status = 'approved'
+          AND COALESCE(p.status, '') NOT IN ('refunded', 'failed', 'cancelled')
+    ");
 
+        $stmt->execute([
+            ':schedule_id' => $scheduleId
+        ]);
+    }
     private function CancelBookingsForSchedule(int $scheduleId): void
     {
         if (!$scheduleId) {
@@ -1052,7 +1050,7 @@ class Schedules
                 $this->conn->rollBack();
             }
             error_log('[Schedules::UpdateTripStatusByDriver] ' . $e->getMessage());
-            return ['success' => false, 'message' => 'Unable to update trip status right now.'];
+            return ['success' => false, 'message' => 'Unable to update trip status right now.' . $e->getMessage()];
         }
     }
 

@@ -81,7 +81,7 @@ rsort($bookingDates);
                         <tr>
                             <td colspan="8">
                                 <div class="empty-state">
-                                    <i class="fas fa-ticket-alt"></i>
+                                    <?= vanny_mascot('waiting', 'small', 'admin-empty-vanny', 'Vanny waiting for bookings') ?>
                                     <p>No bookings yet.</p>
                                 </div>
                             </td>
@@ -161,7 +161,11 @@ rsort($bookingDates);
                                 <td>
                                     <div class="route-info trip-stack">
                                         <i class="fas fa-route" style="color:var(--color-accent);font-size:11px"></i>
-                                        <span><?= htmlspecialchars($b['route_display'] ?? 'N/A') ?></span>
+                                        <span>
+                                            <?= htmlspecialchars($b['origin'] ?? 'Origin') ?>
+                                            <i class="fas fa-arrow-right route-arrow-icon"></i>
+                                            <?= htmlspecialchars($b['destination'] ?? 'Destination') ?>
+                                        </span>
                                         <small><?= date('M d, g:i A', strtotime($b['departure_date'] . ' ' . $b['departure_time'])) ?></small>
                                     </div>
                                 </td>

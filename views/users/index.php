@@ -26,9 +26,10 @@ $locations      = LOCATIONS; // Use LOCATIONS constant from autoload.php
 <section class="u-dashboard-header">
     <div class="u-header-content">
         <div class="u-header-text">
-            <h1 class="u-header-title">Welcome back, <?= htmlspecialchars(ucfirst($user['firstname'] ?? '')) ?></h1>
-            <p class="u-header-subtitle">Find trips, review bookings, and keep your rides organized.</p>
+            <h1 class="u-header-title">Good day, <?= htmlspecialchars(ucfirst($user['firstname'] ?? '')) ?></h1>
+            <p class="u-header-subtitle">Hi! Ready to book your next ride?</p>
         </div>
+        <?= vanny_mascot('letsGo', 'medium', 'u-header-vanny', 'Vanny ready to ride') ?>
         <div class="u-header-date">
             <span class="u-date-label">Today</span>
             <span class="u-date-value"><?= date('M j, Y') ?></span>
@@ -134,7 +135,11 @@ $locations      = LOCATIONS; // Use LOCATIONS constant from autoload.php
                     <strong><?= date('j', strtotime($upcomingTrip['departure_date'])) ?></strong>
                 </div>
                 <div class="u-next-main">
-                    <div class="u-next-route"><?= htmlspecialchars($upcomingTrip['route_display']) ?></div>
+                    <div class="u-next-route">
+                        <?= htmlspecialchars($upcomingTrip['origin'] ?? 'Origin') ?>
+                        <i class="fa-solid fa-arrow-right route-arrow-icon"></i>
+                        <?= htmlspecialchars($upcomingTrip['destination'] ?? 'Destination') ?>
+                    </div>
                     <div class="u-next-meta">
                         <?= date('g:i A', strtotime($upcomingTrip['departure_time'])) ?>
                         &middot; <?= (int) $upcomingTrip['seats_count'] ?> seat<?= (int) $upcomingTrip['seats_count'] === 1 ? '' : 's' ?>

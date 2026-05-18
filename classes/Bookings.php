@@ -42,6 +42,8 @@ class Bookings
                 u.email as user_email,
                 u.contact_number as user_phone,
                 CONCAT(r.origin, ' -> ', r.destination) as route_display,
+                r.origin,
+                r.destination,
                 s.departure_date,
                 s.departure_time,
                 s.trip_status as schedule_status,
@@ -121,6 +123,8 @@ class Bookings
                 u.email as user_email,
                 u.contact_number as user_phone,
                 CONCAT(r.origin, ' → ', r.destination) as route_display,
+                r.origin,
+                r.destination,
                 r.fare as route_fare,
                 s.departure_date,
                 s.departure_time,
@@ -302,9 +306,7 @@ class Bookings
                 }
 
                 $baseRate = (float) ($discounts[$type] ?? 0);
-                $bonusRate = ($isMainPassenger && $verifiedType && $type === $verifiedType && $baseRate > 0)
-                    ? $verifiedBonus
-                    : 0.0;
+                $bonusRate = ($verifiedType && $baseRate > 0) ? $verifiedBonus : 0.0;
                 $totalRate = $baseRate > 0 ? $baseRate + $bonusRate : 0.0;
                 $seatDiscount = round($baseFare * ($totalRate / 100), 2);
                 $idRequired = !$isMainPassenger && $type !== 'regular';
@@ -330,7 +332,7 @@ class Bookings
 
             $discountAmount = round($discountAmount, 2);
             $subtotal = round(max(0, $baseTotal - $discountAmount), 2);
-            $cashFee = $paymentMethod === 'cash' ? $this->GetCashHandlingFee() : 0.0;
+            $cashFee = $this->IsCashPaymentMethod($paymentMethod) ? $this->GetCashHandlingFee() : 0.0;
             $totalAmount = round($subtotal + $cashFee, 2);
 
             if (abs($clientTotal - $totalAmount) > 0.50) {
@@ -368,13 +370,15 @@ class Bookings
                 'base_total' => $baseTotal,
                 'verified_passenger_type' => $verifiedType ?: 'regular',
                 'verified_bonus_rate' => $verifiedBonus,
+                'verified_bonus_applies_to_all_seats' => (bool) $verifiedType,
                 'discount_rate' => count($passengers) === 1 ? (float) $passengers[0]['discount_rate'] : null,
                 'discount_amount' => $discountAmount,
                 'convenience_fee' => 0,
                 'cash_fee' => $cashFee,
                 'subtotal' => $subtotal,
                 'boarding_verification_note' => 'Discounted companion passenger types require valid ID upon boarding.',
-                'route' => $schedule['origin'] . ' -> ' . $schedule['destination'],
+                'route_origin' => $schedule['origin'],
+                'route_destination' => $schedule['destination'],
             ]);
 
             $paidOnlineMethods = ['gcash', 'paymaya', 'card'];
@@ -568,14 +572,20 @@ class Bookings
             ");
             $stmt->execute();
             if ((int) $stmt->fetchColumn() < 1) {
-                return 0.0;
+                return 10.0;
             }
 
             $fee = $this->conn->query("SELECT cash_handling_fee FROM settings LIMIT 1")->fetchColumn();
-            return max(0.0, round((float) $fee, 2));
+            $configuredFee = (float) ($fee === false || $fee === null ? 10 : $fee);
+            return round($configuredFee > 0 ? $configuredFee : 10, 2);
         } catch (Throwable $e) {
-            return 0.0;
+            return 10.0;
         }
+    }
+
+    private function IsCashPaymentMethod(string $method): bool
+    {
+        return in_array(strtolower(trim($method)), ['cash', 'cash-on-site', 'pending_cash'], true);
     }
 
     public static function GetAllStatuses(): array
@@ -839,6 +849,8 @@ class Bookings
                 MIN(b.created_at) as created_at,
                 MAX(b.updated_at) as updated_at,
                 CONCAT(r.origin, ' → ', r.destination) as route_display,
+                r.origin,
+                r.destination,
                 r.fare as route_fare,
                 s.departure_date,
                 s.departure_time,
@@ -897,6 +909,9 @@ class Bookings
         $booking['passenger_type'] = $notes['passenger_type'] ?? 'regular';
         $booking['discount_amount'] = $notes['discount_amount'] ?? 0;
         $booking['convenience_fee'] = $notes['convenience_fee'] ?? 0;
+        $booking['cash_fee'] = $notes['cash_fee'] ?? 0;
+        $booking['base_total'] = $notes['base_total'] ?? 0;
+        $booking['subtotal'] = $notes['subtotal'] ?? 0;
 
         return $booking;
     }

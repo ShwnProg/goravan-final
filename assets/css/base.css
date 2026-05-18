@@ -172,3 +172,194 @@ small,
 html.admin-dark-mode-active {
     --page-bg: #0f172a;
 }
+
+/* Vanny mascot system */
+.vanny-mascot {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.vanny-mascot--small {
+    width: 64px;
+}
+
+.vanny-mascot--medium {
+    width: 150px;
+}
+
+.vanny-mascot--large {
+    width: 260px;
+}
+
+.vanny-message-card,
+.vanny-alert,
+.vanny-empty-state {
+    color: var(--u-text, var(--color-primary));
+}
+
+.vanny-message-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid var(--u-border, var(--border));
+    border-radius: 14px;
+    background: var(--u-surface, #fff);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.vanny-message-card__body {
+    min-width: 0;
+}
+
+.vanny-message-card h3,
+.vanny-empty-state h3 {
+    margin: 0 0 4px;
+    color: inherit;
+    font-size: 16px;
+    line-height: 1.25;
+    letter-spacing: 0;
+}
+
+.vanny-message-card p,
+.vanny-empty-state p {
+    margin: 0;
+    color: var(--u-muted, var(--text-muted));
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.vanny-message-card__action,
+.vanny-empty-state__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    min-height: 36px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.vanny-empty-state {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 26px 18px;
+    text-align: center;
+}
+
+.vanny-alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--u-border, var(--border));
+    border-radius: 12px;
+    background: var(--u-surface2, #f8fafc);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.vanny-alert .vanny-mascot {
+    width: 40px;
+}
+
+.admin-empty-vanny,
+.empty-state .admin-empty-vanny,
+.schedule-empty .admin-empty-vanny {
+    width: 70px;
+    margin: 0 auto 8px;
+}
+
+.admin-vanny-overview {
+    margin-bottom: 18px;
+}
+
+.vanny-confirm-modal .modal-content {
+    border: 0;
+    border-radius: 16px;
+}
+
+.vanny-confirm-modal .modal-body {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    padding: 26px;
+    text-align: center;
+}
+
+.vanny-confirm-modal__mascot {
+    width: 128px;
+}
+
+.vanny-confirm-modal h3 {
+    margin: 0;
+    font-size: 18px;
+    letter-spacing: 0;
+}
+
+.vanny-confirm-modal p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.vanny-confirm-modal__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+html.admin-dark-mode-active .vanny-message-card,
+body.admin-dark-mode-active .vanny-message-card,
+html.admin-dark-mode-active .vanny-alert,
+body.admin-dark-mode-active .vanny-alert,
+html.admin-dark-mode-active .vanny-empty-state,
+body.admin-dark-mode-active .vanny-empty-state {
+    color: #e5edf7;
+}
+
+html.admin-dark-mode-active .vanny-message-card,
+body.admin-dark-mode-active .vanny-message-card {
+    border-color: rgba(148, 163, 184, 0.22);
+    background: #172235;
+    box-shadow: none;
+}
+
+html.admin-dark-mode-active .vanny-message-card p,
+body.admin-dark-mode-active .vanny-message-card p,
+html.admin-dark-mode-active .vanny-empty-state p,
+body.admin-dark-mode-active .vanny-empty-state p {
+    color: #9fb1c8;
+}
+
+@media (max-width: 680px) {
+    .vanny-mascot--small {
+        width: 52px;
+    }
+
+    .vanny-mascot--medium {
+        width: 112px;
+    }
+
+    .vanny-mascot--large {
+        width: 170px;
+    }
+
+    .vanny-message-card {
+        align-items: flex-start;
+        padding: 14px;
+    }
+}

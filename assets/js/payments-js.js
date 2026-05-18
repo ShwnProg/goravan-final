@@ -147,11 +147,11 @@ window.initPaymentsPage = function () {
         var status = btn.dataset.status || 'paid';
 
         document.getElementById('view-booking-ref').textContent  = btn.dataset.bookingRef || '—';
-        document.getElementById('view-route').textContent        = btn.dataset.route       || '—';
+        document.getElementById('view-route').innerHTML          = _routeHtml(btn.dataset.route || '');
         document.getElementById('view-user-name').textContent    = btn.dataset.userName   || '—';
         document.getElementById('view-user-email').textContent   = btn.dataset.userEmail  || '—';
         document.getElementById('view-user-phone').textContent   = btn.dataset.userPhone  || 'N/A';
-        document.getElementById('view-amount').textContent       = '₱ ' + parseFloat(btn.dataset.amount || 0).toFixed(2);
+        document.getElementById('view-amount').innerHTML         = _paymentBreakdown(btn.dataset.notes || '', btn.dataset.amount || 0);
         document.getElementById('view-method').textContent       = _ucFirst(btn.dataset.method || '—');
         document.getElementById('view-payment-ref').textContent  = btn.dataset.ref        || '—';
         document.getElementById('view-notes').textContent        = _notesSummary(btn.dataset.notes || '');
@@ -410,11 +410,41 @@ window.initPaymentsPage = function () {
             var parts = [];
             if (notes.passenger_name) parts.push('Passenger: ' + notes.passenger_name);
             if (notes.seats_count) parts.push('Seats: ' + notes.seats_count);
+            if (notes.cash_fee && parseFloat(notes.cash_fee) > 0) parts.push('Cash handling fee: ₱' + parseFloat(notes.cash_fee).toFixed(2));
             if (notes.refund) parts.push('Refund: ' + _refundSummary(raw));
             return parts.length ? parts.join('\n') : 'No notes';
         } catch (e) {
             return raw;
         }
+    }
+
+    function _paymentBreakdown(raw, total) {
+        try {
+            var notes = raw ? JSON.parse(raw) : {};
+            var base = parseFloat(notes.base_total || 0);
+            var discount = parseFloat(notes.discount_amount || 0);
+            var cashFee = parseFloat(notes.cash_fee || 0);
+            if (!base && !discount && !cashFee) {
+                return '₱ ' + parseFloat(total || 0).toFixed(2);
+            }
+            return '<span class="pdv-money-breakdown">' +
+                '<span><small>Base fare</small><b>₱ ' + base.toFixed(2) + '</b></span>' +
+                '<span><small>Discount</small><b>-₱ ' + discount.toFixed(2) + '</b></span>' +
+                (cashFee > 0 ? '<span><small>Cash handling fee</small><b>₱ ' + cashFee.toFixed(2) + '</b></span>' : '') +
+                '<span class="pdv-money-total"><small>Total</small><b>₱ ' + parseFloat(total || 0).toFixed(2) + '</b></span>' +
+            '</span>';
+        } catch (e) {
+            return '₱ ' + parseFloat(total || 0).toFixed(2);
+        }
+    }
+
+    function _routeHtml(value) {
+        var route = String(value || '').replace(/\s*→\s*/g, ' -> ');
+        var parts = route.split(/\s*->\s*/);
+        if (parts.length >= 2) {
+            return _esc(parts[0]) + ' <i class="fas fa-arrow-right route-arrow-icon"></i> ' + _esc(parts.slice(1).join(' -> '));
+        }
+        return _esc(value || '—');
     }
 
     function _formatDate(str) {

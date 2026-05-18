@@ -218,7 +218,7 @@ class Dashboard
                 SELECT
                     'booking' AS type,
                     CONCAT('Booking ', b.reference_code, ' is ', b.status) AS title,
-                    CONCAT(COALESCE(NULLIF(TRIM(CONCAT(COALESCE(u.firstname, ''), ' ', COALESCE(u.lastname, ''))), ''), 'Passenger'), ' - ', COALESCE(CONCAT(r.origin, ' -> ', r.destination), 'Route unavailable')) AS detail,
+                    CONCAT(COALESCE(NULLIF(TRIM(CONCAT(COALESCE(u.firstname, ''), ' ', COALESCE(u.lastname, ''))), ''), 'Passenger'), ' - ', COALESCE(CONCAT(r.origin, ' → ', r.destination), 'Route unavailable')) AS detail,
                     b.updated_at AS event_time,
                     CASE b.status
                         WHEN 'pending' THEN '#F97316'
@@ -238,7 +238,7 @@ class Dashboard
                 SELECT
                     'schedule' AS type,
                     CONCAT('Schedule marked ', s.trip_status) AS title,
-                    CONCAT(COALESCE(r.origin, 'Origin'), ' -> ', COALESCE(r.destination, 'Destination')) AS detail,
+                    CONCAT(COALESCE(r.origin, 'Origin'), ' → ', COALESCE(r.destination, 'Destination')) AS detail,
                     COALESCE(s.updated_at, s.created_at) AS event_time,
                     CASE s.trip_status
                         WHEN 'not_departed' THEN '#F97316'
@@ -270,16 +270,6 @@ class Dashboard
                 FROM payments p
                 LEFT JOIN bookings b ON p.book_id_fk = b.book_id_pk
 
-                UNION ALL
-
-                SELECT
-                    'user' AS type,
-                    'New passenger registered' AS title,
-                    COALESCE(NULLIF(TRIM(CONCAT(COALESCE(u.firstname, ''), ' ', COALESCE(u.lastname, ''))), ''), 'Passenger') AS detail,
-                    u.created_at AS event_time,
-                    '#378ADD' AS color
-                FROM users u
-                WHERE u.role = 'user'
             ) activity
             WHERE event_time IS NOT NULL
             ORDER BY event_time DESC

@@ -23,6 +23,7 @@ $userId = (int) decrypt($_SESSION['id']);
             <span class="pay-eyebrow">Payment History</span>
             <h1>Receipts</h1>
         </div>
+        <?= vanny_mascot('phoneBooking', 'medium', 'pay-header-vanny', 'Vanny with mobile booking') ?>
         <div class="pay-stat-grid">
             <div class="pay-stat">
                 <span>Total spent</span>
@@ -75,8 +76,8 @@ $userId = (int) decrypt($_SESSION['id']);
 
     <section class="payment-list" id="paymentList">
         <div class="payment-empty">
-            <i class="fa-solid fa-spinner fa-spin"></i>
-            <p>Loading payments...</p>
+            <?= vanny_mascot('running', 'medium', 'payment-empty-vanny', 'Vanny is loading payments') ?>
+            <p>Vanny is loading payments...</p>
         </div>
     </section>
 </div>

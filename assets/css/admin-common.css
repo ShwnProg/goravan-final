@@ -580,6 +580,127 @@ body.admin-dark-mode-active {
     color: #9ca3af;
 }
 
+.route-arrow-icon {
+    margin: 0 6px;
+    color: var(--color-accent);
+    font-size: .85em;
+    vertical-align: middle;
+}
+
+.admin-date-filters {
+    display: flex;
+    align-items: end;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.admin-date-filters label {
+    display: grid;
+    gap: 4px;
+    min-width: 118px;
+}
+
+.admin-date-filters span {
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.admin-date-filters input,
+.admin-date-filters select {
+    min-height: 36px;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 8px;
+    background: #fff;
+    color: #374151;
+    padding: 0 10px;
+    font: inherit;
+    font-size: 12px;
+}
+
+.filter-btn.ghost {
+    min-height: 36px;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 8px;
+    background: #fff;
+    color: #64748b;
+    padding: 0 12px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.seat-type-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.seat-type-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 28px;
+    padding: 0 9px;
+    border: 1px solid rgba(148, 163, 184, .22);
+    border-radius: 999px;
+    background: #f8fafc;
+    color: #334155;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.seat-type-chip small {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.passenger-seat-summary,
+.pdv-money-breakdown {
+    display: grid;
+    gap: 10px;
+}
+
+.passenger-seat-person {
+    display: grid;
+    gap: 2px;
+}
+
+.passenger-seat-person strong {
+    color: var(--color-primary);
+    overflow-wrap: anywhere;
+}
+
+.passenger-seat-person span {
+    color: #64748b;
+    font-size: 12px;
+}
+
+.pdv-money-breakdown > span {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(148, 163, 184, .16);
+}
+
+.pdv-money-breakdown small {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.pdv-money-breakdown b {
+    color: #0f172a;
+}
+
+.pdv-money-breakdown .pdv-money-total {
+    border-bottom: 0;
+}
+
 .admin-pagination {
     display: flex;
     align-items: center;
@@ -1000,6 +1121,19 @@ select.ss {
         font-size: 12px;
     }
 
+    .admin-date-filters {
+        width: 100%;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .admin-date-filters label,
+    .admin-date-filters .filter-btn,
+    .filter-btn.ghost {
+        width: 100%;
+        min-width: 0;
+    }
+
     .name-row {
         flex-direction: column;
         gap: 12px;
@@ -1234,6 +1368,36 @@ body.admin-dark-mode-active .bookings-table tbody td {
 
 body.admin-dark-mode-active .text-muted-sm {
     color: #94a3b8;
+}
+
+body.admin-dark-mode-active .admin-date-filters span,
+body.admin-dark-mode-active .passenger-seat-person span,
+body.admin-dark-mode-active .seat-type-chip small,
+body.admin-dark-mode-active .pdv-money-breakdown small {
+    color: #94a3b8;
+}
+
+body.admin-dark-mode-active .admin-date-filters input,
+body.admin-dark-mode-active .admin-date-filters select,
+body.admin-dark-mode-active .filter-btn.ghost {
+    background: #162032;
+    border-color: rgba(255, 255, 255, .09);
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .seat-type-chip {
+    background: rgba(15, 23, 42, .55);
+    border-color: rgba(255, 255, 255, .09);
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .passenger-seat-person strong,
+body.admin-dark-mode-active .pdv-money-breakdown b {
+    color: #e2e8f0;
+}
+
+body.admin-dark-mode-active .pdv-money-breakdown > span {
+    border-bottom-color: rgba(255, 255, 255, .08);
 }
 
 body.admin-dark-mode-active .admin-status-group-row,

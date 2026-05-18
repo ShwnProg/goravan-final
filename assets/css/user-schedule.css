@@ -350,7 +350,7 @@ select.ss {
     display: block;
     margin-top: 2px;
     color: var(--u-muted);
-    font-size: 12.5px;
+    font-size: 11.5px;
 }
 
 #bookingModal .modal-body {
@@ -775,7 +775,7 @@ select.ss {
 .booking-form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    gap: 12px;
     min-width: 0;
 }
 
@@ -792,7 +792,7 @@ select.ss {
 
 .u-form-group label {
     color: var(--u-muted);
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: .07em;
@@ -824,10 +824,10 @@ select.ss {
     display: inline-flex;
     align-items: center;
     width: fit-content;
-    min-height: 24px;
+    min-height: 22px;
     border-radius: 999px;
-    padding: 0 10px;
-    font-size: 11px;
+    padding: 0 9px;
+    font-size: 10.5px;
     font-weight: 800;
 }
 
@@ -846,14 +846,34 @@ select.ss {
     color: var(--u-muted);
 }
 
+.seat-helper-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    max-width: 100%;
+    padding: 7px 10px;
+    border: 1px solid var(--u-border);
+    border-radius: 10px;
+    background: var(--u-surface2);
+    color: var(--u-muted);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.seat-helper-vanny {
+    width: 34px;
+}
+
 .passenger-seat-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 10px;
-    max-height: 235px;
+    grid-template-columns: repeat(auto-fill, minmax(154px, 1fr));
+    gap: 8px;
+    max-height: 205px;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 2px 4px 2px 0;
+    padding: 2px 3px 2px 0;
 }
 
 .passenger-seat-empty {
@@ -868,11 +888,11 @@ select.ss {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
-    gap: 7px;
+    gap: 6px;
     min-width: 0;
-    padding: 10px 11px;
+    padding: 9px;
     border: 1px solid var(--u-border);
-    border-radius: 10px;
+    border-radius: 8px;
     background: var(--u-surface2);
 }
 
@@ -884,18 +904,25 @@ select.ss {
     min-width: 0;
 }
 
-.passenger-seat-label span {
-    color: var(--u-accent);
+.passenger-seat-title {
+    color: var(--u-text);
     font-size: 12px;
-    font-weight: 900;
+    font-weight: 800;
     white-space: nowrap;
 }
 
-.passenger-seat-label strong,
+.passenger-seat-label small,
 .passenger-seat-discount {
     color: var(--u-muted);
-    font-size: 11px;
-    font-weight: 800;
+    font-size: 10.5px;
+    font-weight: 750;
+}
+
+.passenger-seat-label small {
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: var(--u-surface);
+    white-space: nowrap;
 }
 
 .passenger-seat-discount {
@@ -911,10 +938,10 @@ select.ss {
 .passenger-seat-type {
     width: 100%;
     min-width: 0;
-    min-height: 38px !important;
-    border-radius: 9px !important;
-    padding: 0 10px !important;
-    font-size: 13px !important;
+    min-height: 34px !important;
+    border-radius: 8px !important;
+    padding: 0 9px !important;
+    font-size: 12px !important;
 }
 
 .passenger-seat-type:disabled {
@@ -1004,11 +1031,11 @@ select.ss {
 .cash-info {
     margin: 8px 0 0;
     border: 1px solid var(--u-border);
-    border-radius: 12px;
+    border-radius: 9px;
     background: var(--u-surface);
     color: var(--u-muted);
-    padding: 11px 12px;
-    font-size: 12.5px;
+    padding: 9px 10px;
+    font-size: 11.5px;
 }
 
 .card-fields {
@@ -1031,6 +1058,11 @@ select.ss {
     max-width: 620px;
     margin: 0 auto;
     text-align: center;
+}
+
+.receipt-vanny {
+    width: 130px;
+    margin: 0 auto 8px;
 }
 
 .receipt-check {
@@ -1124,6 +1156,10 @@ select.ss {
     font-size: 36px;
 }
 
+.u-empty-state .vanny-empty-state {
+    padding: 0;
+}
+
 @media (max-width: 768px) {
     .u-search-card {
         padding: 16px !important;
@@ -1158,7 +1194,7 @@ select.ss {
 
     .passenger-seat-list {
         grid-template-columns: 1fr;
-        max-height: 220px;
+        max-height: 190px;
     }
 
     #bookingModal .modal-dialog {
@@ -1812,4 +1848,9 @@ select.ss {
             width: 100%;
         }
     }
+}
+.route-arrow-icon {
+    margin: 0 6px;
+    color: var(--u-accent);
+    font-size: .85em;
 }

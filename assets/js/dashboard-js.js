@@ -95,6 +95,10 @@
         }[ch]));
     }
 
+    function routeArrows(value) {
+        return escapeHtml(value || '').replace(/\s*(?:-&gt;|→)\s*/g, ' <i class="fas fa-arrow-right route-arrow-icon"></i> ');
+    }
+
     function initActivityFeed() {
         const container = document.getElementById('db-activity');
         if (!container) return;
@@ -116,7 +120,7 @@
                     <div class="db-act__dot" style="background:${escapeHtml(a.color || '#64748b')}"></div>
                     <div class="db-act__body">
                         <div class="db-act__text"><b>${escapeHtml(a.title)}</b></div>
-                        <div class="db-act__detail">${escapeHtml(a.detail || '')}</div>
+                        <div class="db-act__detail">${routeArrows(a.detail || '')}</div>
                         <div class="db-act__time">${escapeHtml(a.time || '')}</div>
                     </div>
                 </div>`).join('');

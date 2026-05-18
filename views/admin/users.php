@@ -93,7 +93,7 @@ function verificationBadge(string $status): string
                     <tr>
                         <td colspan="8">
                             <div class="empty-state">
-                                <i class="fas fa-users"></i>
+                                <?= vanny_mascot('wave', 'small', 'admin-empty-vanny', 'Vanny welcomes users') ?>
                                 <p>No users yet.</p>
                             </div>
                         </td>

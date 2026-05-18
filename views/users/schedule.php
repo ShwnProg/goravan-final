@@ -39,7 +39,7 @@ $results = $sched->GetAvailableSchedules([
 $passengerName = trim(($user['firstname'] ?? '') . ' ' . ($user['lastname'] ?? ''));
 $contactNumber = $user['contact_number'] ?? '';
 $verifiedPassengerType = $verifiedType === 'senior' ? 'senior' : ($verifiedType ?: 'regular');
-$cashFee = 0.0;
+$cashFee = 10.0;
 try {
     $cashFeeColumn = $conn->query("
         SELECT COUNT(*)
@@ -49,10 +49,11 @@ try {
           AND COLUMN_NAME = 'cash_handling_fee'
     ")->fetchColumn();
     if ((int) $cashFeeColumn > 0) {
-        $cashFee = max(0.0, (float) $conn->query("SELECT cash_handling_fee FROM settings LIMIT 1")->fetchColumn());
+        $configuredCashFee = (float) $conn->query("SELECT cash_handling_fee FROM settings LIMIT 1")->fetchColumn();
+        $cashFee = $configuredCashFee > 0 ? $configuredCashFee : 10.0;
     }
 } catch (Throwable $e) {
-    $cashFee = 0.0;
+    $cashFee = 10.0;
 }
 ?>
 
@@ -186,9 +187,7 @@ try {
             </div>
         <?php else: ?>
             <div class="u-empty-state">
-                <i class="fa-solid fa-calendar-xmark"></i>
-                <p>No available schedules found for your selected route and date.</p>
-                <p>Try another date or nearby route.</p>
+                <?= vanny_empty_state('location', 'No schedules available', 'Try another date or nearby route.', '', '', 'u-vanny-empty') ?>
             </div>
         <?php endif; ?>
     </div>
@@ -200,7 +199,7 @@ try {
             <div class="modal-header">
                 <div>
                     <h5 class="modal-title" id="bookingModalLabel">Book Your Trip</h5>
-                    <span class="modal-subtitle">Choose seats, passenger details, and payment in one flow.</span>
+                    <span class="modal-subtitle">Seats, details, and payment.</span>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -298,14 +297,17 @@ try {
                         </div>
                         <div class="u-form-group full">
                             <?php if ($verifiedType): ?>
-                                <span class="verified-badge">Verified +2% bonus</span>
+                                <span class="verified-badge">Verified +2%</span>
                             <?php else: ?>
-                                <span class="note-badge">Verify your account in Profile to get discounts</span>
+                                <span class="note-badge">Verify in Profile for fare discounts.</span>
                             <?php endif; ?>
                         </div>
                         <div class="u-form-group full">
-                            <label>Passenger Type Per Seat</label>
-                            <span class="note-badge">Discounted companion types such as Student, Senior Citizen, and PWD require a valid ID upon boarding. If no valid proof is presented, the passenger must pay the regular fare difference.</span>
+                            <label>Passenger Types</label>
+                            <span class="seat-helper-note">
+                                <?= vanny_mascot('pointing', 'small', 'seat-helper-vanny', 'Vanny passenger type tip') ?>
+                                <span>Discounted companions need valid ID at boarding.</span>
+                            </span>
                             <div class="passenger-seat-list" id="passengerSeatList"></div>
                         </div>
                     </div>
@@ -350,7 +352,7 @@ try {
                                     <label for="paymentPhone">GCash/PayMaya Number</label>
                                     <input type="tel" id="paymentPhone" placeholder="09XX XXX XXXX">
                                 </div>
-                                <p class="payment-note">This is a demo - no real transaction will occur.</p>
+                                <p class="payment-note">Demo payment only.</p>
                             </div>
 
                             <div class="payment-panel" data-panel="paymaya" hidden>
@@ -358,7 +360,7 @@ try {
                                     <label for="paymentPhonePaymaya">GCash/PayMaya Number</label>
                                     <input type="tel" id="paymentPhonePaymaya" placeholder="09XX XXX XXXX">
                                 </div>
-                                <p class="payment-note">This is a demo - no real transaction will occur.</p>
+                                <p class="payment-note">Demo payment only.</p>
                             </div>
 
                             <div class="payment-panel" data-panel="card" hidden>
@@ -385,7 +387,7 @@ try {
                             <div class="payment-panel" data-panel="cash" hidden>
                                 <div class="cash-info">
                                     <i class="fa-solid fa-circle-info"></i>
-                                    <span>Cash bookings are paid personally/on-site after approval and are not refundable online.</span>
+                                    <span>Pay on-site after approval. Cash fee applies.</span>
                                 </div>
                             </div>
 
@@ -418,6 +420,7 @@ try {
 
                 <section class="booking-step" data-step="5">
                     <div class="receipt-wrap">
+                        <?= vanny_mascot('thumbsUp', 'medium', 'receipt-vanny', 'Vanny says booking submitted') ?>
                         <div class="receipt-check"><i class="fa-solid fa-check"></i></div>
                         <div class="receipt-title">Booking Request Submitted</div>
                         <div class="receipt-ref">

@@ -1,6 +1,7 @@
 <?php
-require_once '../../autoload.php';
+require_once "../../autoload.php";
 ob_start();
+
 $title = "Create Account";
 $page_js = '../../assets/js/user.js';
 
@@ -28,9 +29,13 @@ $old = $_SESSION['old'] ?? [];
 unset($_SESSION['old']);
 ?>
 
-<section class="auth-container">
-    <h2>Create an <span>Account</span></h2>
-    <span class='sub-header'>Fill in the details below to register your GoraVan account.</span>
+<section class="auth-container auth-title-with-vanny">
+    <div>
+        <h2>Create an <span>Account</span></h2>
+        <span class="sub-header">Fill in the details below to register your GoraVan account.</span>
+    </div>
+
+    <?= vanny_mascot('welcome', 'small', 'auth-title-vanny', 'Vanny welcomes new users') ?>
 </section>
 
 <div class="auth-input">
@@ -41,12 +46,15 @@ unset($_SESSION['old']);
         <div class="input-group name-group">
             <div class="name-field">
                 <label for="first_name">First Name</label>
-                <input type="text" name="first_name" id="first_name" value="<?= htmlspecialchars($old['first_name'] ?? '') ?>"
+                <input type="text" name="first_name" id="first_name"
+                    value="<?= htmlspecialchars($old['first_name'] ?? '') ?>"
                     placeholder="Enter first name" autocomplete="given-name" required>
             </div>
+
             <div class="name-field">
                 <label for="last_name">Last Name</label>
-                <input type="text" name="last_name" id="last_name" value="<?= htmlspecialchars($old['last_name'] ?? '') ?>"
+                <input type="text" name="last_name" id="last_name"
+                    value="<?= htmlspecialchars($old['last_name'] ?? '') ?>"
                     placeholder="Enter last name" autocomplete="family-name" required>
             </div>
         </div>
@@ -62,10 +70,13 @@ unset($_SESSION['old']);
             <input type="text" name="contact" id="contact" value="<?= htmlspecialchars($old['contact'] ?? '') ?>"
                 placeholder="09XX XXX XXXX" autocomplete="tel" inputmode="numeric" required>
         </div>
+
         <div class="input-group">
             <label for="birthdate">Birthdate</label>
-            <input type="date" name="birthdate" id="birthdate" value="<?= htmlspecialchars($old['birthdate'] ?? '') ?>" required>
+            <input type="date" name="birthdate" id="birthdate"
+                value="<?= htmlspecialchars($old['birthdate'] ?? '') ?>" required>
         </div>
+
         <div class="password-group">
             <div class="pw-field">
                 <label for="password">Password</label>
@@ -77,39 +88,37 @@ unset($_SESSION['old']);
                     </button>
                 </div>
             </div>
+
             <div class="pw-field">
                 <label for="confirm_password">Confirm Password</label>
                 <div class="password-wrapper">
-                    <input type="password" name="confirm_password" id="confirm_password" placeholder="Re-enter password"
-                        autocomplete="new-password" required>
+                    <input type="password" name="confirm_password" id="confirm_password"
+                        placeholder="Re-enter password" autocomplete="new-password" required>
                     <button type="button" class="password-toggle" aria-label="Toggle password visibility">
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
             </div>
         </div>
+
         <p class="auth-field-hint">For your security, password fields are cleared after an unsuccessful submit.</p>
 
         <div class="select-type">
             <label for="type">Passenger Type</label>
             <select name="type" id="type" required>
                 <option value="">Select passenger type</option>
-
-                <option value="regular" <?= ($old['type'] ?? '') == 'regular' ? 'selected' : '' ?>>Regular</option>
-
-                <option value="student" <?= ($old['type'] ?? '') == 'student' ? 'selected' : '' ?>>Student</option>
-
-                <option value="senior" <?= ($old['type'] ?? '') == 'senior' ? 'selected' : '' ?>>Senior Citizen</option>
-
-                <option value="pwd" <?= ($old['type'] ?? '') == 'pwd' ? 'selected' : '' ?>>Person With Disability (PWD)
-                </option>
+                <option value="regular" <?= ($old['type'] ?? '') === 'regular' ? 'selected' : '' ?>>Regular</option>
+                <option value="student" <?= ($old['type'] ?? '') === 'student' ? 'selected' : '' ?>>Student</option>
+                <option value="senior" <?= ($old['type'] ?? '') === 'senior' ? 'selected' : '' ?>>Senior Citizen</option>
+                <option value="pwd" <?= ($old['type'] ?? '') === 'pwd' ? 'selected' : '' ?>>Person With Disability (PWD)</option>
             </select>
         </div>
 
         <div class="upload">
-            <label for="verification">Upload Verification Document <em
-                    style="font-style:normal;font-weight:400;color:#94a3b8;">(Required for discounted
-                    booking)</em></label>
+            <label for="verification">
+                Upload Verification Document
+                <em>(Required for discounted booking)</em>
+            </label>
             <input type="file" name="verification" id="verification" accept=".jpg,.jpeg,.png,.pdf">
         </div>
 
@@ -125,5 +134,5 @@ unset($_SESSION['old']);
 
 <?php
 $content = ob_get_clean();
-include '../layout/auth.php';
+include "../layout/auth.php";
 ?>

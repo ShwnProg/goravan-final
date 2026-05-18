@@ -70,14 +70,26 @@ try {
 
     <!-- HOME -->
     <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-badge">Southern Leyte Online Van Booking</div>
-            <h1>Book Your <span>Van Ride</span><br>Online, Anytime</h1>
-            <p>GoraVan makes commuting between Southern Leyte destinations easier. Reserve your seat, view schedules,
-                and confirm your booking - all without going to the terminal.</p>
-            <div class="hero-actions">
-                <a href="views/auth/register.php" class="cta-btn">Book a Ride</a>
-                <a href="views/auth/login.php" class="cta-outline">Log In</a>
+        <div class="hero-main">
+            <div class="hero-copy">
+                <div class="hero-topline">
+                    <div class="hero-badge">Southern Leyte Online Van Booking</div>
+
+                    <img class="hero-vanny" src="/images/vanny-lets-go.png" alt="Vanny ready to go" loading="lazy"
+                        decoding="async">
+                </div>
+
+                <h1>Book Your <span>Van Ride</span><br>Online, Anytime</h1>
+
+                <p>
+                    GoraVan makes commuting between Southern Leyte destinations easier. Reserve your seat, view
+                    schedules, and confirm your booking - all without going to the terminal.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="views/auth/register.php" class="cta-btn">Book a Ride</a>
+                    <a href="views/auth/login.php" class="cta-outline">Log In</a>
+                </div>
             </div>
         </div>
 
@@ -86,20 +98,20 @@ try {
                 <div class="hero-card-header">
                     <span class="card-label">Available Routes</span>
                 </div>
+
                 <div class="route-list">
                     <?php if (!empty($landingSchedules)): ?>
                         <?php foreach ($landingSchedules as $schedule): ?>
-                   
-                                <div class="route-item">
-                                    <span class="route-name">
-                                        <?= htmlspecialchars($schedule['origin'] ?? 'Origin') ?>
-                                        <i class="fas fa-arrow-right"></i>
-                                        <?= htmlspecialchars($schedule['destination'] ?? 'Destination') ?>
-                                    </span>
-                                    <span class="route-time">
-                                        <?= date('M j, g:i A', strtotime(($schedule['departure_date'] ?? '') . ' ' . ($schedule['departure_time'] ?? ''))) ?>
-                                    </span>
-                                </div>
+                            <div class="route-item">
+                                <span class="route-name">
+                                    <?= htmlspecialchars($schedule['origin'] ?? 'Origin') ?>
+                                    <i class="fas fa-arrow-right"></i>
+                                    <?= htmlspecialchars($schedule['destination'] ?? 'Destination') ?>
+                                </span>
+                                <span class="route-time">
+                                    <?= date('M j, g:i A', strtotime(($schedule['departure_date'] ?? '') . ' ' . ($schedule['departure_time'] ?? ''))) ?>
+                                </span>
+                            </div>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <div class="route-item">
@@ -116,10 +128,13 @@ try {
                         Seat Availability
                         <?php if (!empty($landingSchedules[0])): ?>
                             -
-                            <?= htmlspecialchars(($landingSchedules[0]['origin'] ?? 'Origin') . ' -> ' . ($landingSchedules[0]['destination'] ?? 'Destination')) ?>
+                            <?= htmlspecialchars($landingSchedules[0]['origin'] ?? 'Origin') ?>
+                            <i class="fas fa-arrow-right"></i>
+                            <?= htmlspecialchars($landingSchedules[0]['destination'] ?? 'Destination') ?>
                         <?php endif; ?>
                     </span>
                 </div>
+
                 <div class="seat-grid">
                     <?php if (!empty($landingSeatPreview)): ?>
                         <?php foreach ($landingSeatPreview as $seat): ?>
@@ -140,6 +155,7 @@ try {
                         <div class="seat available">4A</div>
                     <?php endif; ?>
                 </div>
+
                 <div class="seat-legend">
                     <span><span class="legend-box available-box"></span> Available</span>
                     <span><span class="legend-box taken-box"></span> Taken</span>
@@ -147,7 +163,6 @@ try {
             </div>
         </div>
     </section>
-
     <!-- FEATURES SECTION -->
     <section class="features" id="features">
         <div class="features-header">

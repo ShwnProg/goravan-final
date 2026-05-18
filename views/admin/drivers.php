@@ -63,7 +63,7 @@ $drivers   = $driverObj->GetAllDrivers();
                         <tr>
                             <td colspan="8">
                                 <div class="empty-state">
-                                    <i class="fas fa-user-tie"></i>
+                                    <?= vanny_mascot('wave', 'small', 'admin-empty-vanny', 'Vanny welcomes drivers') ?>
                                     <p>No drivers yet. Add your first driver.</p>
                                 </div>
                             </td>

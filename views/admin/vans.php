@@ -65,7 +65,7 @@ $vans = $vanObj->GetAllVans();
                     <tr>
                         <td colspan="7">
                             <div class="empty-state">
-                                <i class="fas fa-van-shuttle"></i>
+                                <?= vanny_mascot('letsGo', 'small', 'admin-empty-vanny', 'Vanny ready for vans') ?>
                                 <p>No vans yet. Add your first van.</p>
                             </div>
                         </td>

@@ -63,7 +63,7 @@ $routes = $route->GetAllRoutes();
                         <tr>
                             <td colspan="7">
                                 <div class="empty-state">
-                                    <i class="fas fa-road"></i>
+                                    <?= vanny_mascot('location', 'small', 'admin-empty-vanny', 'Vanny location guide') ?>
                                     <p>No routes yet. Add your first route.</p>
                                 </div>
                             </td>

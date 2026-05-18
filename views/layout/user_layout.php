@@ -49,6 +49,9 @@ $depth = str_repeat('../', substr_count($_SERVER['PHP_SELF'], '/') - 1);
 </head>
 
 <body class="user-page" id="userBody">
+    <script>
+        window.GV_BASE_URL = <?= json_encode(rtrim(BASE_URL, '/')) ?>;
+    </script>
     <!-- <?php if (isset($_SESSION['success'])): ?>
         <script>
             document.addEventListener('DOMContentLoaded', () => {
