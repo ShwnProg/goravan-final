@@ -1517,3 +1517,33 @@
     color: var(--u-muted);
     font-weight: 700;
 }
+.vanny-empty-state__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 120px;
+    min-height: 44px;
+    padding: 12px 20px;
+
+    background: var(--u-accent, #f97316);
+    color: #ffffff !important;
+
+    font-size: 14px !important;
+    font-weight: 800;
+    line-height: 1;
+
+    text-decoration: none;
+    border-radius: 10px;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-indent: 0 !important;
+    white-space: nowrap;
+}
+
+.vanny-empty-state__action:hover {
+    color: #ffffff !important;
+    filter: brightness(.95);
+    text-decoration: none;
+}

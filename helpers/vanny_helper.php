@@ -83,7 +83,7 @@ function vanny_empty_state(
         $html .= '<p>' . htmlspecialchars($description, ENT_QUOTES, 'UTF-8') . '</p>';
     }
     if ($actionText !== '' && $actionHref !== '') {
-        $html .= '<a class="vanny-empty-state__action" href="' . htmlspecialchars($actionHref, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($actionText, ENT_QUOTES, 'UTF-8') . '</a>';
+        $html .= '<a class="vanny-empty-state__action" href="' . htmlspecialchars($actionHref, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($actionText, ENT_QUOTES, 'UTF-8')  . '</a>';
     }
     $html .= '</div>';
 
