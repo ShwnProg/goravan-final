@@ -1333,3 +1333,133 @@
 .receipt-money-breakdown .receipt-money-total {
     border-bottom: 0;
 }
+
+/* Mobile payments layout polish */
+@media (max-width: 768px) {
+    .user-page .u-body:has(.pay-header-card) {
+        padding: 14px 14px 92px !important;
+    }
+
+    .user-page .pay-header-card {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) 72px;
+        grid-template-areas:
+            "title vanny"
+            "stats stats";
+        align-items: center !important;
+        gap: 12px;
+        margin-bottom: 12px;
+        padding: 16px !important;
+        border-radius: 14px;
+    }
+
+    .user-page .pay-header-card > div:first-child {
+        grid-area: title;
+        min-width: 0;
+    }
+
+    .user-page .pay-eyebrow {
+        margin-bottom: 4px;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+    }
+
+    .user-page .pay-header-card h1 {
+        margin: 0;
+        font-size: 22px !important;
+        line-height: 1.15;
+    }
+
+    .user-page .pay-header-vanny {
+        grid-area: vanny;
+        width: 62px !important;
+        margin: 0 auto;
+        align-self: center;
+    }
+
+    .user-page .pay-stat-grid {
+        grid-area: stats;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        min-width: 0 !important;
+    }
+
+    .user-page .pay-stat {
+        min-height: 50px;
+        padding: 10px 12px;
+        border-radius: 9px;
+        gap: 2px;
+    }
+
+    .user-page .pay-stat span {
+        font-size: 9px;
+        letter-spacing: 0.08em;
+    }
+
+    .user-page .pay-stat strong {
+        font-size: 16px;
+        line-height: 1.2;
+    }
+
+    .user-page .pay-filter-bar {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .user-page .pay-field {
+        gap: 5px;
+    }
+
+    .user-page .pay-field > span {
+        font-size: 10px;
+    }
+
+    .user-page .pay-search,
+    .user-page .pay-filter-bar select,
+    .user-page .pay-filter-bar input[type="date"],
+    .user-page .pay-clear-filter {
+        min-height: 42px !important;
+        border-radius: 9px !important;
+        font-size: 12px;
+    }
+
+    .user-page .pay-search input {
+        font-size: 12px;
+    }
+
+    .user-page .pay-clear-filter {
+        margin-top: 2px;
+    }
+
+    .user-page .pay-filter-feedback {
+        margin-bottom: 10px;
+        font-size: 11px;
+    }
+
+    .user-page .payment-empty {
+        padding: 28px 14px;
+    }
+}
+
+@media (max-width: 380px) {
+    .user-page .u-body:has(.pay-header-card) {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .user-page .pay-header-card {
+        grid-template-columns: minmax(0, 1fr) 58px;
+        padding: 14px !important;
+    }
+
+    .user-page .pay-header-card h1 {
+        font-size: 20px !important;
+    }
+
+    .user-page .pay-header-vanny {
+        width: 54px !important;
+    }
+}

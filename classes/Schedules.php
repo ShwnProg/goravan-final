@@ -876,16 +876,18 @@ class Schedules
         foreach ($trips as $trip) {
             $status = $trip['trip_status'] ?? '';
             $date = $trip['departure_date'] ?? '';
-            if ($date === $today && $status !== 'cancelled') {
+            $dateTime = trim($date . ' ' . ($trip['departure_time'] ?? '00:00:00'));
+
+            if ($date === $today && !in_array($status, ['cancelled', 'completed'], true)) {
                 $stats['today']++;
             }
-            if ($status !== 'cancelled' && $status !== 'completed' && trim($date . ' ' . ($trip['departure_time'] ?? '')) >= date('Y-m-d H:i:s')) {
+            if (!in_array($status, ['cancelled', 'completed'], true) && $dateTime >= date('Y-m-d H:i:s')) {
                 $stats['upcoming']++;
             }
             if ($status === 'completed') {
                 $stats['completed']++;
             }
-            if (in_array($status, ['not_departed', 'departed', 'arrived'], true)) {
+            if (in_array($status, ['departed', 'arrived'], true) || ($date === $today && $status === 'not_departed')) {
                 $stats['active']++;
             }
         }
@@ -962,6 +964,8 @@ class Schedules
             $stmt = $this->conn->prepare("
                 SELECT
                     s.schedule_id_pk,
+                    s.departure_date,
+                    s.departure_time,
                     s.trip_status,
                     d.status AS driver_status,
                     r.is_active AS route_active,
@@ -1006,6 +1010,14 @@ class Schedules
             if (($transitions[$current] ?? null) !== $newStatus) {
                 $this->conn->rollBack();
                 return ['success' => false, 'message' => 'Trip status must be updated in order.'];
+            }
+
+            if ($current === 'not_departed') {
+                $departureAt = strtotime(trim((string) ($trip['departure_date'] ?? '') . ' ' . (string) ($trip['departure_time'] ?? '00:00:00')));
+                if ($departureAt && time() < $departureAt) {
+                    $this->conn->rollBack();
+                    return ['success' => false, 'message' => 'This trip cannot be marked departed before its scheduled departure time.'];
+                }
             }
 
             if ($current === 'not_departed' && $this->CountApprovedBookingsForSchedule($scheduleId) < 1) {

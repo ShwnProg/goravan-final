@@ -322,6 +322,69 @@ html.admin-dark-mode-active {
     margin-top: 8px;
 }
 
+.vanny-swal .swal2-image {
+    display: block;
+    object-fit: contain;
+}
+
+.vanny-swal--modal {
+    position: relative;
+    width: min(360px, calc(100vw - 32px));
+    padding: 24px 22px 20px;
+}
+
+.vanny-swal--modal .swal2-image {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    width: 46px !important;
+    max-height: 46px;
+    margin: 0;
+}
+
+.vanny-swal--modal .swal2-icon {
+    margin: -4px auto 12px;
+    transform: scale(0.72);
+    transform-origin: center;
+}
+
+.vanny-swal--modal .swal2-title {
+    margin: 0;
+    padding: 0;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: 0;
+}
+
+.vanny-swal--modal .swal2-html-container {
+    margin: 10px 0 0;
+    font-size: 15px;
+    line-height: 1.45;
+}
+
+.vanny-swal--modal .swal2-actions {
+    margin: 18px 0 0;
+}
+
+.vanny-swal--modal .swal2-confirm,
+.vanny-swal--modal .swal2-cancel {
+    min-width: 72px;
+    min-height: 38px;
+    padding: 8px 16px;
+    border-radius: 6px;
+}
+
+.swal2-toast .swal2-image {
+    display: none !important;
+}
+
+.swal2-toast .swal2-title {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    line-height: 1.35;
+}
+
 html.admin-dark-mode-active .vanny-message-card,
 body.admin-dark-mode-active .vanny-message-card,
 html.admin-dark-mode-active .vanny-alert,

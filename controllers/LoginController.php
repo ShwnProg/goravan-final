@@ -61,7 +61,7 @@ if (!empty($result['is_login'])) {
     unset($_SESSION['old_login']);
     unset($_SESSION['login_attempts'], $_SESSION['login_locked_until']);
 
-    if ($role === 'admin') {
+    if ($role === 'admin' || $role === 'user') {
         $_SESSION['success'] = 'Login successful.';
     }
 

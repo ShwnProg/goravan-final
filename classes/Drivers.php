@@ -235,11 +235,6 @@ class Drivers
                         $params[':fullname'] = $this->full_name;
                     }
 
-                    if ($this->password) {
-                        $sql .= ", password = :password";
-                        $params[':password'] = password_hash($this->password, PASSWORD_DEFAULT);
-                    }
-
                     $sql .= " WHERE user_id_pk = :id AND role = 'driver'";
                     $userStmt = $this->conn->prepare($sql);
                     $userStmt->execute($params);

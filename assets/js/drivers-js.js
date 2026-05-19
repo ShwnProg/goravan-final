@@ -157,7 +157,6 @@ document.getElementById('drivers-tbody')?.addEventListener('click', function (e)
         document.getElementById('edit-license').value = editBtn.dataset.license;
         document.getElementById('edit-contact').value = editBtn.dataset.contact;
         document.getElementById('edit-email').value = editBtn.dataset.email || '';
-        document.getElementById('edit-password').value = '';
 
         window.syncSS(
             document.getElementById('edit-status'),

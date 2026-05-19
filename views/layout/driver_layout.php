@@ -57,6 +57,8 @@ $current = basename($_SERVER['PHP_SELF']);
         <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
 
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
     <div class="sidebar" id="sidebar">
         <div class="logo">
             <img src="../../images/logo.png" alt="GoraVan logo">
@@ -67,6 +69,9 @@ $current = basename($_SERVER['PHP_SELF']);
                 <label>Driver</label>
                 <a href="index.php" class="menu-btn <?= $current === 'index.php' ? 'active' : '' ?>">
                     <i class="fas fa-gauge"></i><span>Dashboard</span>
+                </a>
+                <a href="upcoming.php" class="menu-btn <?= $current === 'upcoming.php' ? 'active' : '' ?>">
+                    <i class="fas fa-calendar-day"></i><span>Upcoming Trips</span>
                 </a>
             </div>
             <div class="menu-section">
@@ -137,6 +142,7 @@ $current = basename($_SERVER['PHP_SELF']);
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../assets/js/vanny-ui.js"></script>
     <script src="../../assets/js/admin-ui.js"></script>
     <script src="../../assets/js/nav.js"></script>
     <?php if (!empty($page_js)): ?>

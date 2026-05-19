@@ -325,13 +325,6 @@ $drivers   = $driverObj->GetAllDrivers();
                     </div>
 
                     <div class="rfield">
-                        <label class="rfield-label"><i class="fas fa-key"></i> New Password</label>
-                        <input type="text" name="password" id="edit-password" class="rinput"
-                            placeholder="Leave blank to keep current password"
-                            minlength="8">
-                    </div>
-
-                    <div class="rfield">
                         <label class="rfield-label"><i class="fas fa-toggle-on"></i> Status</label>
                         <select name="status" id="edit-status" class="ss" data-placeholder="Select status">
                             <option value="active">Active</option>

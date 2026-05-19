@@ -17,6 +17,30 @@ $stats = $driver ? $scheduleObj->GetDriverTripStats($driverUserId) : [
     'completed' => 0,
     'active' => 0,
 ];
+$now = date('Y-m-d H:i:s');
+$dashboardTrips = array_values(array_filter($trips, function (array $trip) use ($now): bool {
+    $status = (string) ($trip['trip_status'] ?? '');
+    $dateTime = trim((string) ($trip['departure_date'] ?? '') . ' ' . (string) ($trip['departure_time'] ?? '00:00:00'));
+
+    if (in_array($status, ['departed', 'arrived'], true)) {
+        return true;
+    }
+
+    if (in_array($status, ['completed', 'cancelled'], true)) {
+        return false;
+    }
+
+    return $dateTime <= $now;
+}));
+$completedTrips = array_values(array_filter($trips, function (array $trip): bool {
+    return ($trip['trip_status'] ?? '') === 'completed';
+}));
+usort($completedTrips, function (array $a, array $b): int {
+    $aTime = strtotime((string) ($a['completed_at'] ?? '')) ?: strtotime(trim((string) ($a['departure_date'] ?? '') . ' ' . (string) ($a['departure_time'] ?? '00:00:00'))) ?: 0;
+    $bTime = strtotime((string) ($b['completed_at'] ?? '')) ?: strtotime(trim((string) ($b['departure_date'] ?? '') . ' ' . (string) ($b['departure_time'] ?? '00:00:00'))) ?: 0;
+    return $bTime <=> $aTime;
+});
+$completedTrips = array_slice($completedTrips, 0, 5);
 
 $formatDate = function (?string $date): string {
     return $date ? date('M j, Y', strtotime($date)) : '-';
@@ -73,9 +97,9 @@ ob_start();
     <?php else: ?>
         <section class="driver-welcome">
             <div>
-                <span class="driver-eyebrow">Driver Dashboard</span>
+                <span class="driver-eyebrow">Driver Workboard</span>
                 <h1>Welcome, <?= htmlspecialchars($driver['full_name']) ?></h1>
-                <p>Here are your assigned trips. Update movement status only when the trip really changes.</p>
+                <p>Trips appear here when their schedule time has arrived. Future assignments are in Upcoming Trips.</p>
             </div>
             <?= vanny_mascot('wave', 'medium', 'driver-welcome-vanny', 'Vanny welcomes the driver') ?>
             <div class="driver-license">
@@ -107,15 +131,22 @@ ob_start();
             </div>
         </section>
 
-        <?php if (empty($trips)): ?>
+        <?php if (empty($dashboardTrips)): ?>
             <section class="driver-empty-state">
                 <?= vanny_mascot('waiting', 'medium', 'driver-empty-vanny', 'Vanny waiting for assigned trips') ?>
-                <h2>No assigned trips</h2>
-                <p>Your assigned schedules will appear here once the admin assigns you to a trip.</p>
+                <h2>No trips to handle right now</h2>
+                <p>Upcoming or in-progress schedules will appear here when there is something to drive.</p>
             </section>
         <?php else: ?>
+            <div class="driver-section-heading">
+                <div>
+                    <span class="driver-eyebrow">Now and Next</span>
+                    <h2>Trips to Handle</h2>
+                </div>
+                <small><?= count($dashboardTrips) ?> ready or in-progress schedule<?= count($dashboardTrips) === 1 ? '' : 's' ?></small>
+            </div>
             <section class="driver-trip-list">
-                <?php foreach ($trips as $trip): ?>
+                <?php foreach ($dashboardTrips as $trip): ?>
                     <?php
                     $status = $scheduleObj->NormalizeTripStatus((string) ($trip['trip_status'] ?? 'not_departed'));
                     $nextStatus = $scheduleObj->NextDriverTripStatus($status);
@@ -212,6 +243,33 @@ ob_start();
                         </div>
                     </article>
                 <?php endforeach; ?>
+            </section>
+        <?php endif; ?>
+
+        <?php if (!empty($completedTrips)): ?>
+            <section class="driver-completed-panel">
+                <div class="driver-section-heading">
+                    <div>
+                        <span class="driver-eyebrow">History</span>
+                        <h2>Recently Completed</h2>
+                    </div>
+                    <small>Latest <?= count($completedTrips) ?></small>
+                </div>
+                <div class="driver-completed-list">
+                    <?php foreach ($completedTrips as $trip): ?>
+                        <article class="driver-completed-item">
+                            <div>
+                                <strong>
+                                    <?= htmlspecialchars($trip['origin'] ?? 'Origin') ?>
+                                    <i class="fas fa-arrow-right route-arrow-icon"></i>
+                                    <?= htmlspecialchars($trip['destination'] ?? 'Destination') ?>
+                                </strong>
+                                <span><?= htmlspecialchars($formatDate($trip['departure_date'] ?? null)) ?> at <?= htmlspecialchars($formatTime($trip['departure_time'] ?? null)) ?></span>
+                            </div>
+                            <small><?= (int) ($trip['approved_bookings_count'] ?? 0) ?> passenger<?= (int) ($trip['approved_bookings_count'] ?? 0) === 1 ? '' : 's' ?></small>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
             </section>
         <?php endif; ?>
     <?php endif; ?>

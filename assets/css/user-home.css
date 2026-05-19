@@ -580,3 +580,140 @@
 .user-home-page .u-header-date span {
     opacity: 1 !important;
 }
+
+/* Mobile home layout polish */
+@media (max-width: 768px) {
+    .user-home-page {
+        padding-top: 10px;
+    }
+
+    .user-home-page .u-dashboard-header,
+    .user-home-page .u-search-toolbar {
+        width: auto;
+        margin: 0 14px 12px !important;
+        border-radius: 14px !important;
+    }
+
+    .user-home-page .u-dashboard-header {
+        padding: 16px 16px 12px !important;
+    }
+
+    .user-home-page .u-dashboard-header::before {
+        width: 4px;
+    }
+
+    .user-home-page .u-header-content {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) 78px;
+        grid-template-areas:
+            "copy vanny"
+            "date date";
+        align-items: center;
+        gap: 10px 12px;
+    }
+
+    .user-home-page .u-header-text {
+        grid-area: copy;
+        min-width: 0;
+    }
+
+    .user-home-page .u-header-title {
+        margin: 0 0 5px;
+        font-size: 20px !important;
+        line-height: 1.18;
+    }
+
+    .user-home-page .u-header-subtitle {
+        margin: 0;
+        font-size: 12px;
+        line-height: 1.35;
+    }
+
+    .user-home-page .u-header-vanny {
+        grid-area: vanny;
+        width: 72px !important;
+        margin: 0 auto !important;
+        filter: none;
+    }
+
+    .user-home-page .u-header-date {
+        grid-area: date;
+        width: 100%;
+        min-width: 0;
+        padding: 10px 12px !important;
+        text-align: left;
+    }
+
+    .user-home-page .u-date-label {
+        margin-bottom: 2px;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+    }
+
+    .user-home-page .u-date-value {
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    .user-home-page .u-search-toolbar {
+        padding: 14px !important;
+    }
+
+    .user-home-page .u-toolbar-title {
+        margin: 0 0 12px;
+        font-size: 15px !important;
+        line-height: 1.2;
+    }
+
+    .user-home-page .u-toolbar-form {
+        gap: 10px !important;
+    }
+
+    .user-home-page .u-tf {
+        gap: 5px;
+    }
+
+    .user-home-page .u-tf label {
+        font-size: 10px !important;
+        letter-spacing: 0.08em;
+    }
+
+    .user-home-page .u-search-toolbar .ss-btn,
+    .user-home-page .u-search-toolbar input[type="date"],
+    .user-home-page .u-tbtn {
+        min-height: 42px !important;
+        border-radius: 9px !important;
+        font-size: 12px;
+    }
+
+    .user-home-page .u-tbtn {
+        width: 100%;
+        justify-content: center;
+        margin-top: 2px;
+    }
+
+    .user-home-page .u-body {
+        padding: 4px 14px 86px !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .user-home-page .u-dashboard-header,
+    .user-home-page .u-search-toolbar {
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+    }
+
+    .user-home-page .u-header-content {
+        grid-template-columns: minmax(0, 1fr) 64px;
+        gap: 8px;
+    }
+
+    .user-home-page .u-header-title {
+        font-size: 18px !important;
+    }
+
+    .user-home-page .u-header-vanny {
+        width: 62px !important;
+    }
+}

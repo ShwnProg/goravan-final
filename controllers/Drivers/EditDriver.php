@@ -19,7 +19,6 @@ $full_name      = trim($_POST['full_name'] ?? '');
 $license_number = strtoupper(trim($_POST['license_number'] ?? ''));
 $contact_number = trim($_POST['contact_number'] ?? '');
 $email          = strtolower(trim($_POST['email'] ?? ''));
-$password       = (string) ($_POST['password'] ?? '');
 $status         = $_POST['status'] ?? 'active';
 
 if (!$full_name || !$license_number || !$contact_number || !$email) {
@@ -29,11 +28,6 @@ if (!$full_name || !$license_number || !$contact_number || !$email) {
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     echo json_encode(['success' => false, 'message' => 'Invalid driver email address']);
-    exit;
-}
-
-if ($password !== '' && strlen($password) < 8) {
-    echo json_encode(['success' => false, 'message' => 'Driver password must be at least 8 characters']);
     exit;
 }
 
@@ -57,7 +51,7 @@ $driver->full_name = $full_name;
 $driver->license_number = $license_number;
 $driver->contact_number = $contact_number;
 $driver->email = $email;
-$driver->password = $password;
+$driver->password = '';
 $driver->status = $status;
 
 $current = $driver->GetDriverByID();
@@ -67,7 +61,6 @@ if ($current &&
     $current['license_number'] === $license_number &&
     $current['contact_number'] === $contact_number &&
     ($current['login_email'] ?? '') === $email &&
-    $password === '' &&
     $current['status'] === $status
 ) {
     echo json_encode([

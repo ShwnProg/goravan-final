@@ -1,9 +1,9 @@
 <?php
 class Database
 {
-    private $host = "it208.2025.ccsit.info";
+    private $host = "localhost";
     private $user = "root";
-    private $pass = "67TRJCDQ1+Rm169B";
+    private $pass = "shawnmarlogaldo@1122";
     private $dbname = "goravan_project_db";
 
     public $conn = null;

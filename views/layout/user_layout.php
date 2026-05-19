@@ -192,6 +192,44 @@ $depth = str_repeat('../', substr_count($_SERVER['PHP_SELF'], '/') - 1);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="<?= $depth ?>assets/js/vanny-ui.js"></script>
+
+    <?php if (isset($_SESSION['success'])): ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login Successful',
+                    text: <?= json_encode($_SESSION['success']) ?>,
+                    toast: true,
+                    position: 'top-end',
+                    timer: 2400,
+                    showConfirmButton: false,
+                    timerProgressBar: true
+                });
+            });
+        </script>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error'])): ?>
+        <?php $firstError = is_array($_SESSION['error']) ? $_SESSION['error'][0] : $_SESSION['error']; ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Unable to Complete Request',
+                    text: <?= json_encode($firstError) ?>,
+                    toast: true,
+                    position: 'top-end',
+                    timer: 4200,
+                    showConfirmButton: false,
+                    timerProgressBar: true
+                });
+            });
+        </script>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
 
     <?php if (!empty($page_js)): ?>
         <script src="<?= $page_js ?>"></script>
