@@ -146,5 +146,43 @@ class Verification
     {
         return $this->GetApprovedVerification() !== null;
     }
+
+    public static function ValidateTypeForBirthdate(string $type, ?string $birthdate): ?string
+    {
+        $type = strtolower(trim($type));
+        if (!in_array($type, ['regular', 'student', 'senior', 'pwd'], true)) {
+            return 'Invalid passenger type selected.';
+        }
+
+        if (!$birthdate) {
+            return 'Birthdate is required.';
+        }
+
+        try {
+            $birth = new DateTimeImmutable($birthdate);
+            $today = new DateTimeImmutable('today');
+        } catch (Throwable $e) {
+            return 'Invalid birthdate.';
+        }
+
+        if ($birth > $today) {
+            return 'Birthdate cannot be in the future.';
+        }
+
+        $age = $birth->diff($today)->y;
+        if ($age <= 0) {
+            return 'Invalid birthdate.';
+        }
+
+        if ($type === 'student' && $age < 16) {
+            return 'You must be at least 16 years old to verify as Student.';
+        }
+
+        if ($type === 'senior' && $age < 60) {
+            return 'You must be 60+ to verify as Senior Citizen.';
+        }
+
+        return null;
+    }
 }
 ?>

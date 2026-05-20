@@ -109,7 +109,7 @@ window.initVansPage = function () {
 
         formData.append('csrf_token', getCsrf());
 
-        fetch('../../controllers/vans/AddVan.php', {
+        fetch('../../controllers/Vans/AddVan.php', {
             method: 'POST',
             body: formData
         })
@@ -164,7 +164,7 @@ window.initVansPage = function () {
         const formData = new FormData(form);
         formData.append('csrf_token', getCsrf());
 
-        fetch('../../controllers/vans/EditVan.php', {
+        fetch('../../controllers/Vans/EditVan.php', {
             method: 'POST',
             body: formData
         })
@@ -259,7 +259,7 @@ window.initVansPage = function () {
         }).then(function (res) {
             if (!res.isConfirmed) return;
 
-            post('../../controllers/vans/ToggleVan.php', {
+            post('../../controllers/Vans/ToggleVan.php', {
                 van_id: toggleBtn.dataset.id,
                 status: nextStatus,
                 csrf_token: csrf
@@ -324,7 +324,7 @@ window.initVansPage = function () {
             confirmButtonColor: '#ef4444',
         }).then(function (res) {
             if (!res.isConfirmed) return;
-            post('../../controllers/vans/DeleteVan.php', {
+            post('../../controllers/Vans/DeleteVan.php', {
                 van_id: id,
                 csrf_token: getCsrf()
             }).then(function (d) {

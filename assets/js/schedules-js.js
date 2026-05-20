@@ -258,8 +258,9 @@ window.initSchedulesPage = function () {
 
             var matchSearch = !q      || text.includes(q);
             var matchStatus = !status || row.dataset.status === status;
-            var matchExactDate = !exact || row.dataset.date === exact;
-            var matchDate = matchExactDate && withinDateRange(row.dataset.date || '', from, to);
+            var filterDate = row.dataset.filterDate || row.dataset.date || '';
+            var matchExactDate = !exact || filterDate === exact;
+            var matchDate = matchExactDate && withinDateRange(filterDate, from, to);
 
             row.dataset.filterMatch = (matchSearch && matchStatus && matchDate) ? '1' : '0';
         });
@@ -390,7 +391,16 @@ window.initSchedulesPage = function () {
             e.stopPropagation();
             var row = delBtn.closest('tr.schedule-row');
             if (!row) return;
-            deleteSchedule(row.dataset.id, row.dataset.routeDisplay || 'this schedule');
+            deleteSchedule(row.dataset.id, row.dataset.routeDisplay || 'this schedule', row.dataset.status || '');
+            return;
+        }
+
+        var cancelBtn = e.target.closest('.icon-btn.cancel-schedule');
+        if (cancelBtn) {
+            e.stopPropagation();
+            var row = cancelBtn.closest('tr.schedule-row');
+            if (!row) return;
+            cancelSchedule(row.dataset.id, row.dataset.routeDisplay || 'this schedule');
             return;
         }
 
@@ -648,7 +658,7 @@ window.initSchedulesPage = function () {
     /* ══════════════════════════════════════════════════════════════════
        AJAX — DELETE
     ══════════════════════════════════════════════════════════════════ */
-    function deleteSchedule(scheduleId, routeLabel) {
+    function deleteSchedule(scheduleId, routeLabel, status) {
         Swal.fire({
             title            : 'Delete Schedule?',
             text             : 'Delete "' + routeLabel + '"? This cannot be undone.',
@@ -668,7 +678,40 @@ window.initSchedulesPage = function () {
                     Swal.fire({ icon: 'success', title: 'Deleted!', text: data.message })
                         .then(function () { location.reload(); });
                 } else {
-                    Swal.fire({ icon: 'error', title: 'Error', text: data.message || 'Delete failed.' });
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.title || 'Cannot delete schedule',
+                        text: data.message || 'Delete failed.'
+                    });
+                }
+            }).catch(function () {
+                Swal.fire('Error', 'Network error. Please try again.', 'error');
+            });
+        });
+    }
+
+    function cancelSchedule(scheduleId, routeLabel) {
+        Swal.fire({
+            title            : 'Cancel Schedule?',
+            text             : 'Cancel "' + routeLabel + '"? Users and the assigned driver will no longer see it as active.',
+            icon             : 'warning',
+            showCancelButton : true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor : '#6b7280',
+            confirmButtonText : 'Yes, cancel it',
+        }).then(function (result) {
+            if (!result.isConfirmed) return;
+
+            fetchPost('../../controllers/Schedules/ToggleSchedule.php', {
+                schedule_id: scheduleId,
+                status: 'cancelled',
+                csrf_token : getCsrf(),
+            }).then(function (data) {
+                if (data.success) {
+                    Swal.fire({ icon: 'success', title: 'Cancelled!', text: data.message })
+                        .then(function () { location.reload(); });
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Error', text: data.message || 'Cancel failed.' });
                 }
             }).catch(function () {
                 Swal.fire('Error', 'Network error. Please try again.', 'error');

@@ -494,13 +494,15 @@ body.admin-dark-mode-active .topbar-greeting {
 }
 
 body.admin-dark-mode-active .topbar-icon-btn {
-    background: rgba(255, 255, 255, .05);
-    color: #9ca3af;
+    background: rgba(148, 163, 184, .14);
+    border: 1px solid rgba(148, 163, 184, .2);
+    color: #dbe4ef;
 }
 
 body.admin-dark-mode-active .topbar-icon-btn:hover {
-    background: rgba(249, 115, 22, .12);
-    color: var(--color-accent);
+    background: rgba(249, 115, 22, .18);
+    border-color: rgba(249, 115, 22, .32);
+    color: #fdba74;
     box-shadow: 0 0 0 3px rgba(249, 115, 22, .08);
 }
 
@@ -1343,7 +1345,14 @@ body.admin-dark-mode-active .btn-close {
 }
 
 #page-content.admin-dark-mode .toggle-track {
-    background: #2d3748;
+    background: #475569;
+    box-shadow: inset 0 0 0 1px rgba(203, 213, 225, .16);
+}
+
+body.admin-dark-mode-active .toggle-switch input:checked + .toggle-track,
+#page-content.admin-dark-mode .toggle-switch input:checked + .toggle-track {
+    background: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, .16);
 }
 
 #page-content.admin-dark-mode .settings-feedback.success {

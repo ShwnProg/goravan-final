@@ -293,11 +293,53 @@ class Schedules
                 return ['success' => false, 'message' => 'Invalid schedule ID.'];
             }
 
+            $currentStatus = $this->getCurrentStatus();
+            if (!$currentStatus) {
+                return ['success' => false, 'message' => 'Schedule not found.'];
+            }
+
+            $currentStatus = $this->NormalizeTripStatus((string) $currentStatus);
+            $blockedDeleteMessages = [
+                'not_departed' => [
+                    'title' => 'Cancel first',
+                    'message' => 'Cancel this schedule first before deleting it.'
+                ],
+                'departed' => [
+                    'title' => 'Cannot delete departed schedule',
+                    'message' => 'Cannot delete departed schedule. This trip is already in progress. Complete the trip first instead of deleting it.'
+                ],
+                'arrived' => [
+                    'title' => 'Cannot delete arrived schedule',
+                    'message' => 'Cannot delete arrived schedule. This trip has already arrived and should be completed instead.'
+                ],
+                'completed' => [
+                    'title' => 'Cannot delete completed schedule',
+                    'message' => 'Cannot delete completed schedule. Completed trips are kept for history and reports.'
+                ],
+            ];
+
+            if (isset($blockedDeleteMessages[$currentStatus])) {
+                return [
+                    'success' => false,
+                    'title' => $blockedDeleteMessages[$currentStatus]['title'],
+                    'message' => $blockedDeleteMessages[$currentStatus]['message']
+                ];
+            }
+
+            if ($currentStatus !== 'cancelled') {
+                return [
+                    'success' => false,
+                    'title' => 'Cannot delete schedule',
+                    'message' => 'This schedule cannot be deleted in its current status.'
+                ];
+            }
+
             $bookingCount = $this->CountBookingsForSchedule((int) $this->id);
             if ($bookingCount > 0) {
                 return [
                     'success' => false,
-                    'message' => 'This schedule has booking history, so it cannot be deleted. Keep it cancelled to preserve records.'
+                    'title' => 'Cannot delete schedule',
+                    'message' => 'This schedule is already cancelled and cannot be deleted.'
                 ];
             }
 
@@ -314,6 +356,52 @@ class Schedules
                 'message' => 'Unable to delete this schedule because it is still linked to other records.',
                 'error' => $e->getMessage()
             ];
+        }
+    }
+
+    public function CancelScheduleByAdmin(): array
+    {
+        try {
+            if (!$this->id) {
+                return ['success' => false, 'message' => 'Invalid schedule ID.'];
+            }
+
+            $currentStatus = $this->getCurrentStatus();
+            if (!$currentStatus) {
+                return ['success' => false, 'message' => 'Schedule not found.'];
+            }
+
+            if (!in_array($currentStatus, ['not_departed', 'boarding'], true)) {
+                return [
+                    'success' => false,
+                    'message' => 'Only schedules that have not departed can be cancelled by admin.'
+                ];
+            }
+
+            $this->conn->beginTransaction();
+
+            $stmt = $this->conn->prepare("
+                UPDATE {$this->table}
+                SET trip_status = 'cancelled',
+                    departed_at = NULL,
+                    arrived_at = NULL,
+                    completed_at = NULL,
+                    updated_at = NOW()
+                WHERE schedule_id_pk = :id
+            ");
+            $stmt->execute([':id' => $this->id]);
+
+            $this->CancelBookingsForSchedule((int) $this->id);
+
+            $this->conn->commit();
+
+            return ['success' => true, 'message' => 'Schedule cancelled successfully.'];
+        } catch (PDOException $e) {
+            if ($this->conn->inTransaction()) {
+                $this->conn->rollBack();
+            }
+            error_log('[Schedules::CancelScheduleByAdmin] ' . $e->getMessage());
+            return ['success' => false, 'message' => 'Unable to cancel schedule. Please try again.'];
         }
     }
 
@@ -556,6 +644,26 @@ class Schedules
               AND status NOT IN ('rejected', 'cancelled', 'completed')
         ");
         $stmt->execute([':schedule_id' => $scheduleId]);
+
+        $cashPayments = $this->conn->prepare("
+            UPDATE payments p
+            INNER JOIN bookings b ON p.book_id_fk = b.book_id_pk
+            SET p.status = 'cancelled',
+                p.paid_at = NULL
+            WHERE b.schedule_id_fk = :schedule_id
+              AND p.status IN ('pending', 'unpaid', 'pending_cash', 'cash_unpaid')
+        ");
+        $cashPayments->execute([':schedule_id' => $scheduleId]);
+
+        $paidPayments = $this->conn->prepare("
+            UPDATE payments p
+            INNER JOIN bookings b ON p.book_id_fk = b.book_id_pk
+            SET p.status = 'refund_requested'
+            WHERE b.schedule_id_fk = :schedule_id
+              AND p.status = 'paid'
+              AND p.payment_method <> 'cash'
+        ");
+        $paidPayments->execute([':schedule_id' => $scheduleId]);
     }
     public function GetAvailableSchedules(array $filters = [])
     {
@@ -872,22 +980,24 @@ class Schedules
             'completed' => 0,
             'active' => 0,
         ];
+        $nowTs = time();
 
         foreach ($trips as $trip) {
             $status = $trip['trip_status'] ?? '';
             $date = $trip['departure_date'] ?? '';
-            $dateTime = trim($date . ' ' . ($trip['departure_time'] ?? '00:00:00'));
+            $departureTs = strtotime(trim($date . ' ' . ($trip['departure_time'] ?? '00:00:00')));
 
             if ($date === $today && !in_array($status, ['cancelled', 'completed'], true)) {
                 $stats['today']++;
             }
-            if (!in_array($status, ['cancelled', 'completed'], true) && $dateTime >= date('Y-m-d H:i:s')) {
+            if (!in_array($status, ['cancelled', 'completed'], true) && $departureTs !== false && $departureTs > $nowTs) {
                 $stats['upcoming']++;
             }
             if ($status === 'completed') {
                 $stats['completed']++;
             }
-            if (in_array($status, ['departed', 'arrived'], true) || ($date === $today && $status === 'not_departed')) {
+            if (in_array($status, ['departed', 'arrived'], true)
+                || ($status === 'not_departed' && $departureTs !== false && $departureTs <= $nowTs)) {
                 $stats['active']++;
             }
         }

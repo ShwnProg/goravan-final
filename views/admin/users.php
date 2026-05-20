@@ -192,7 +192,7 @@ function verificationBadge(string $status): string
 </div>
 
 <!-- VIEW & VERIFY MODAL -->
-<div class="modal fade" id="viewModal" tabindex="-1">
+<div class="modal fade user-verification-modal" id="viewModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content rmodal">
             <div class="rmodal-header">
@@ -203,7 +203,7 @@ function verificationBadge(string $status): string
                 </div>
                 <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal"></button>
             </div>
-            <div class="rmodal-body">
+            <div class="rmodal-body modal-body">
                 <div class="user-details-viewer">
 
                     <div class="udv-info-section">

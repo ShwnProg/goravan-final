@@ -21,7 +21,7 @@ $vanObj = new Vans($conn);
 $vans   = $vanObj->GetAllVans();
 
 $scheduleDates = array_values(array_unique(array_filter(array_map(
-    fn($s) => !empty($s['departure_date']) ? (string) $s['departure_date'] : '',
+    fn($s) => !empty($s['created_at']) ? substr((string) $s['created_at'], 0, 10) : '',
     $schedules
 ))));
 rsort($scheduleDates);
@@ -34,7 +34,7 @@ rsort($scheduleDates);
     </div>
     <div class="admin-date-filters" data-filter-scope="schedules">
         <label>
-            <span>Date</span>
+            <span>Created</span>
             <select id="schedule-date-select">
                 <option value="">All dates</option>
                 <?php foreach ($scheduleDates as $recordDate): ?>
@@ -87,12 +87,12 @@ rsort($scheduleDates);
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Actions</th>
                         <th>Route</th>
                         <th>Driver</th>
                         <th>Van</th>
                         <th>Departure</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="schedules-tbody">
@@ -129,6 +129,9 @@ rsort($scheduleDates);
                             $availableSeats = (int) ($s['available_seats'] ?? max(0, $totalSeats - $bookedSeats));
                             $createdAt    = !empty($s['created_at'])
                                             ? htmlspecialchars(date('M d, Y g:i A', strtotime($s['created_at'])), ENT_QUOTES)
+                                            : '';
+                            $createdDate  = !empty($s['created_at'])
+                                            ? htmlspecialchars(substr((string) $s['created_at'], 0, 10), ENT_QUOTES)
                                             : '';
                             $updatedAt    = !empty($s['updated_at'])
                                             ? htmlspecialchars(date('M d, Y g:i A', strtotime($s['updated_at'])), ENT_QUOTES)
@@ -168,6 +171,7 @@ rsort($scheduleDates);
                                 data-available-seats="<?= $availableSeats ?>"
                                 data-booked-seats="<?= $bookedSeats ?>"
                                 data-date="<?= htmlspecialchars($s['departure_date'], ENT_QUOTES) ?>"
+                                data-filter-date="<?= $createdDate ?>"
                                 data-time="<?= htmlspecialchars($s['departure_time'], ENT_QUOTES) ?>"
                                 data-eta="<?= $etaValue ?>"
                                 data-eta-display="<?= $etaDisplay ?>"
@@ -180,16 +184,6 @@ rsort($scheduleDates);
                                 data-updated-at="<?= $updatedAt ?>">
 
                                 <td class="text-muted-sm"><?= $i + 1 ?></td>
-                                <td>
-                                    <div class="row-actions">
-                                        <button class="icon-btn edit" title="Edit">
-                                            <i class="fas fa-pen"></i>
-                                        </button>
-                                        <button class="icon-btn delete" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
                                 <td>
                                     <div class="route-display">
                                         <i class="fas fa-route" style="color:var(--color-accent);font-size:11px"></i>
@@ -220,6 +214,21 @@ rsort($scheduleDates);
                                     <span class="badge <?= $status ?>">
                                         <?= htmlspecialchars($scheduleObj->TripStatusLabel($rawStatus)) ?>
                                     </span>
+                                </td>
+                                <td>
+                                    <div class="row-actions">
+                                        <?php if (in_array($rawStatus, ['not_departed', 'boarding'], true)): ?>
+                                            <button class="icon-btn status cancel-schedule" title="Cancel schedule">
+                                                <i class="fas fa-ban"></i>
+                                            </button>
+                                        <?php endif; ?>
+                                        <button class="icon-btn edit" title="Edit">
+                                            <i class="fas fa-pen"></i>
+                                        </button>
+                                        <button class="icon-btn delete" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

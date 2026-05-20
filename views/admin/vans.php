@@ -211,9 +211,9 @@ $vans = $vanObj->GetAllVans();
 
                     <div class="rfield">
                         <label class="rfield-label"><i class="fas fa-chair"></i> Capacity</label>
-                        <input type="number" name="capacity" class="rinput" placeholder="e.g. 14" min="1" max="14"
+                        <input type="number" name="capacity" class="rinput" placeholder="e.g. 14" min="10" max="14"
                             step="1" required>
-                        <span class="rfield-hint">Seats will be auto-generated (A1, A2, B1, B2…)</span>
+                        <span class="rfield-hint">Capacity must be 10 to 14 seats. Seats will be auto-generated (A1, A2, B1, B2…)</span>
                     </div>
 
                     <div class="rfield">
@@ -269,8 +269,8 @@ $vans = $vanObj->GetAllVans();
                     <div class="rfield">
                         <label class="rfield-label"><i class="fas fa-chair"></i> Capacity</label>
                         <input type="number" name="capacity" id="edit-capacity" class="rinput" placeholder="e.g. 14"
-                            min="1" max="14" step="1" required>
-                        <span class="rfield-hint">Capacity changes keep booked seats intact.</span>
+                            min="10" max="14" step="1" required>
+                        <span class="rfield-hint">Capacity must be 10 to 14 seats. Capacity changes keep booked seats intact.</span>
                     </div>
 
                     <div class="rfield">

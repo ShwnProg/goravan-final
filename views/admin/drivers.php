@@ -218,10 +218,18 @@ $drivers   = $driverObj->GetAllDrivers();
                     <?= csrf_field() ?>
 
                     <div class="rfield">
-                        <label class="rfield-label"><i class="fas fa-user"></i> Full Name</label>
-                        <input type="text" name="full_name" class="rinput"
-                            placeholder="e.g. Juan Dela Cruz"
-                            maxlength="255"
+                        <label class="rfield-label"><i class="fas fa-user"></i> First Name</label>
+                        <input type="text" name="first_name" class="rinput"
+                            placeholder="e.g. Juan"
+                            maxlength="120"
+                            required>
+                    </div>
+
+                    <div class="rfield">
+                        <label class="rfield-label"><i class="fas fa-user"></i> Last Name</label>
+                        <input type="text" name="last_name" class="rinput"
+                            placeholder="e.g. Dela Cruz"
+                            maxlength="120"
                             required>
                     </div>
 

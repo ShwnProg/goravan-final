@@ -451,6 +451,193 @@
     padding: 18px 0;
 }
 
+.db-insights-card {
+    gap: 12px;
+}
+
+.db-insights-sub {
+    margin: -4px 0 0;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.db-insights-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.db-insight {
+    min-width: 0;
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #eef2f7;
+    border-radius: 8px;
+    background: #fafafa;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color .15s ease, background .15s ease, transform .15s ease;
+}
+
+.db-insight:hover {
+    border-color: rgba(249, 115, 22, .32);
+    background: #fff;
+    transform: translateY(-1px);
+}
+
+.db-insight--wide {
+    grid-column: 1 / -1;
+}
+
+.db-insight__icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    background: rgba(59, 130, 246, .1);
+    color: #2563eb;
+    font-size: 13px;
+}
+
+.db-insight__icon--attention {
+    background: rgba(249, 115, 22, .12);
+    color: #ea580c;
+}
+
+.db-insight__icon--verify {
+    background: rgba(124, 58, 237, .1);
+    color: #7c3aed;
+}
+
+.db-insight__icon--success {
+    background: rgba(22, 163, 74, .1);
+    color: #16a34a;
+}
+
+.db-insight__body {
+    min-width: 0;
+    display: grid;
+    gap: 2px;
+}
+
+.db-insight__label {
+    color: #94a3b8;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.db-insight__body strong {
+    color: var(--color-primary, #2E3A4D);
+    font-size: 17px;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+.db-insight__body span:last-child {
+    color: #64748b;
+    font-size: 11.5px;
+    line-height: 1.35;
+}
+
+.db-insights-list {
+    display: grid;
+    gap: 8px;
+}
+
+.db-insight-row {
+    min-width: 0;
+    display: flex;
+    gap: 10px;
+    padding: 11px 12px;
+    border: 1px solid #eef2f7;
+    border-radius: 8px;
+    background: #fafafa;
+    color: inherit;
+    text-decoration: none;
+}
+
+a.db-insight-row {
+    transition: border-color .15s ease, background .15s ease, transform .15s ease;
+}
+
+a.db-insight-row:hover {
+    border-color: rgba(249, 115, 22, .32);
+    background: #fff;
+    transform: translateY(-1px);
+}
+
+.db-insight__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.db-insight__top strong {
+    color: var(--color-primary, #2E3A4D);
+    font-size: 12.5px;
+    line-height: 1.25;
+}
+
+.db-insight-row .db-insight__body > span:not(.db-insight__top):not(.db-insight-actions) {
+    color: #64748b;
+    font-size: 11.5px;
+    line-height: 1.4;
+}
+
+.db-insight-pill {
+    display: inline-flex;
+    align-items: center;
+    min-height: 20px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 9.5px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.db-insight-pill.is-good {
+    background: rgba(22, 163, 74, .1);
+    color: #15803d;
+}
+
+.db-insight-pill.is-warning {
+    background: rgba(249, 115, 22, .12);
+    color: #c2410c;
+}
+
+.db-insight-pill.is-neutral {
+    background: rgba(100, 116, 139, .1);
+    color: #64748b;
+}
+
+.db-insight-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.db-insight-actions a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 0 9px;
+    border-radius: 999px;
+    background: rgba(249, 115, 22, .1);
+    color: #c2410c;
+    font-size: 10.5px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
 .db-empty-inline {
     min-height: 120px;
     display: flex;
@@ -480,6 +667,8 @@
     .db-stat__val { font-size: 22px; }
     .db-stat__val--money { font-size: 17px; }
     .db-metrics { grid-template-columns: 1fr; }
+    .db-insights-grid { grid-template-columns: 1fr; }
+    .db-insight--wide { grid-column: auto; }
 }
 
 /* Dashboard readability polish */
@@ -552,7 +741,9 @@ body.admin-dark-mode-active .db-seg__name,
 body.admin-dark-mode-active .db-act__text,
 body.admin-dark-mode-active .db-act__text b,
 body.admin-dark-mode-active .db-ref,
-body.admin-dark-mode-active .db-metric strong {
+body.admin-dark-mode-active .db-metric strong,
+body.admin-dark-mode-active .db-insight__body strong,
+body.admin-dark-mode-active .db-insight__top strong {
     color: #f1f5f9;
 }
 
@@ -562,7 +753,10 @@ body.admin-dark-mode-active .db-seg__count,
 body.admin-dark-mode-active .db-act__detail,
 body.admin-dark-mode-active .db-muted,
 body.admin-dark-mode-active .db-metric span,
-body.admin-dark-mode-active .db-mini-note {
+body.admin-dark-mode-active .db-mini-note,
+body.admin-dark-mode-active .db-insights-sub,
+body.admin-dark-mode-active .db-insight__body span:last-child,
+body.admin-dark-mode-active .db-insight-row .db-insight__body > span:not(.db-insight__top):not(.db-insight-actions) {
     color: #94a3b8;
 }
 
@@ -570,13 +764,43 @@ body.admin-dark-mode-active .db-pill,
 body.admin-dark-mode-active .db-ref,
 body.admin-dark-mode-active .db-seg__track,
 body.admin-dark-mode-active .db-metric,
-body.admin-dark-mode-active .db-empty-inline {
+body.admin-dark-mode-active .db-empty-inline,
+body.admin-dark-mode-active .db-insight,
+body.admin-dark-mode-active .db-insight-row {
     background: #252d3f;
 }
 
 body.admin-dark-mode-active .db-metric,
-body.admin-dark-mode-active .db-empty-inline {
+body.admin-dark-mode-active .db-empty-inline,
+body.admin-dark-mode-active .db-insight,
+body.admin-dark-mode-active .db-insight-row {
     border-color: rgba(148, 163, 184, .14);
+}
+
+body.admin-dark-mode-active .db-insight:hover,
+body.admin-dark-mode-active a.db-insight-row:hover {
+    background: #1f293b;
+    border-color: rgba(249, 115, 22, .32);
+}
+
+body.admin-dark-mode-active .db-insight-pill.is-good {
+    background: rgba(34, 197, 94, .14);
+    color: #86efac;
+}
+
+body.admin-dark-mode-active .db-insight-pill.is-warning {
+    background: rgba(249, 115, 22, .16);
+    color: #fdba74;
+}
+
+body.admin-dark-mode-active .db-insight-pill.is-neutral {
+    background: rgba(148, 163, 184, .14);
+    color: #cbd5e1;
+}
+
+body.admin-dark-mode-active .db-insight-actions a {
+    background: rgba(249, 115, 22, .16);
+    color: #fdba74;
 }
 
 body.admin-dark-mode-active .db-tbl-head,

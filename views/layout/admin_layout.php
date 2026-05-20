@@ -154,6 +154,7 @@ $current = basename($_SERVER['PHP_SELF']);
             transition: none !important;
             animation-duration: .001ms !important;
         }
+        
     </style>
 
 </head>

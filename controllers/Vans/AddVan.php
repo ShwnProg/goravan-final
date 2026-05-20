@@ -34,8 +34,8 @@ if (!$model) {
     exit;
 }
 
-if ($capacity <= 0 || $capacity > 14) {
-    echo json_encode(['success' => false, 'message' => 'Capacity must be between 1 and 14.']);
+if ($capacity < 10 || $capacity > 14) {
+    echo json_encode(['success' => false, 'message' => 'Capacity must be between 10 and 14 seats.']);
     exit;
 }
 

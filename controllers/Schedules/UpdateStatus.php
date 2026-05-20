@@ -39,24 +39,11 @@ if ($new_status !== 'cancelled') {
 $schedule     = new Schedules($conn);
 $schedule->id = $schedule_id;
 
-if ($schedule->HasPendingBookings()) {
-    $_SESSION['error'] = 'Resolve pending bookings before changing this schedule status.';
-    header('Location: ../../views/admin/schedules.php');
-    exit;
-}
-
-if (!$schedule->canUpdateStatus($new_status)) {
-    $_SESSION['error'] = 'Invalid status transition.';
-    header('Location: ../../views/admin/schedules.php');
-    exit;
-}
-
 // -- Update --------------------------------------------------------------------
-$schedule->trip_status = $new_status;
-$result = $schedule->UpdateStatus();
+$result = $schedule->CancelScheduleByAdmin();
 
 $_SESSION[$result['success'] ? 'success' : 'error'] = $result['success']
-    ? 'Status updated successfully.'
+    ? ($result['message'] ?? 'Schedule cancelled successfully.')
     : ($result['message'] ?? 'Unable to update schedule status. Please try again.');
 
 header('Location: ../../views/admin/schedules.php');

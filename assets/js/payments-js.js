@@ -46,7 +46,7 @@ window.initPaymentsPage = function () {
 
     function filtersActive() {
         return !!((searchInput && searchInput.value.trim()) ||
-            (statusFilter && statusFilter.value && statusFilter.value !== 'pending') ||
+            (statusFilter && statusFilter.value && statusFilter.value !== 'pending_cash') ||
             (methodFilter && methodFilter.value) ||
             (dateFrom && dateFrom.value) ||
             (dateTo && dateTo.value));
@@ -85,7 +85,7 @@ window.initPaymentsPage = function () {
                 || (row.dataset.userName   || '').toLowerCase().includes(q)
                 || (row.dataset.userEmail  || '').toLowerCase().includes(q)
                 || (row.dataset.ref        || '').toLowerCase().includes(q);
-            var matchS = !status || (row.dataset.status || '') === status;
+            var matchS = !status || paymentStatusMatches(row, status);
             var matchM = !method || (row.dataset.method || '').toLowerCase() === method;
             var dateValue = row.dataset.filterDate || row.dataset.paidAt || row.dataset.created || '';
             var matchD = _withinDate(dateValue, from, to);
@@ -104,13 +104,13 @@ window.initPaymentsPage = function () {
     if (dateTo) dateTo.addEventListener('change', applyFilters);
     if (dateClear) dateClear.addEventListener('click', function () {
         if (searchInput) searchInput.value = '';
-        if (statusFilter) statusFilter.value = 'pending';
+        if (statusFilter) statusFilter.value = 'pending_cash';
         if (methodFilter) methodFilter.value = '';
         if (dateFrom) dateFrom.value = '';
         if (dateTo) dateTo.value = '';
         if (statusTabs) {
             statusTabs.querySelectorAll('button').forEach(function (tab) {
-                tab.classList.toggle('active', (tab.dataset.status || '') === 'pending');
+                tab.classList.toggle('active', (tab.dataset.status || '') === 'pending_cash');
             });
         }
         applyFilters();
@@ -313,8 +313,8 @@ window.initPaymentsPage = function () {
     function paymentGroupMeta(status) {
         var groups = {
             pending: { groupKey: 'pending', label: 'Pending Payments', icon: 'fas fa-clock', hint: 'Waiting for approval', colspan: 9 },
-            pending_cash: { groupKey: 'pending', label: 'Pending Cash Payments', icon: 'fas fa-money-bill-1-wave', hint: 'Pay on-site', colspan: 9 },
-            cash_unpaid: { groupKey: 'pending', label: 'Pending Cash Payments', icon: 'fas fa-money-bill-1-wave', hint: 'Pay on-site', colspan: 9 },
+            pending_cash: { groupKey: 'pending_cash', label: 'Pending Cash Payments', icon: 'fas fa-money-bill-1-wave', hint: 'Pay on-site', colspan: 9 },
+            cash_unpaid: { groupKey: 'pending_cash', label: 'Pending Cash Payments', icon: 'fas fa-money-bill-1-wave', hint: 'Pay on-site', colspan: 9 },
             unpaid: { groupKey: 'pending', label: 'Unpaid Payments', icon: 'fas fa-clock', hint: 'Waiting for payment', colspan: 9 },
             failed: { groupKey: 'failed', label: 'Failed Payments', icon: 'fas fa-triangle-exclamation', hint: 'Payment failed', colspan: 9 },
             paid: { groupKey: 'paid', label: 'Paid Payments', icon: 'fas fa-circle-check', hint: 'Completed payments', colspan: 9 },
@@ -324,6 +324,15 @@ window.initPaymentsPage = function () {
             refunded: { groupKey: 'refunded', label: 'Refunded Payments', icon: 'fas fa-receipt', hint: 'Refund completed', colspan: 9 }
         };
         return groups[status] || { groupKey: status, label: AdminUI.statusLabel(status) + ' Payments', icon: 'fas fa-credit-card', hint: 'Other statuses', colspan: 9 };
+    }
+
+    function paymentStatusMatches(row, status) {
+        var rowStatus = row.dataset.status || '';
+        if (status === 'pending_cash') {
+            return ['pending_cash', 'cash_unpaid', 'unpaid'].includes(rowStatus)
+                || (rowStatus === 'pending' && (row.dataset.method || '').toLowerCase() === 'cash');
+        }
+        return rowStatus === status;
     }
 
     function _ucFirst(str) {

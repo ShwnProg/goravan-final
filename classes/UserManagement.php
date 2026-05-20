@@ -250,6 +250,26 @@ class UserManagement
     private function setDocStatus(int $doc_id, string $status): array
     {
         try {
+            if ($status === 'approved') {
+                $docStmt = $this->conn->prepare("
+                    SELECT vd.document_type, u.birthdate
+                    FROM {$this->veri_table} vd
+                    INNER JOIN {$this->table} u ON vd.user_id_fk = u.user_id_pk
+                    WHERE vd.document_id_pk = :id
+                    LIMIT 1
+                ");
+                $docStmt->execute([':id' => $doc_id]);
+                $doc = $docStmt->fetch(PDO::FETCH_ASSOC);
+                if (!$doc) {
+                    return ['success' => false, 'error' => 'Document not found.'];
+                }
+
+                $typeError = Verification::ValidateTypeForBirthdate((string) ($doc['document_type'] ?? ''), $doc['birthdate'] ?? null);
+                if ($typeError) {
+                    return ['success' => false, 'error' => $typeError];
+                }
+            }
+
             $stmt = $this->conn->prepare("
                 UPDATE {$this->veri_table}
                 SET status      = :status,

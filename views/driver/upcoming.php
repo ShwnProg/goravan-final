@@ -10,13 +10,14 @@ $driver = $driverObj->GetDriverByUserId($driverUserId);
 
 $scheduleObj = new Schedules($conn);
 $trips = $driver ? $scheduleObj->GetDriverTripsByUser($driverUserId) : [];
-$now = date('Y-m-d H:i:s');
-$upcomingTrips = array_values(array_filter($trips, function (array $trip) use ($now): bool {
+$nowTs = time();
+$upcomingTrips = array_values(array_filter($trips, function (array $trip) use ($nowTs): bool {
     $status = (string) ($trip['trip_status'] ?? '');
-    $dateTime = trim((string) ($trip['departure_date'] ?? '') . ' ' . (string) ($trip['departure_time'] ?? '00:00:00'));
+    $departureTs = strtotime(trim((string) ($trip['departure_date'] ?? '') . ' ' . (string) ($trip['departure_time'] ?? '00:00:00')));
 
     return !in_array($status, ['departed', 'arrived', 'completed', 'cancelled'], true)
-        && $dateTime > $now;
+        && $departureTs !== false
+        && $departureTs > $nowTs;
 }));
 
 $formatDate = function (?string $date): string {

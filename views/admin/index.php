@@ -15,6 +15,7 @@ $paymentSummary = $dash->GetPaymentSummary();
 $totalUsers     = $dash->GetTotalUsers();
 $schedSummary   = $dash->GetScheduleSummary();  // active_schedules + statuses
 $fleetSummary   = $dash->GetFleetSummary();
+$quickInsights  = $dash->GetQuickInsights();
 $missingScheduleDates = $dash->GetMissingScheduleDates(7);
 $recentBookings = $dash->GetRecentBookings();   // last 5
 $dailyBookings  = $dash->GetDailyBookings();    // last 7 days
@@ -41,9 +42,18 @@ $breakdown = [
 $formatMoney = function ($amount): string {
     return 'PHP ' . number_format((float) $amount, 2);
 };
+
+$todaysTrips = (int) ($quickInsights['todays_trips'] ?? 0);
+$pendingBookings = (int) ($bookingSummary['pending'] ?? 0);
+$pendingInsightVerifications = (int) ($quickInsights['pending_verifications'] ?? $verificationSummary);
+$revenueToday = (float) ($paymentSummary['revenue_today'] ?? 0);
+$activeVans = (int) ($fleetSummary['active_vans'] ?? 0);
+$activeDrivers = (int) ($fleetSummary['active_drivers'] ?? 0);
+$hasPendingWork = $pendingBookings > 0 || $pendingInsightVerifications > 0;
+$hasMissingSchedules = !empty($missingScheduleDates);
 ?>
 
-<!-- ── KPI CARDS ─────────────────────────────────────────────────────────────── -->
+<!--  KPI CARDS  -->
 <?= vanny_message_card(
     'info',
     'Admin overview',
@@ -180,7 +190,7 @@ $formatMoney = function ($amount): string {
 </div>
 
 
-<!-- ── MID ROW: BREAKDOWN + BAR CHART ───────────────────────────────────────── -->
+<!--  MID ROW: BREAKDOWN + BAR CHART  -->
 <div class="db-mid-row">
 
     <!-- Booking breakdown -->
@@ -230,7 +240,7 @@ $formatMoney = function ($amount): string {
 </div>
 
 
-<!-- ── BOTTOM ROW: TABLE + ACTIVITY ─────────────────────────────────────────── -->
+<!--  BOTTOM ROW: TABLE + ACTIVITY  -->
 <div class="db-bottom-row">
 
     <!-- Recent bookings -->
@@ -282,14 +292,86 @@ $formatMoney = function ($amount): string {
         </div>
     </div>
 
-    <!-- Activity feed -->
-    <div class="db-card">
+    <!-- Quick insights -->
+    <div class="db-card db-insights-card">
         <div class="db-card__head">
-            <span class="db-card__title">Recent activity</span>
+            <span class="db-card__title">Quick Insights</span>
             <span class="db-pill db-pill--live">Live</span>
         </div>
-        <div class="db-activity" id="db-activity">
-            <!-- Populated by dashboard-js.js via GetRecentActivity() or static fallback -->
+        <p class="db-insights-sub">Important operational updates for today.</p>
+        <div class="db-insights-list">
+            <a class="db-insight-row" href="schedules.php">
+                <span class="db-insight__icon"><i class="fas fa-route"></i></span>
+                <span class="db-insight__body">
+                    <span class="db-insight__top">
+                        <strong>Today's Operations</strong>
+                        <span class="db-insight-pill <?= $todaysTrips > 0 ? 'is-good' : 'is-neutral' ?>"><?= $todaysTrips > 0 ? 'Active' : 'Quiet' ?></span>
+                    </span>
+                    <span><?= $todaysTrips > 0 ? 'You have ' . number_format($todaysTrips) . ' scheduled trip' . ($todaysTrips === 1 ? '' : 's') . ' today.' : 'No trips scheduled today.' ?></span>
+                </span>
+            </a>
+
+            <div class="db-insight-row">
+                <span class="db-insight__icon db-insight__icon--attention"><i class="fas fa-clipboard-check"></i></span>
+                <span class="db-insight__body">
+                    <span class="db-insight__top">
+                        <strong>Pending Work</strong>
+                        <span class="db-insight-pill <?= $hasPendingWork ? 'is-warning' : 'is-good' ?>"><?= $hasPendingWork ? 'Action Needed' : 'Good' ?></span>
+                    </span>
+                    <span>
+                        <?php if ($hasPendingWork): ?>
+                            <?= $pendingBookings > 0 ? number_format($pendingBookings) . ' booking' . ($pendingBookings === 1 ? '' : 's') . ' awaiting approval.' : '' ?>
+                            <?= $pendingBookings > 0 && $pendingInsightVerifications > 0 ? ' ' : '' ?>
+                            <?= $pendingInsightVerifications > 0 ? number_format($pendingInsightVerifications) . ' verification request' . ($pendingInsightVerifications === 1 ? '' : 's') . ' need review.' : '' ?>
+                        <?php else: ?>
+                            No pending approvals right now.
+                        <?php endif; ?>
+                    </span>
+                    <?php if ($hasPendingWork): ?>
+                        <span class="db-insight-actions">
+                            <?php if ($pendingBookings > 0): ?><a href="bookings.php">Review Bookings</a><?php endif; ?>
+                            <?php if ($pendingInsightVerifications > 0): ?><a href="users.php">Review Verifications</a><?php endif; ?>
+                        </span>
+                    <?php endif; ?>
+                </span>
+            </div>
+
+            <a class="db-insight-row" href="payments.php">
+                <span class="db-insight__icon db-insight__icon--success"><i class="fas fa-peso-sign"></i></span>
+                <span class="db-insight__body">
+                    <span class="db-insight__top">
+                        <strong>Payment Status</strong>
+                        <span class="db-insight-pill <?= $revenueToday > 0 ? 'is-good' : 'is-neutral' ?>"><?= $revenueToday > 0 ? 'Collected' : 'No Payments' ?></span>
+                    </span>
+                    <span><?= $revenueToday > 0 ? $formatMoney($revenueToday) . ' collected today.' : 'No paid payments recorded today.' ?></span>
+                </span>
+            </a>
+
+            <a class="db-insight-row" href="vans.php">
+                <span class="db-insight__icon"><i class="fas fa-van-shuttle"></i></span>
+                <span class="db-insight__body">
+                    <span class="db-insight__top">
+                        <strong>Fleet Readiness</strong>
+                        <span class="db-insight-pill <?= ($activeVans && $activeDrivers) ? 'is-good' : 'is-warning' ?>"><?= ($activeVans && $activeDrivers) ? 'Ready' : 'Check Fleet' ?></span>
+                    </span>
+                    <span><?= ($activeVans || $activeDrivers) ? number_format($activeVans) . ' active van' . ($activeVans === 1 ? '' : 's') . ' and ' . number_format($activeDrivers) . ' active driver' . ($activeDrivers === 1 ? '' : 's') . ' available.' : 'No active vans or drivers available.' ?></span>
+                </span>
+            </a>
+            <div class="db-insight-row">
+                <span class="db-insight__icon db-insight__icon--verify"><i class="fas fa-calendar-days"></i></span>
+                <span class="db-insight__body">
+                    <span class="db-insight__top">
+                        <strong>Schedule Warning</strong>
+                        <span class="db-insight-pill <?= $hasMissingSchedules ? 'is-warning' : 'is-good' ?>"><?= $hasMissingSchedules ? 'Warning' : 'Good' ?></span>
+                    </span>
+                    <span><?= $hasMissingSchedules ? 'Some dates in the next 7 days have no schedules.' : 'Schedules are prepared for the next 7 days.' ?></span>
+                    <?php if ($hasMissingSchedules): ?>
+                        <span class="db-insight-actions">
+                            <a href="schedules.php">Create Schedules</a>
+                        </span>
+                    <?php endif; ?>
+                </span>
+            </div>
         </div>
     </div>
 

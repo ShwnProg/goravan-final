@@ -32,6 +32,7 @@ $result         = $schedule->DeleteSchedule();
 /* -- RESPONSE --------------------------------------------------------------- */
 echo json_encode([
     'success' => $result['success'],
+    'title' => $result['title'] ?? null,
     'message' => $result['message'] ?? ($result['success']
         ? 'Schedule deleted successfully.'
         : 'Failed to delete schedule.')

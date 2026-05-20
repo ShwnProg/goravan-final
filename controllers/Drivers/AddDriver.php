@@ -7,15 +7,23 @@ if (!csrf_check()) {
     exit;
 }
 
-$full_name     = trim($_POST['full_name'] ?? '');
+$first_name     = trim($_POST['first_name'] ?? '');
+$last_name      = trim($_POST['last_name'] ?? '');
+$full_name      = trim($first_name . ' ' . $last_name);
 $license_number = strtoupper(trim($_POST['license_number'] ?? ''));
 $contact_number = trim($_POST['contact_number'] ?? '');
 $email          = strtolower(trim($_POST['email'] ?? ''));
 $password       = (string) ($_POST['password'] ?? '');
 $status        = trim($_POST['status'] ?? 'active');
 
-if (!$full_name || !$license_number || !$contact_number || !$email || !$password) {
+if (!$first_name || !$last_name || !$license_number || !$contact_number || !$email || !$password) {
     $_SESSION['error'] = 'All fields are required.';
+    header('Location: ../../views/admin/drivers.php');
+    exit;
+}
+
+if (mb_strlen($full_name) > 255) {
+    $_SESSION['error'] = 'Driver name is too long.';
     header('Location: ../../views/admin/drivers.php');
     exit;
 }

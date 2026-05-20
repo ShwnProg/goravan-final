@@ -17,10 +17,10 @@ $stats = $driver ? $scheduleObj->GetDriverTripStats($driverUserId) : [
     'completed' => 0,
     'active' => 0,
 ];
-$now = date('Y-m-d H:i:s');
-$dashboardTrips = array_values(array_filter($trips, function (array $trip) use ($now): bool {
+$nowTs = time();
+$dashboardTrips = array_values(array_filter($trips, function (array $trip) use ($nowTs): bool {
     $status = (string) ($trip['trip_status'] ?? '');
-    $dateTime = trim((string) ($trip['departure_date'] ?? '') . ' ' . (string) ($trip['departure_time'] ?? '00:00:00'));
+    $departureTs = strtotime(trim((string) ($trip['departure_date'] ?? '') . ' ' . (string) ($trip['departure_time'] ?? '00:00:00')));
 
     if (in_array($status, ['departed', 'arrived'], true)) {
         return true;
@@ -30,7 +30,7 @@ $dashboardTrips = array_values(array_filter($trips, function (array $trip) use (
         return false;
     }
 
-    return $dateTime <= $now;
+    return $departureTs !== false && $departureTs <= $nowTs;
 }));
 $completedTrips = array_values(array_filter($trips, function (array $trip): bool {
     return ($trip['trip_status'] ?? '') === 'completed';

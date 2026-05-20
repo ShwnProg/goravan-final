@@ -62,6 +62,16 @@ if (!in_array($type, ['student', 'senior', 'pwd'], true)) {
     exit;
 }
 
+$userObj = new Users($conn);
+$userObj->id = $userId;
+$user = $userObj->GetUserById();
+$birthdate = is_array($user) ? ($user['birthdate'] ?? null) : null;
+$typeError = Verification::ValidateTypeForBirthdate($type, $birthdate);
+if ($typeError) {
+    echo json_encode(['success' => false, 'message' => $typeError]);
+    exit;
+}
+
 if (!isset($_FILES['verification_document']) || $_FILES['verification_document']['error'] !== UPLOAD_ERR_OK) {
     $uploadErrors = [
         UPLOAD_ERR_INI_SIZE   => 'File exceeds server size limit.',

@@ -298,7 +298,7 @@ class Bookings
                 }
 
                 $isMainPassenger = $index === 0;
-                $type = $isMainPassenger ? ($verifiedType ?: 'regular') : $declaredType;
+                $type = ($isMainPassenger && $verifiedType) ? $verifiedType : $declaredType;
 
                 $name = trim((string) ($passengerNames[$index] ?? $passengerName));
                 if ($name === '') {
@@ -309,7 +309,7 @@ class Bookings
                 $bonusRate = ($verifiedType && $baseRate > 0) ? $verifiedBonus : 0.0;
                 $totalRate = $baseRate > 0 ? $baseRate + $bonusRate : 0.0;
                 $seatDiscount = round($baseFare * ($totalRate / 100), 2);
-                $idRequired = !$isMainPassenger && $type !== 'regular';
+                $idRequired = $type !== 'regular' && !($isMainPassenger && $verifiedType);
 
                 $baseTotal += $baseFare;
                 $discountAmount += $seatDiscount;
@@ -376,7 +376,7 @@ class Bookings
                 'convenience_fee' => 0,
                 'cash_fee' => $cashFee,
                 'subtotal' => $subtotal,
-                'boarding_verification_note' => 'Discounted companion passenger types require valid ID upon boarding.',
+                'boarding_verification_note' => 'Discounted unverified passengers and companions require valid ID upon boarding.',
                 'route_origin' => $schedule['origin'],
                 'route_destination' => $schedule['destination'],
             ]);

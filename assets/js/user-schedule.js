@@ -44,6 +44,7 @@
         backdrop: 'static',
         keyboard: false
     }) : null;
+    var shouldRefreshAfterBooking = false;
 
     var state = freshState();
 
@@ -62,7 +63,13 @@
             modalEl.addEventListener('shown.bs.modal', function () {
                 if (currentStep === 1) setTimeout(invalidateMap, 120);
             });
-            modalEl.addEventListener('hidden.bs.modal', resetFlow);
+            modalEl.addEventListener('hidden.bs.modal', function () {
+                if (shouldRefreshAfterBooking) {
+                    window.location.reload();
+                    return;
+                }
+                resetFlow();
+            });
         }
     }
 
@@ -191,8 +198,8 @@
         var anotherBtn = document.getElementById('bookAnotherBtn');
         if (anotherBtn) {
             anotherBtn.addEventListener('click', function () {
-                resetFlow();
-                showStep(1);
+                shouldRefreshAfterBooking = true;
+                window.location.reload();
             });
         }
 
@@ -525,7 +532,7 @@
             var discountNote = '';
             if (hasVerifiedType() && discountForType(type) > 0) {
                 discountNote = ' - verified bonus';
-            } else if (!isMainSeat && type !== 'regular') {
+            } else if (type !== 'regular') {
                 discountNote = ' - ID required';
             }
             return '<div class="passenger-seat-row" data-seat-id="' + esc(seat.seat_id) + '">' +
@@ -533,7 +540,7 @@
                     '<span class="passenger-seat-title">Seat ' + esc(seat.seat_number) + '</span>' +
                     '<small>' + (isMainSeat ? 'Main' : 'Companion') + '</small>' +
                 '</div>' +
-                '<select class="passenger-seat-type" data-field="type"' + (isMainSeat ? ' disabled data-main-seat="1"' : '') + '>' +
+                '<select class="passenger-seat-type" data-field="type"' + (isMainSeat && hasVerifiedType() ? ' disabled data-main-seat="1"' : '') + '>' +
                 passengerTypeOption('regular', type, isMainSeat) +
                 passengerTypeOption('student', type, isMainSeat) +
                 passengerTypeOption('senior', type, isMainSeat) +
@@ -547,7 +554,7 @@
     }
 
     function passengerTypeOption(value, current, isMainSeat) {
-        var disabled = isMainSeat && value !== mainPassengerType();
+        var disabled = isMainSeat && hasVerifiedType() && value !== mainPassengerType();
         return '<option value="' + value + '"' + (value === current ? ' selected' : '') + (disabled ? ' disabled' : '') + '>' + labelPassengerType(value) + '</option>';
     }
 
@@ -563,7 +570,7 @@
             seat.name = e.target.value.trim();
         }
         if (e.target.dataset.field === 'type') {
-            if (isMainPassengerSeat(seat)) {
+            if (isMainPassengerSeat(seat) && hasVerifiedType()) {
                 seat.type = mainPassengerType();
                 e.target.value = seat.type;
                 return;
@@ -730,6 +737,7 @@
                     throw new Error(data.message || 'Booking failed.');
                 }
                 updateScheduleCardAvailability(data.seats_count || state.selectedSeats.length);
+                shouldRefreshAfterBooking = true;
                 renderReceipt(data);
                 showStep(5);
                 if (window.Swal) {
@@ -857,7 +865,7 @@
 
         state.selectedSeats.forEach(function (seat) {
             if (String(seat.seat_id) === String(state.mainSeatId)) {
-                seat.type = mainPassengerType();
+                seat.type = hasVerifiedType() ? mainPassengerType() : normalizePassengerType(seat.type || 'regular');
             } else {
                 seat.type = normalizePassengerType(seat.type || 'regular');
             }

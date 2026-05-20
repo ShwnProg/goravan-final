@@ -50,21 +50,13 @@ if ($new_status !== 'cancelled') {
     exit;
 }
 
-if (!$schedule->canUpdateStatus($new_status)) {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Only not departed schedules can be cancelled from admin.'
-    ]);
-    exit;
-}
-
-$result = $schedule->UpdateStatus();
+$result = $schedule->CancelScheduleByAdmin();
 
 /* -- RESPONSE --------------------------------------------------------------- */
 echo json_encode([
     'success' => $result['success'],
     'message' => $result['success']
-        ? 'Schedule status updated successfully.'
+        ? ($result['message'] ?? 'Schedule cancelled successfully.')
         : ($result['message'] ?? 'Unable to update schedule status. Please try again.')
 ]);
 

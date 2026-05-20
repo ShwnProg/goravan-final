@@ -107,8 +107,12 @@ if ($approvedVerification) {
 $passengerTypes = array_slice(array_pad($passengerTypes, count($seatIds), 'regular'), 0, count($seatIds));
 $passengerNames = array_slice(array_pad($passengerNames, count($seatIds), $passengerName), 0, count($seatIds));
 
-// The account owner is the first selected seat. Companions can declare their own type.
-$mainPassengerType = $verifiedPassengerType ?: 'regular';
+// Approved users keep their verified passenger type. Unverified users may declare
+// their type and must show the matching ID at boarding when discounted.
+$mainPassengerType = $verifiedPassengerType ?: ($passengerTypes[0] ?? $passengerType ?: 'regular');
+if (!in_array($mainPassengerType, $allowedPassengerTypes, true)) {
+    $mainPassengerType = 'regular';
+}
 $passengerTypes[0] = $mainPassengerType;
 $passengerType = $mainPassengerType;
 

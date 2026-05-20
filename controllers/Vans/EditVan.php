@@ -36,10 +36,10 @@ if (!preg_match('/^[A-Z0-9\- ]{3,20}$/', $plate_number)) {
     exit;
 }
 
-if ($capacity <= 0 || $capacity > 30) {
+if ($capacity < 10 || $capacity > 14) {
     echo json_encode([
         'success' => false,
-        'message' => 'Capacity must be between 1 and 30.'
+        'message' => 'Capacity must be between 10 and 14 seats.'
     ]);
     exit;
 }

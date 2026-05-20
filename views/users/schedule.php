@@ -299,14 +299,14 @@ try {
                             <?php if ($verifiedType): ?>
                                 <span class="verified-badge">Verified +2%</span>
                             <?php else: ?>
-                                <span class="note-badge">Verify in Profile for fare discounts.</span>
+                                <span class="note-badge">Verify in Profile for the extra +2% discount.</span>
                             <?php endif; ?>
                         </div>
                         <div class="u-form-group full">
                             <label>Passenger Types</label>
                             <span class="seat-helper-note">
                                 <?= vanny_mascot('pointing', 'small', 'seat-helper-vanny', 'Vanny passenger type tip') ?>
-                                <span>Discounted companions need valid ID at boarding.</span>
+                                <span>Discounted unverified passengers and companions need valid ID at boarding.</span>
                             </span>
                             <div class="passenger-seat-list" id="passengerSeatList"></div>
                         </div>

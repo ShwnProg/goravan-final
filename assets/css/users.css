@@ -286,6 +286,40 @@
     gap: 22px;
 }
 
+.user-verification-modal .modal-dialog {
+    width: min(920px, 94vw);
+    max-width: 94vw;
+    height: calc(100vh - 48px);
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.user-verification-modal .rmodal {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden !important;
+}
+
+.user-verification-modal .rmodal-header,
+.user-verification-modal .rmodal-footer {
+    flex: 0 0 auto;
+}
+
+.user-verification-modal .rmodal-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    padding-bottom: 22px;
+}
+
+.user-verification-modal .user-details-viewer {
+    gap: 16px;
+}
+
 .udv-info-section {
     background: #f8f9fb;
     border: 1px solid rgba(0, 0, 0, .05);
@@ -297,6 +331,10 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .06);
+    border-radius: 10px;
+    padding: 16px 18px;
 }
 
 .udv-section-title {
@@ -310,7 +348,7 @@
 
 .udv-info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 14px 20px;
 }
 
@@ -332,6 +370,8 @@
     font-size: 13.5px;
     color: #1e293b;
     font-weight: 600;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
 }
 
 /* ── DOCUMENT LIST ───────────────────────────── */
@@ -664,6 +704,11 @@ body.admin-dark-mode-active .badge.cancelled::before {
 
 /* Modal dark */
 body.admin-dark-mode-active .udv-info-section {
+    background: rgba(15, 23, 42, .5);
+    border-color: rgba(255, 255, 255, .06);
+}
+
+body.admin-dark-mode-active .udv-docs-section {
     background: rgba(15, 23, 42, .5);
     border-color: rgba(255, 255, 255, .06);
 }

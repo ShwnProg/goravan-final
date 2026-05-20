@@ -36,7 +36,6 @@ class UserNotifications
                     CASE
                         WHEN SUM(CASE WHEN b.status = 'pending' THEN 1 ELSE 0 END) > 0 THEN 'pending'
                         WHEN SUM(CASE WHEN b.status = 'approved' THEN 1 ELSE 0 END) > 0 THEN 'approved'
-                        WHEN SUM(CASE WHEN b.status = 'completed' THEN 1 ELSE 0 END) > 0 THEN 'completed'
                         WHEN SUM(CASE WHEN b.status = 'rejected' THEN 1 ELSE 0 END) > 0 THEN 'rejected'
                         ELSE 'cancelled'
                     END AS status,
@@ -48,7 +47,7 @@ class UserNotifications
                 LEFT JOIN schedules s ON b.schedule_id_fk = s.schedule_id_pk
                 LEFT JOIN routes r ON s.route_id_fk = r.route_id_pk
                 WHERE b.user_id_fk = :user_id
-                  AND b.status IN ('approved', 'rejected', 'cancelled', 'completed')
+                  AND b.status IN ('approved', 'rejected', 'cancelled')
                 GROUP BY b.reference_code, r.origin, r.destination, s.departure_date, s.departure_time
                 ORDER BY MAX(b.updated_at) DESC
                 LIMIT 12
@@ -61,7 +60,6 @@ class UserNotifications
                     'approved' => ['Booking approved', 'fa-solid fa-circle-check', 'booking approved'],
                     'rejected' => ['Booking rejected', 'fa-solid fa-circle-xmark', 'booking rejected'],
                     'cancelled' => ['Booking cancelled', 'fa-solid fa-ban', 'booking cancelled'],
-                    'completed' => ['Trip completed', 'fa-solid fa-flag-checkered', 'booking completed'],
                 ];
                 $meta = $labels[$status] ?? ['Booking updated', 'fa-solid fa-ticket', 'booking'];
 
@@ -177,6 +175,7 @@ class UserNotifications
             $stmt = $this->conn->prepare("
                 SELECT
                     MIN(b.book_id_pk) AS book_id_pk,
+                    s.schedule_id_pk,
                     b.reference_code,
                     s.trip_status,
                     s.departed_at,
@@ -189,7 +188,7 @@ class UserNotifications
                 WHERE b.user_id_fk = :user_id
                   AND b.status IN ('approved', 'completed')
                   AND s.trip_status IN ('departed', 'arrived', 'completed')
-                GROUP BY b.reference_code, s.trip_status, s.departed_at, s.arrived_at, s.completed_at, r.origin, r.destination
+                GROUP BY s.schedule_id_pk, s.trip_status, s.departed_at, s.arrived_at, s.completed_at, r.origin, r.destination
                 ORDER BY COALESCE(s.completed_at, s.arrived_at, s.departed_at) DESC
                 LIMIT 10
             ");
@@ -204,7 +203,7 @@ class UserNotifications
                 ][$status] ?? ['Your trip was updated.', 'fa-solid fa-route', null];
 
                 return $this->item(
-                    'trip-' . $row['reference_code'] . '-' . $status,
+                    'trip-' . $row['schedule_id_pk'] . '-' . $status,
                     'trip',
                     ucwords(str_replace('_', ' ', $status ?: 'Trip update')),
                     $meta[0] . ' ' . ($row['route_display'] ?? ''),

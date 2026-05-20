@@ -25,15 +25,24 @@ rsort($paymentDates);
 $paymentDisplayStatus = function (array $payment): string {
     $status = strtolower((string) ($payment['status'] ?? 'pending'));
     $bookingStatus = strtolower((string) ($payment['booking_status'] ?? ''));
+    $method = strtolower((string) ($payment['payment_method'] ?? ''));
 
-    return $bookingStatus === 'rejected' ? 'rejected' : $status;
+    if ($bookingStatus === 'rejected') {
+        return 'rejected';
+    }
+
+    if ($method === 'cash' && in_array($status, ['pending', 'pending_cash', 'cash_unpaid', 'unpaid'], true)) {
+        return 'pending_cash';
+    }
+
+    return $status;
 };
 
 $paymentGroupMeta = function (string $displayStatus): array {
     $groups = [
         'pending' => ['key' => 'pending', 'label' => 'Pending Payments', 'icon' => 'fas fa-clock', 'hint' => 'Waiting for approval'],
-        'pending_cash' => ['key' => 'pending', 'label' => 'Pending Cash Payments', 'icon' => 'fas fa-money-bill-1-wave', 'hint' => 'Pay on-site'],
-        'cash_unpaid' => ['key' => 'pending', 'label' => 'Pending Cash Payments', 'icon' => 'fas fa-money-bill-1-wave', 'hint' => 'Pay on-site'],
+        'pending_cash' => ['key' => 'pending_cash', 'label' => 'Pending Cash Payments', 'icon' => 'fas fa-money-bill-1-wave', 'hint' => 'Pay on-site'],
+        'cash_unpaid' => ['key' => 'pending_cash', 'label' => 'Pending Cash Payments', 'icon' => 'fas fa-money-bill-1-wave', 'hint' => 'Pay on-site'],
         'unpaid' => ['key' => 'pending', 'label' => 'Unpaid Payments', 'icon' => 'fas fa-clock', 'hint' => 'Waiting for payment'],
         'failed' => ['key' => 'failed', 'label' => 'Failed Payments', 'icon' => 'fas fa-triangle-exclamation', 'hint' => 'Payment failed'],
         'paid' => ['key' => 'paid', 'label' => 'Paid Payments', 'icon' => 'fas fa-circle-check', 'hint' => 'Completed payments'],
@@ -69,8 +78,7 @@ $paymentGroupMeta = function (string $displayStatus): array {
     </div>
 </div>
 <div class="admin-status-tabs" id="payment-status-tabs" aria-label="Payment status filters">
-    <button type="button" class="active" data-status="pending">Pending Payments</button>
-    <button type="button" data-status="pending_cash">Cash Pending</button>
+    <button type="button" class="active" data-status="pending_cash">Cash Pending</button>
     <button type="button" data-status="paid">Paid Payments</button>
     <button type="button" data-status="refund_requested">Refund Requests</button>
     <button type="button" data-status="refunded">Refunded Payments</button>
@@ -78,7 +86,7 @@ $paymentGroupMeta = function (string $displayStatus): array {
     <button type="button" data-status="rejected">Rejected Payments</button>
     <button type="button" data-status="">All Payments</button>
 </div>
-<input type="hidden" id="payment-status-filter" value="pending">
+<input type="hidden" id="payment-status-filter" value="pending_cash">
 
 <input type="hidden" id="page-csrf-token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES) ?>">
 
@@ -86,7 +94,7 @@ $paymentGroupMeta = function (string $displayStatus): array {
     <div class="payments-card-header">
         <h2>
             <i class="fas fa-credit-card" style="margin-right:7px;color:var(--color-accent)"></i>
-            <span id="payment-view-title">Pending Payments</span>
+            <span id="payment-view-title">Cash Pending Payments</span>
         </h2>
         <span id="payment-count"></span>
     </div>
@@ -273,7 +281,7 @@ $paymentGroupMeta = function (string $displayStatus): array {
                 </div>
                 <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal"></button>
             </div>
-            <div class="rmodal-body">
+            <div class="rmodal-body modal-body">
                 <input type="hidden" id="refund-review-payment-id" value="">
                 <div class="refund-request-box" id="refund-request-summary">No refund note found.</div>
                 <div class="refund-review-grid">
@@ -310,7 +318,7 @@ $paymentGroupMeta = function (string $displayStatus): array {
 
 <!-- VIEW PAYMENT DETAILS MODAL (read-only) -->
 <div class="modal fade" id="viewModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-lg payment-details-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg payment-details-dialog">
         <div class="modal-content rmodal payment-details-modal">
             <div class="rmodal-header">
                 <div class="rmodal-icon"><i class="fas fa-file-invoice-dollar"></i></div>
@@ -320,7 +328,7 @@ $paymentGroupMeta = function (string $displayStatus): array {
                 </div>
                 <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal"></button>
             </div>
-            <div class="rmodal-body">
+            <div class="rmodal-body modal-body">
                 <div class="payment-details-viewer">
 
                     <div class="pdv-section">

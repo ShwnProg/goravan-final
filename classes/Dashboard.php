@@ -126,6 +126,33 @@ class Dashboard
         }
     }
 
+    public function GetQuickInsights(): array
+    {
+        $fallback = [
+            'todays_trips' => 0,
+            'pending_verifications' => 0,
+        ];
+
+        try {
+            $stmt = $this->conn->query("
+                SELECT
+                    (SELECT COUNT(*)
+                     FROM schedules
+                     WHERE departure_date = CURDATE()) AS todays_trips,
+                    (SELECT COUNT(DISTINCT v.user_id_fk)
+                     FROM verification_documents v
+                     INNER JOIN users u ON u.user_id_pk = v.user_id_fk
+                     WHERE u.role = 'user'
+                       AND (v.status = 'pending' OR v.status IS NULL)) AS pending_verifications
+            ");
+
+            return array_merge($fallback, $stmt->fetch(PDO::FETCH_ASSOC) ?: []);
+        } catch (PDOException $e) {
+            error_log('[Dashboard::GetQuickInsights] ' . $e->getMessage());
+            return $fallback;
+        }
+    }
+
     public function GetMissingScheduleDates(int $days = 7): array
     {
         $days = max(1, min(30, $days));
@@ -142,7 +169,7 @@ class Dashboard
             $scheduled = array_flip($stmt->fetchAll(PDO::FETCH_COLUMN) ?: []);
 
             $missing = [];
-            for ($i = 0; $i <= $days; $i++) {
+            for ($i = 0; $i < $days; $i++) {
                 $date = date('Y-m-d', strtotime('+' . $i . ' day'));
                 if (!isset($scheduled[$date])) {
                     $missing[] = $date;

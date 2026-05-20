@@ -77,17 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // BIRTHDATE
 
-    //CALCULATE AGE FROM BIRTHDATE
-    $age = date('Y') - date('Y', strtotime($birthdate));
-
-    if ($type == 'senior' && $age < 60) {
-        $errors[] = "You must be 60+ to register as Senior";
-    }
-    if ($birthdate > date('Y-m-d')) {
-        $errors[] = "Birthdate cannot be in the future";
-    }
-    if ($age <= 0) {
-        $errors[] = "Invalid birthdate";
+    $type = strtolower(trim($type));
+    $typeError = Verification::ValidateTypeForBirthdate($type, $birthdate);
+    if ($typeError) {
+        $errors[] = $typeError;
     }
 
     // PASSWORD
