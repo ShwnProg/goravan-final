@@ -1327,7 +1327,9 @@
 }
 
 .receipt-money-breakdown b {
+    font-size: 16px;
     color: var(--u-text);
+    margin-right: 5px;
 }
 
 .receipt-money-breakdown .receipt-money-total {

@@ -525,7 +525,5 @@ window.initVansPage = function () {
         return true;
     }
 
-}; // end initVansPage
-
-/* Auto-init for direct (non-AJAX) page loads */
+};
 document.addEventListener('DOMContentLoaded', window.initVansPage);
