@@ -64,7 +64,15 @@ spl_autoload_register(function ($class) {
 });
 
 $database = new Database();
-$conn = $database->GetConnection();
+
+try {
+    $conn = $database->GetConnection();
+} catch (DatabaseConnectionException $e) {
+    http_response_code(503);
+    define('GORAVAN_DATABASE_STATUS_MODE', true);
+    require __DIR__ . '/views/system/database-status.php';
+    exit;
+}
 
 function require_role(string $role): void
 {

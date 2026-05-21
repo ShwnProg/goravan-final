@@ -1,0 +1,365 @@
+.system-status-page {
+    min-height: 100vh;
+    margin: 0;
+    background:
+        radial-gradient(circle at 12% 10%, rgba(249, 115, 22, 0.12), transparent 28%),
+        linear-gradient(135deg, #f8fafc 0%, #eef3f8 52%, #f8fafc 100%);
+    color: var(--color-primary);
+    font-family: var(--font-base);
+}
+
+.status-shell {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+    padding: 32px 18px;
+}
+
+.status-card {
+    width: min(960px, 100%);
+    padding: clamp(24px, 4vw, 42px);
+    border: 1px solid rgba(46, 58, 77, 0.10);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 24px 70px rgba(46, 58, 77, 0.14);
+}
+
+.status-card__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    color: var(--color-primary);
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.status-card__brand img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.status-card__brand span span {
+    color: var(--color-accent);
+}
+
+.status-hero {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+
+.status-icon {
+    display: grid;
+    width: 66px;
+    height: 66px;
+    place-items: center;
+    border-radius: 8px;
+    border: 1px solid rgba(249, 115, 22, 0.26);
+    background: rgba(249, 115, 22, 0.10);
+    color: var(--color-accent);
+    font-size: 26px;
+}
+
+.status-label {
+    margin: 0 0 10px;
+    color: var(--color-accent);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0;
+}
+
+.status-copy h1 {
+    margin: 0 0 14px;
+    color: var(--color-primary);
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.08;
+    letter-spacing: 0;
+}
+
+.status-message {
+    max-width: 760px;
+    margin: 0;
+    color: #526175;
+    font-size: 15px;
+    line-height: 1.75;
+}
+
+.vanny-status-panel {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 28px 0;
+    padding: 16px;
+    border: 1px solid rgba(62, 82, 114, 0.14);
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(62, 82, 114, 0.08), rgba(249, 115, 22, 0.08));
+}
+
+.vanny-status-panel__mascot {
+    width: 74px;
+    height: auto;
+    flex: 0 0 auto;
+    filter: drop-shadow(0 12px 18px rgba(46, 58, 77, 0.16));
+}
+
+.vanny-status-panel strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--color-primary);
+    font-size: 15px;
+}
+
+.vanny-status-panel p {
+    margin: 0;
+    color: #526175;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.status-info-card {
+    display: flex;
+    gap: 12px;
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid rgba(46, 58, 77, 0.10);
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.status-info-card__icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 8px;
+    background: rgba(62, 82, 114, 0.08);
+    color: var(--color-brand);
+}
+
+.status-info-card small {
+    display: block;
+    margin-bottom: 4px;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0;
+}
+
+.status-info-card strong {
+    display: block;
+    color: var(--color-primary);
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.restore-guide {
+    margin-top: 16px;
+    border: 1px solid rgba(249, 115, 22, 0.20);
+    border-radius: 8px;
+    background: rgba(249, 115, 22, 0.07);
+}
+
+.restore-guide summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 48px;
+    padding: 0 16px;
+    color: var(--color-primary);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 800;
+    list-style: none;
+}
+
+.restore-guide summary::-webkit-details-marker {
+    display: none;
+}
+
+.restore-guide summary span {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.restore-guide[open] summary .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+.restore-guide p {
+    margin: 0;
+    padding: 0 16px 16px;
+    color: #526175;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.status-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.status-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.status-btn:hover {
+    transform: translateY(-1px);
+}
+
+.status-btn--primary {
+    background: var(--color-accent);
+    color: #ffffff;
+    box-shadow: 0 12px 24px rgba(249, 115, 22, 0.22);
+}
+
+.status-btn--primary:hover {
+    background: #ea6b0e;
+    color: #ffffff;
+}
+
+.status-btn--ghost {
+    border: 1px solid rgba(46, 58, 77, 0.16);
+    background: #ffffff;
+    color: var(--color-primary);
+}
+
+.status-btn--ghost:hover {
+    background: rgba(62, 82, 114, 0.06);
+    color: var(--color-primary);
+}
+
+html.admin-dark-mode-active .system-status-page,
+body.admin-dark-mode-active.system-status-page {
+    background:
+        radial-gradient(circle at 12% 10%, rgba(249, 115, 22, 0.16), transparent 28%),
+        linear-gradient(135deg, #0f172a 0%, #111827 52%, #0f172a 100%);
+    color: #e5edf7;
+}
+
+html.admin-dark-mode-active .status-card,
+body.admin-dark-mode-active .status-card {
+    border-color: rgba(148, 163, 184, 0.18);
+    background: rgba(23, 34, 53, 0.96);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.30);
+}
+
+html.admin-dark-mode-active .status-card__brand,
+html.admin-dark-mode-active .status-copy h1,
+html.admin-dark-mode-active .vanny-status-panel strong,
+html.admin-dark-mode-active .status-info-card strong,
+html.admin-dark-mode-active .restore-guide summary,
+body.admin-dark-mode-active .status-card__brand,
+body.admin-dark-mode-active .status-copy h1,
+body.admin-dark-mode-active .vanny-status-panel strong,
+body.admin-dark-mode-active .status-info-card strong,
+body.admin-dark-mode-active .restore-guide summary {
+    color: #e5edf7;
+}
+
+html.admin-dark-mode-active .status-message,
+html.admin-dark-mode-active .vanny-status-panel p,
+html.admin-dark-mode-active .restore-guide p,
+body.admin-dark-mode-active .status-message,
+body.admin-dark-mode-active .vanny-status-panel p,
+body.admin-dark-mode-active .restore-guide p {
+    color: #a8b6ca;
+}
+
+html.admin-dark-mode-active .vanny-status-panel,
+body.admin-dark-mode-active .vanny-status-panel {
+    border-color: rgba(148, 163, 184, 0.18);
+    background: linear-gradient(135deg, rgba(62, 82, 114, 0.26), rgba(249, 115, 22, 0.12));
+}
+
+html.admin-dark-mode-active .status-info-card,
+body.admin-dark-mode-active .status-info-card {
+    border-color: rgba(148, 163, 184, 0.16);
+    background: #111827;
+}
+
+html.admin-dark-mode-active .status-info-card small,
+body.admin-dark-mode-active .status-info-card small {
+    color: #93a4ba;
+}
+
+html.admin-dark-mode-active .restore-guide,
+body.admin-dark-mode-active .restore-guide {
+    border-color: rgba(249, 115, 22, 0.24);
+    background: rgba(249, 115, 22, 0.10);
+}
+
+html.admin-dark-mode-active .status-btn--ghost,
+body.admin-dark-mode-active .status-btn--ghost {
+    border-color: rgba(148, 163, 184, 0.22);
+    background: #172235;
+    color: #e5edf7;
+}
+
+html.admin-dark-mode-active .status-btn--ghost:hover,
+body.admin-dark-mode-active .status-btn--ghost:hover {
+    background: #1f2c43;
+    color: #ffffff;
+}
+
+@media (max-width: 760px) {
+    .status-card {
+        padding: 22px;
+    }
+
+    .status-hero {
+        grid-template-columns: 1fr;
+    }
+
+    .status-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .status-shell {
+        padding: 16px;
+        place-items: stretch;
+    }
+
+    .status-card {
+        align-self: center;
+    }
+
+    .vanny-status-panel {
+        align-items: flex-start;
+    }
+
+    .vanny-status-panel__mascot {
+        width: 58px;
+    }
+
+    .status-actions {
+        display: grid;
+    }
+}
