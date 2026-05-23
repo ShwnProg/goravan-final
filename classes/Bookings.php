@@ -473,7 +473,8 @@ class Bookings
                 UPDATE payments p
                 INNER JOIN {$this->table} b ON p.book_id_fk = b.book_id_pk
                 SET p.status = CASE
-                            WHEN p.status = 'paid' AND p.payment_method <> 'cash' THEN 'refund_requested'
+                            WHEN :status_rejected = 'rejected' AND p.status = 'paid' AND p.payment_method <> 'cash' THEN 'refunded'
+                            WHEN :status_cancelled = 'cancelled' AND p.status = 'paid' AND p.payment_method <> 'cash' THEN 'refund_requested'
                             WHEN p.payment_method = 'cash' THEN 'cancelled'
                             ELSE 'cancelled'
                         END,
@@ -484,7 +485,11 @@ class Bookings
                     WHERE b.reference_code = :reference_code
                       AND p.status NOT IN ('refund_requested', 'refunded')
                 ");
-                $pay->execute([':reference_code' => $referenceCode]);
+                $pay->execute([
+                    ':status_rejected' => $this->status,
+                    ':status_cancelled' => $this->status,
+                    ':reference_code' => $referenceCode,
+                ]);
             }
 
             $this->conn->commit();

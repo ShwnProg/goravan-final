@@ -230,6 +230,7 @@ class Payments
         $status = strtolower((string) ($row['status'] ?? ''));
         $bookingStatus = strtolower((string) ($row['booking_status'] ?? ''));
 
+        if ($status === 'refunded') return 6;
         if (in_array($status, ['pending', 'pending_cash', 'cash_unpaid', 'unpaid'], true) && $bookingStatus !== 'rejected') return 1;
         if ($status === 'paid' && $bookingStatus !== 'rejected') return 2;
         if ($bookingStatus === 'rejected') return 3;
@@ -293,6 +294,15 @@ class Payments
                 p.paid_at = NULL
             WHERE b.status IN ('rejected', 'cancelled')
               AND p.status IN ('pending', 'unpaid', 'pending_cash', 'cash_unpaid')
+        ");
+
+        $this->conn->exec("
+            UPDATE {$this->table} p
+            INNER JOIN bookings b ON p.book_id_fk = b.book_id_pk
+            SET p.status = 'refunded'
+            WHERE b.status = 'rejected'
+              AND p.status IN ('paid', 'refund_requested')
+              AND p.payment_method <> 'cash'
         ");
 
         $this->conn->exec("

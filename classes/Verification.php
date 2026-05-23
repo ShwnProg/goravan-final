@@ -173,6 +173,9 @@ class Verification
         if ($age <= 0) {
             return 'Invalid birthdate.';
         }
+        if($age > 100) {
+            return 'Age exceeds reasonable limits.';
+        }
 
         if ($type === 'student' && $age < 16) {
             return 'You must be at least 16 years old to verify as Student.';

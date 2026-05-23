@@ -27,6 +27,10 @@ $paymentDisplayStatus = function (array $payment): string {
     $bookingStatus = strtolower((string) ($payment['booking_status'] ?? ''));
     $method = strtolower((string) ($payment['payment_method'] ?? ''));
 
+    if ($status === 'refunded') {
+        return 'refunded';
+    }
+
     if ($bookingStatus === 'rejected') {
         return 'rejected';
     }

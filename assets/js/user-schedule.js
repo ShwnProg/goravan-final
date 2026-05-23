@@ -707,6 +707,36 @@
         if (!validatePassenger() || !validatePayment()) return;
         assignVerifiedDiscountSeat();
 
+        confirmBookingRequest().then(function (confirmed) {
+            if (!confirmed) return;
+            performBookingSubmit();
+        });
+    }
+
+    function confirmBookingRequest() {
+        var schedule = state.schedule || {};
+        var route = [schedule.origin || '-', schedule.destination || '-'].join(' to ');
+        var text = 'Please confirm you want to book ' + state.selectedSeats.length + ' seat(s) for ' + route + '.';
+
+        if (!window.Swal) {
+            return Promise.resolve(window.confirm(text));
+        }
+
+        return Swal.fire({
+            title: 'Confirm booking request?',
+            text: text,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, book this trip',
+            cancelButtonText: 'Review details',
+            confirmButtonColor: '#F97316',
+            reverseButtons: true
+        }).then(function (result) {
+            return !!result.isConfirmed;
+        });
+    }
+
+    function performBookingSubmit() {
         var btn = document.getElementById('confirmPayBtn');
         if (btn) btn.disabled = true;
 
