@@ -110,6 +110,7 @@
 <link rel="stylesheet" href="../../assets/css/payments.css">
 <link rel="stylesheet" href="../../assets/css/auth.css">
 <link rel="stylesheet" href="../../assets/css/style.css">
+<link rel="stylesheet" href="../../assets/css/password-strength.css">
 <!-- <link rel="stylesheet" href="../../assets/css/users.css"> -->
 
 

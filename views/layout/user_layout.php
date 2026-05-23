@@ -39,6 +39,7 @@ $depth = str_repeat('../', substr_count($_SERVER['PHP_SELF'], '/') - 1);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= $depth ?>assets/css/base.css">
     <link rel="stylesheet" href="<?= $depth ?>assets/css/user-common.css">
+    <link rel="stylesheet" href="<?= $depth ?>assets/css/password-strength.css">
     <?php if (!empty($page_css)): ?>
         <link rel="stylesheet" href="<?= $page_css ?>">
     <?php endif; ?>
@@ -234,6 +235,7 @@ $depth = str_repeat('../', substr_count($_SERVER['PHP_SELF'], '/') - 1);
     <?php if (!empty($page_js)): ?>
         <script src="<?= $page_js ?>"></script>
     <?php endif; ?>
+    <script src="<?= $depth ?>assets/js/password-strength.js"></script>
     <script src="<?= $depth ?>assets/js/user-nav.js"></script>
 </body>
 

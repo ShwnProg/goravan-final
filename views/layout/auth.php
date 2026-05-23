@@ -86,6 +86,7 @@ require_once "../../autoload.php";
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../assets/js/vanny-ui.js"></script>
+    <script src="../../assets/js/password-strength.js"></script>
 
     <?php if (!empty($page_js)): ?>
         <script src="<?= $page_js ?>"></script>

@@ -145,6 +145,7 @@ $current = basename($_SERVER['PHP_SELF']);
     <script src="../../assets/js/vanny-ui.js"></script>
     <script src="../../assets/js/admin-ui.js"></script>
     <script src="../../assets/js/nav.js"></script>
+    <script src="../../assets/js/password-strength.js"></script>
     <?php if (!empty($page_js)): ?>
         <script src="<?= $page_js ?>"></script>
     <?php endif; ?>

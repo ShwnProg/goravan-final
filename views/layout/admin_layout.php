@@ -210,6 +210,7 @@ $current = basename($_SERVER['PHP_SELF']);
     <script src="../../assets/js/admin-ui.js"></script>
     <script src="../../assets/js/nav.js"></script>
     <script src="../../assets/js/notifications.js"></script>
+    <script src="../../assets/js/password-strength.js"></script>
 
     <!-- ── Page-specific script ───────────────── -->
     <?php if (!empty($page_js)): ?>
