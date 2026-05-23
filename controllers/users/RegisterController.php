@@ -56,6 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Last name must be at least 2 characters';
     }
 
+    if(strlen($firstName) > 50) {
+        $errors[] = 'First name cannot exceed 50 characters';
+    }
+    if(strlen($lastName) > 50) {
+        $errors[] = 'Last name cannot exceed 50 characters';
+    }
+
     // EMAIL
     $clean_email = filter_var($email, FILTER_SANITIZE_EMAIL);
     $validate_email = filter_var($clean_email, FILTER_VALIDATE_EMAIL);
@@ -173,6 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'last_name' => $lastName,
         'email' => $email,
         'contact' => $contact,
+        'birthdate' => $birthdate,
         'type' => $type
     ];
 
