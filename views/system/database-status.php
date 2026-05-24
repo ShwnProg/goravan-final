@@ -18,6 +18,7 @@ if (!empty($_SESSION['is_login']) && !empty($_SESSION['role'])) {
 }
 
 $checkedAt = date('F j, Y, g:i A');
+$databaseStatusError = trim((string)($databaseStatusError ?? 'No database error details were provided.'));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -119,6 +120,17 @@ $checkedAt = date('F j, Y, g:i A');
                     </div>
                 </article>
             </div>
+
+            <section class="status-error-details" aria-labelledby="database-error-title">
+                <div class="status-error-details__header">
+                    <span class="status-error-details__icon"><i class="fa-solid fa-bug"></i></span>
+                    <div>
+                        <small>Debug Details</small>
+                        <h2 id="database-error-title">Actual database error</h2>
+                    </div>
+                </div>
+                <pre><?= htmlspecialchars($databaseStatusError, ENT_QUOTES, 'UTF-8') ?></pre>
+            </section>
 
             <details class="restore-guide">
                 <summary>

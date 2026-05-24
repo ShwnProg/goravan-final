@@ -164,6 +164,63 @@
     line-height: 1.45;
 }
 
+.status-error-details {
+    margin-top: 16px;
+    padding: 16px;
+    border: 1px solid rgba(220, 38, 38, 0.22);
+    border-radius: 8px;
+    background: rgba(254, 242, 242, 0.96);
+}
+
+.status-error-details__header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.status-error-details__icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 8px;
+    background: rgba(220, 38, 38, 0.10);
+    color: #dc2626;
+}
+
+.status-error-details small {
+    display: block;
+    margin-bottom: 3px;
+    color: #991b1b;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0;
+}
+
+.status-error-details h2 {
+    margin: 0;
+    color: #7f1d1d;
+    font-size: 16px;
+    line-height: 1.35;
+}
+
+.status-error-details pre {
+    overflow-x: auto;
+    margin: 0;
+    padding: 12px;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #7f1d1d;
+    font-family: Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
 .restore-guide {
     margin-top: 16px;
     border: 1px solid rgba(249, 115, 22, 0.20);
@@ -312,6 +369,28 @@ html.admin-dark-mode-active .restore-guide,
 body.admin-dark-mode-active .restore-guide {
     border-color: rgba(249, 115, 22, 0.24);
     background: rgba(249, 115, 22, 0.10);
+}
+
+html.admin-dark-mode-active .status-error-details,
+body.admin-dark-mode-active .status-error-details {
+    border-color: rgba(248, 113, 113, 0.28);
+    background: rgba(127, 29, 29, 0.20);
+}
+
+html.admin-dark-mode-active .status-error-details small,
+body.admin-dark-mode-active .status-error-details small {
+    color: #fca5a5;
+}
+
+html.admin-dark-mode-active .status-error-details h2,
+body.admin-dark-mode-active .status-error-details h2 {
+    color: #fee2e2;
+}
+
+html.admin-dark-mode-active .status-error-details pre,
+body.admin-dark-mode-active .status-error-details pre {
+    background: rgba(15, 23, 42, 0.86);
+    color: #fecaca;
 }
 
 html.admin-dark-mode-active .status-btn--ghost,

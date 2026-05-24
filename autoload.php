@@ -70,6 +70,7 @@ try {
 } catch (DatabaseConnectionException $e) {
     http_response_code(503);
     define('GORAVAN_DATABASE_STATUS_MODE', true);
+    $databaseStatusError = $e->getPrevious() ? $e->getPrevious()->getMessage() : $e->getMessage();
     require __DIR__ . '/views/system/database-status.php';
     exit;
 }
